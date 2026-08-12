@@ -1,35 +1,26 @@
-# Calculadora Boleado
+# Calculadora Boleado — Controle de Compras
 
-Controle de **Compras e Custos** da confeitaria.
+Planilha no modelo **CONTROLE DE COMPRAS — CONFEITARIA** (PDF enviado), com a 3ª à 6ª compra lançadas.
 
-## Total gasto agora
+## Gasto em dinheiro
 
-**R$ 416,56** — terceira à sexta compra (1ª e 2ª ainda não lançadas).
-
-| Compra | Itens | Total |
-|---|---:|---:|
-| 3ª | 2 | R$ 46,88 |
-| 4ª | 6 | R$ 138,41 |
-| 5ª | 9 | R$ 201,27 |
-| 6ª | 1 | R$ 30,00 |
-| **Geral** | **18** | **R$ 416,56** |
+| | Valor |
+|---|---:|
+| Compras 1ª + 2ª (já estavam no modelo) | R$ 466,82 |
+| Compras 3ª a 6ª (novas) | R$ 416,56 |
+| **Subtotal das compras** | **R$ 883,38** |
+| Luz e gás (20%) | R$ 176,68 |
+| **Custo total c/ luz e gás** | **R$ 1.060,06** |
 
 ## Excel
 
-Baixe e abra no Excel ou no Google Planilhas:
+[`planilha_custos_confeitaria_atualizada.xlsx`](./planilha_custos_confeitaria_atualizada.xlsx)
 
-- [`Compras_e_Custos_Boleado.xlsx`](./Compras_e_Custos_Boleado.xlsx)
+Abas: **Compras e Custos** (mesmo layout do PDF) e **Por compra**.
 
-Abas: Compras e Custos · Resumo por compra · Resumo por categoria · Estoque consolidado · Como usar.
-
-Para regenerar a planilha:
+Para regenerar:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install openpyxl
+python3 -m venv .venv && .venv/bin/pip install openpyxl
 .venv/bin/python generate_excel.py
 ```
-
-## Painel
-
-Abra `index.html` no navegador (ou sirva a pasta com qualquer servidor estático).

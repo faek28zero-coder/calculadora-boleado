@@ -1,679 +1,358 @@
 #!/usr/bin/env python3
-"""Gera a planilha Compras e Custos da Calculadora Boleado."""
+"""Recria a planilha no modelo do PDF e acrescenta a 3ª–6ª compra."""
 
 from openpyxl import Workbook
-from openpyxl.styles import (
-    Alignment,
-    Border,
-    Font,
-    NamedStyle,
-    PatternFill,
-    Side,
-    numbers,
-)
-from openpyxl.chart import BarChart, PieChart, Reference
-from openpyxl.chart.label import DataLabelList
-from openpyxl.chart.series import DataPoint
-from openpyxl.drawing.fill import PatternFillProperties, ColorChoice
-from openpyxl.utils import get_column_letter
-from openpyxl.formatting.rule import FormulaRule
-from openpyxl.workbook.child import INVALID_TITLE_REGEX
 from openpyxl.chart.shapes import GraphicalProperties
-from openpyxl.drawing.line import LineProperties
-from openpyxl.chart.legend import Legend
-from copy import copy
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.page import PageMargins
 
-COMPRAS = [
-    {
-        "compra": 3,
-        "nome": "Terceira compra",
-        "itens": [
-            {
-                "produto": "Chocolate em pó",
-                "detalhe": "200 g",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pct",
-                "conteudo": "200 g",
-                "valor": 39.90,
-            },
-            {
-                "produto": "Margarina",
-                "detalhe": "250 g",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pote",
-                "conteudo": "250 g",
-                "valor": 6.98,
-            },
-        ],
-    },
-    {
-        "compra": 4,
-        "nome": "Quarta compra",
-        "itens": [
-            {
-                "produto": "Caixa para cento de doces",
-                "detalhe": "3 unidades",
-                "categoria": "Embalagem",
-                "qtd": 3,
-                "unidade": "un",
-                "conteudo": "3 un",
-                "valor": 10.47,
-            },
-            {
-                "produto": "Granulado",
-                "detalhe": "",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pct",
-                "conteudo": "—",
-                "valor": 19.99,
-            },
-            {
-                "produto": "Chocolate em pó 50%",
-                "detalhe": "",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pct",
-                "conteudo": "—",
-                "valor": 38.99,
-            },
-            {
-                "produto": "Leite condensado",
-                "detalhe": "6 unidades",
-                "categoria": "Ingrediente",
-                "qtd": 6,
-                "unidade": "lata",
-                "conteudo": "6 un",
-                "valor": 41.44,
-            },
-            {
-                "produto": "Creme de leite",
-                "detalhe": "8 unidades",
-                "categoria": "Ingrediente",
-                "qtd": 8,
-                "unidade": "cx",
-                "conteudo": "8 un",
-                "valor": 21.52,
-            },
-            {
-                "produto": "Forminha de brigadeiro",
-                "detalhe": "200 unidades",
-                "categoria": "Embalagem",
-                "qtd": 200,
-                "unidade": "un",
-                "conteudo": "200 un",
-                "valor": 6.00,
-            },
-        ],
-    },
-    {
-        "compra": 5,
-        "nome": "Quinta compra",
-        "itens": [
-            {
-                "produto": "Saco de confeitar",
-                "detalhe": "25 unidades",
-                "categoria": "Utensílio",
-                "qtd": 25,
-                "unidade": "un",
-                "conteudo": "25 un",
-                "valor": 13.99,
-            },
-            {
-                "produto": "Coco em flocos",
-                "detalhe": "500 g",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pct",
-                "conteudo": "500 g",
-                "valor": 25.99,
-            },
-            {
-                "produto": "Biscoito Oreo",
-                "detalhe": "270 g",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "pct",
-                "conteudo": "270 g",
-                "valor": 11.99,
-            },
-            {
-                "produto": "Pote redondo 150 ml",
-                "detalhe": "",
-                "categoria": "Embalagem",
-                "qtd": 1,
-                "unidade": "un",
-                "conteudo": "150 ml",
-                "valor": 11.59,
-            },
-            {
-                "produto": "Saco Kraft",
-                "detalhe": "20 unidades",
-                "categoria": "Embalagem",
-                "qtd": 20,
-                "unidade": "un",
-                "conteudo": "20 un",
-                "valor": 14.99,
-            },
-            {
-                "produto": "Carimbo de brigadeiros",
-                "detalhe": "",
-                "categoria": "Utensílio",
-                "qtd": 1,
-                "unidade": "un",
-                "conteudo": "1 un",
-                "valor": 15.99,
-            },
-            {
-                "produto": "Leite condensado",
-                "detalhe": "10 unidades",
-                "categoria": "Ingrediente",
-                "qtd": 10,
-                "unidade": "lata",
-                "conteudo": "10 un",
-                "valor": 69.90,
-            },
-            {
-                "produto": "Creme de leite",
-                "detalhe": "7 unidades",
-                "categoria": "Ingrediente",
-                "qtd": 7,
-                "unidade": "cx",
-                "conteudo": "7 un",
-                "valor": 18.83,
-            },
-            {
-                "produto": "Embalagem quadrada para brigadeiro",
-                "detalhe": "15 unidades",
-                "categoria": "Embalagem",
-                "qtd": 15,
-                "unidade": "un",
-                "conteudo": "15 un",
-                "valor": 18.00,
-            },
-        ],
-    },
-    {
-        "compra": 6,
-        "nome": "Sexta compra",
-        "itens": [
-            {
-                "produto": "Barra de chocolate",
-                "detalhe": "",
-                "categoria": "Ingrediente",
-                "qtd": 1,
-                "unidade": "un",
-                "conteudo": "—",
-                "valor": 30.00,
-            },
-        ],
-    },
+# Cores extraídas do PDF original
+VINHO = "6B214A"
+VINHO2 = "A13B69"
+AZUL = "4F81BD"
+AZUL2 = "B8CCE4"
+AZUL3 = "DCE6F1"
+CINZA1 = "2B2B2B"
+CINZA2 = "383838"
+ROSA = "F8E7EF"
+ROSA2 = "F3D4E0"
+BRANCO = "FFFFFF"
+PRETO = "000000"
+AMARELO = "FFFF99"
+CREME = "FFE299"
+CINZA_TXT = "888888"
+
+# (categoria, produto, preco, qtd, unidade, observacao, grupo)
+# grupo: 1 = compra inicial, 2 = segunda, 3–6 = novas
+ITENS = [
+    # —— compra inicial ——
+    ("Utilidades", "Papel-alumínio", 4.39, 1, "rolo", "", 1),
+    ("Utilidades", "Plástico filme", 5.59, 1, "rolo", "", 1),
+    ("Utilidades", "Papel-toalha", 4.39, 2, "rolos", "", 1),
+    ("Utilidades", "Saco de confeitar", 7.50, 5, "unidades", "", 1),
+    ("Utilidades", "Touca Descartável", 5.00, 5, "unidades", "", 1),
+    ("Utilidades", "Durex", 4.50, 1, "unidade", "", 1),
+    ("Utilidades", "Grampeador com grampos", 12.00, 1, "conjunto", "", 1),
+    ("Utilidades", "Peneira", 19.29, 1, "unidade", "", 1),
+    ("Ingredientes", "Chocolate em pó", 39.80, 200, "gramas", "", 1),
+    ("Ingredientes", "Margarina Qualy", 6.98, 250, "gramas", "", 1),
+    ("Ingredientes", "Paçoca", 23.90, 700, "gramas", "", 1),
+    ("Ingredientes", "Leite em pó", 8.99, 200, "gramas", "", 1),
+    ("Ingredientes", "Biscoito Oreo", 8.58, 180, "gramas", "", 1),
+    ("Ingredientes", "Leite condensado", 29.12, 1580, "gramas", "", 1),
+    ("Ingredientes", "Creme de leite", 14.96, 800, "gramas", "", 1),
+    ("Ingredientes", "Pacote de bala", 7.98, 500, "gramas", "", 1),
+    ("Ingredientes", "Granulado", 19.98, 400, "gramas", "", 1),
+    ("Ingredientes", "Pacotão de Bis", 12.98, 201.6, "gramas", "", 1),
+    ("Ingredientes", "Morango", 10.90, 220, "gramas", "", 1),
+    ("Ingredientes", "Barra de chocolate Fracionado", 29.90, 1000, "gramas", "", 1),
+    ("Embalagens", "Adesivos", 19.34, 70, "unidades", "", 1),
+    ("Embalagens", "Pote 250 ml", 15.00, 24, "unidades", "", 1),
+    ("Embalagens", "Pote 140 ml", 15.90, 25, "unidades", "", 1),
+    ("Embalagens", "Forminha de brigadeiro", 3.50, 100, "unidades", "", 1),
+    ("Embalagens", "Colherzinhas", 5.99, 50, "unidades", "", 1),
+    ("Embalagens", "Saco chup-chup", 2.99, 100, "unidades", "", 1),
+    ("Embalagens", "Embalagem quadrada de brigadeiro", 4.99, 10, "unidades", "", 1),
+    ("Embalagens", "Pote de brinde", 6.50, 10, "unidades", "", 1),
+    ("Embalagens", "Saco Kraft", 29.90, 50, "unidades", "", 1),
+    ("Embalagens", "Embalagem trufas", 30.00, 300, "unidades", "", 1),
+    # —— segunda compra (já estava no PDF) ——
+    ("Embalagens", "Saco de confeitar GRANDE", 20.00, 10, "unidades", "Segunda compra", 2),
+    ("Utilidades", "Forma pra fazer as trufas (não descartável)", 35.98, 2, "formas",
+     "Segunda compra - INVESTIMENTO, não descartável", 2),
+    # —— terceira compra ——
+    ("Ingredientes", "Chocolate em pó", 39.90, 200, "gramas", "Terceira compra", 3),
+    ("Ingredientes", "Margarina Qualy", 6.98, 250, "gramas", "Terceira compra", 3),
+    # —— quarta compra ——
+    ("Embalagens", "Caixa para cento de doces", 10.47, 3, "unidades", "Quarta compra", 4),
+    ("Ingredientes", "Granulado", 19.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4),
+    ("Ingredientes", "Chocolate em pó 50%", 38.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4),
+    ("Ingredientes", "Leite condensado", 41.44, 2370, "gramas", "Quarta compra (6 latas de 395 g)", 4),
+    ("Ingredientes", "Creme de leite", 21.52, 1600, "gramas", "Quarta compra (8 caixas de 200 g)", 4),
+    ("Embalagens", "Forminha de brigadeiro", 6.00, 200, "unidades", "Quarta compra", 4),
+    # —— quinta compra ——
+    ("Utilidades", "Saco de confeitar", 13.99, 25, "unidades", "Quinta compra", 5),
+    ("Ingredientes", "Coco em flocos", 25.99, 500, "gramas", "Quinta compra", 5),
+    ("Ingredientes", "Biscoito Oreo", 11.99, 270, "gramas", "Quinta compra", 5),
+    ("Embalagens", "Pote redondo 150 ml", 11.59, 1, "pacote", "Quinta compra (qtd. do pacote não informada)", 5),
+    ("Embalagens", "Saco Kraft", 14.99, 20, "unidades", "Quinta compra", 5),
+    ("Utilidades", "Carimbo de brigadeiros", 15.99, 1, "unidade", "Quinta compra", 5),
+    ("Ingredientes", "Leite condensado", 69.90, 3950, "gramas", "Quinta compra (10 latas de 395 g)", 5),
+    ("Ingredientes", "Creme de leite", 18.83, 1400, "gramas", "Quinta compra (7 caixas de 200 g)", 5),
+    ("Embalagens", "Embalagem quadrada de brigadeiro", 18.00, 15, "unidades", "Quinta compra", 5),
+    # —— sexta compra ——
+    ("Ingredientes", "Barra de chocolate", 30.00, 1, "unidade", "Sexta compra (peso não informado)", 6),
 ]
 
-
-CHOCOLATE = "3B2414"
-CACAU = "5C3317"
-CARAMELO = "C4A35A"
-CREME = "F7F0E4"
-CREME2 = "EFE4D0"
-OFFWHITE = "FFFBF4"
-VINHO = "7A2E1F"
-VERDE = "2F5D3A"
-TEXTO = "2A2118"
-MUTED = "7A6A58"
-LINHA = "D9CBB4"
-BRANCO = "FFFFFF"
-
-
-def money(cell):
-    cell.number_format = '"R$" #,##0.00'
-    cell.alignment = Alignment(horizontal="right", vertical="center")
-
-
-def qty(cell):
-    cell.number_format = "#,##0"
-    cell.alignment = Alignment(horizontal="center", vertical="center")
-
-
-def thin_border():
-    s = Side(style="thin", color=LINHA)
-    return Border(left=s, right=s, top=s, bottom=s)
-
-
-def thick_bottom():
-    s = Side(style="thin", color=LINHA)
-    b = Side(style="medium", color=CHOCOLATE)
-    return Border(left=s, right=s, top=s, bottom=b)
+ADICIONAIS = [
+    ("Granulado", 5),
+    ("Morango", 16),
+    ("Biscoito Oreo", 9),
+    ("Pacotão de Bis", 6),
+    ("Paçoca", 5),
+    ("Leite em pó", 9),
+]
 
 
 def fill(hex_color):
     return PatternFill("solid", fgColor=hex_color)
 
 
-def apply_header(ws, row, cols, bg=CHOCOLATE, fg=CREME):
-    for col in range(1, cols + 1):
-        cell = ws.cell(row, col)
-        cell.fill = fill(bg)
-        cell.font = Font(name="Calibri", bold=True, color=fg, size=11)
-        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
-        cell.border = thin_border()
+def thin(color="B5B5B5"):
+    s = Side(style="thin", color=color)
+    return Border(left=s, right=s, top=s, bottom=s)
+
+
+def money2(cell):
+    cell.number_format = '"R$" #,##0.00'
+    cell.alignment = Alignment(horizontal="right", vertical="center")
+
+
+def money4(cell):
+    cell.number_format = '"R$" #,##0.0000'
+    cell.alignment = Alignment(horizontal="right", vertical="center")
 
 
 def build():
     wb = Workbook()
-
-    # ---------- Compras e Custos ----------
     ws = wb.active
     ws.title = "Compras e Custos"
-    ws.sheet_properties.tabColor = CHOCOLATE
+    ws.sheet_view.showGridLines = False
     ws.page_setup.orientation = "landscape"
+    ws.page_setup.paperSize = ws.PAPERSIZE_A4
     ws.page_setup.fitToPage = True
     ws.page_setup.fitToWidth = 1
     ws.page_setup.fitToHeight = 1
-    ws.page_setup.paperSize = ws.PAPERSIZE_A4
-    ws.print_title_rows = "1:5"
     ws.page_setup.horizontalCentered = True
-    ws.oddHeader.left.text = "Calculadora Boleado"
-    ws.oddFooter.center.text = "Página &P de &N"
+    ws.page_margins = PageMargins(left=0.4, right=0.4, top=0.4, bottom=0.4)
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
+    ws.sheet_properties.tabColor = VINHO
+    ws.print_title_rows = "1:4"
 
-    ws.merge_cells("A1:J1")
-    ws["A1"] = "CALCULADORA BOLEADO  ·  COMPRAS E CUSTOS"
-    ws["A1"].font = Font(name="Calibri", bold=True, size=20, color=CHOCOLATE)
-    ws["A1"].alignment = Alignment(horizontal="left", vertical="center")
-    ws["A1"].fill = fill(CREME)
+    # —— título ——
+    ws.merge_cells("A1:G1")
+    ws["A1"] = "CONTROLE DE COMPRAS — CONFEITARIA"
+    ws["A1"].font = Font(name="Calibri", bold=True, size=16, color=BRANCO)
+    ws["A1"].fill = fill(VINHO)
+    ws["A1"].alignment = Alignment(horizontal="center", vertical="center")
+    ws.row_dimensions[1].height = 24
+    for col in range(1, 8):
+        ws.cell(1, col).fill = fill(VINHO)
 
-    ws.merge_cells("A2:J2")
-    ws["A2"] = "Terceira à sexta compra  ·  Ingredientes, embalagens e utensílios"
-    ws["A2"].font = Font(name="Calibri", italic=True, size=11, color=MUTED)
-    ws["A2"].fill = fill(CREME)
-    ws["A2"].alignment = Alignment(horizontal="left", vertical="center")
+    ws.merge_cells("A2:G2")
+    ws["A2"] = "Base de custos inicial • atualize os valores sempre que fizer novas compras"
+    ws["A2"].font = Font(name="Calibri", italic=True, size=10, color=VINHO)
+    ws["A2"].alignment = Alignment(horizontal="center", vertical="center")
+    ws.row_dimensions[2].height = 16
+
+    ws.row_dimensions[3].height = 8
 
     headers = [
-        "Nº",
-        "Compra",
-        "Produto",
-        "Detalhe / conteúdo",
         "Categoria",
-        "Qtd",
-        "Unidade",
-        "Valor total (R$)",
+        "Produto",
+        "Preço pago (R$)",
+        "Quantidade comprada",
+        "Unidade / conteúdo",
         "Custo unitário (R$)",
-        "% do total",
+        "Observações",
     ]
     for i, h in enumerate(headers, 1):
-        ws.cell(4, i, h)
-    apply_header(ws, 4, 10)
-    ws.row_dimensions[1].height = 28
-    ws.row_dimensions[2].height = 18
-    ws.row_dimensions[3].height = 8
+        cell = ws.cell(4, i, h)
+        cell.font = Font(name="Calibri", bold=True, size=10, color=BRANCO)
+        cell.fill = fill(VINHO2)
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        cell.border = thin("8A2E5A")
     ws.row_dimensions[4].height = 22
 
-    row = 5
-    first_data = 5
-    zebra = [OFFWHITE, CREME]
-    for compra in COMPRAS:
-        for item in compra["itens"]:
-            bg = zebra[(row - first_data) % 2]
-            values = [
-                compra["compra"],
-                compra["nome"],
-                item["produto"],
-                item["detalhe"] or item["conteudo"],
-                item["categoria"],
-                item["qtd"],
-                item["unidade"],
-                item["valor"],
-                item["valor"] / item["qtd"] if item["qtd"] else item["valor"],
-            ]
-            for col, val in enumerate(values, 1):
-                cell = ws.cell(row, col, val)
-                cell.fill = fill(bg)
-                cell.font = Font(name="Calibri", size=11, color=TEXTO)
-                cell.alignment = Alignment(vertical="center")
-                cell.border = thin_border()
-            ws.cell(row, 1).alignment = Alignment(horizontal="center", vertical="center")
-            ws.cell(row, 5).alignment = Alignment(horizontal="center", vertical="center")
-            ws.cell(row, 6).alignment = Alignment(horizontal="center", vertical="center")
-            ws.cell(row, 7).alignment = Alignment(horizontal="center", vertical="center")
-            money(ws.cell(row, 8))
-            money(ws.cell(row, 9))
-            # % do total — fórmula para o Excel recalcular se editar
-            pct = ws.cell(row, 10)
-            pct.value = f"=IF($H$24=0,0,H{row}/$H$24)"
-            pct.number_format = "0.0%"
-            pct.alignment = Alignment(horizontal="center", vertical="center")
-            pct.fill = fill(bg)
-            pct.font = Font(name="Calibri", size=11, color=TEXTO)
-            pct.border = thin_border()
-            row += 1
+    first = 5
+    for idx, (cat, prod, preco, qtd, unid, obs, grupo) in enumerate(ITENS):
+        r = first + idx
+        ws.cell(r, 1, cat)
+        ws.cell(r, 2, prod)
+        ws.cell(r, 3, preco)
+        ws.cell(r, 4, qtd)
+        ws.cell(r, 5, unid)
+        ws.cell(r, 6, f"=IF(D{r}=0,0,C{r}/D{r})")
+        ws.cell(r, 7, obs)
 
-    last_data = row - 1  # 22
+        if grupo == 2:
+            bg, fg, money_fg = (CINZA1, BRANCO, AMARELO) if idx % 2 == 0 else (CINZA2, BRANCO, AMARELO)
+        elif grupo == 3:
+            bg, fg, money_fg = ROSA, PRETO, PRETO
+        elif grupo == 4:
+            bg, fg, money_fg = ROSA2, PRETO, PRETO
+        elif grupo == 5:
+            bg, fg, money_fg = ROSA, PRETO, PRETO
+        elif grupo == 6:
+            bg, fg, money_fg = ROSA2, PRETO, PRETO
+        else:
+            bg, fg, money_fg = BRANCO, PRETO, PRETO
 
-    # Totals row
-    ws.merge_cells(f"A{row}:G{row}")
-    total_label = ws.cell(row, 1, "TOTAL GERAL GASTO")
-    total_label.font = Font(name="Calibri", bold=True, size=12, color=CREME)
-    total_label.fill = fill(CHOCOLATE)
-    total_label.alignment = Alignment(horizontal="right", vertical="center")
-    for c in range(1, 11):
-        ws.cell(row, c).fill = fill(CHOCOLATE)
-        ws.cell(row, c).border = thin_border()
-        ws.cell(row, c).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-    ws.cell(row, 8, f"=SUM(H{first_data}:H{last_data})")
-    money(ws.cell(row, 8))
-    ws.cell(row, 8).font = Font(name="Calibri", bold=True, size=13, color=CARAMELO)
-    ws.cell(row, 8).fill = fill(CHOCOLATE)
-    ws.cell(row, 10, f"=SUM(J{first_data}:J{last_data})")
-    ws.cell(row, 10).number_format = "0%"
-    ws.cell(row, 10).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-    ws.cell(row, 10).fill = fill(CHOCOLATE)
-    ws.cell(row, 10).alignment = Alignment(horizontal="center", vertical="center")
-    ws.row_dimensions[row].height = 24
-    total_row = row  # 23 — wait I said H24 in formulas
+        for c in range(1, 8):
+            cell = ws.cell(r, c)
+            cell.fill = fill(bg)
+            cell.font = Font(name="Calibri", size=10, color=fg)
+            cell.border = thin("D0D0D0")
+            cell.alignment = Alignment(vertical="center")
+        ws.cell(r, 1).alignment = Alignment(horizontal="left", vertical="center")
+        ws.cell(r, 3).font = Font(name="Calibri", size=10, color=money_fg)
+        ws.cell(r, 6).font = Font(name="Calibri", size=10, color=money_fg)
+        money2(ws.cell(r, 3))
+        ws.cell(r, 4).alignment = Alignment(horizontal="right", vertical="center")
+        if isinstance(qtd, float) and not qtd.is_integer():
+            ws.cell(r, 4).number_format = "0.0"
+        else:
+            ws.cell(r, 4).number_format = "0"
+        money4(ws.cell(r, 6))
+        ws.row_dimensions[r].height = 16
 
-    # I used $H$24 in percent formulas. Let me recalculate:
-    # headers at 4, data starts 5
-    # items: 2 + 6 + 9 + 1 = 18 items
-    # last_data = 5+18-1 = 22
-    # total_row = 23
-    # So formula should be $H$23 not $H$24!
+    last = first + len(ITENS) - 1
 
-    for r in range(first_data, last_data + 1):
-        ws.cell(r, 10).value = f"=IF($H${total_row}=0,0,H{r}/$H${total_row})"
-
-    # freeze
+    ws.auto_filter.ref = f"A4:G{last}"
     ws.freeze_panes = "A5"
-    ws.auto_filter.ref = f"A4:J{last_data}"
 
-    widths = {
-        "A": 6,
-        "B": 18,
-        "C": 38,
-        "D": 20,
-        "E": 14,
-        "F": 8,
-        "G": 10,
-        "H": 18,
-        "I": 20,
-        "J": 12,
-    }
+    widths = {"A": 16, "B": 44, "C": 16, "D": 20, "E": 20, "F": 18, "G": 48, "H": 3, "I": 28, "J": 14}
     for col, w in widths.items():
         ws.column_dimensions[col].width = w
 
-    ws.auto_filter.ref = f"A4:J{last_data}"
+    # —— PARÂMETROS ——
+    ws.merge_cells("I1:J1")
+    ws["I1"] = "PARÂMETROS"
+    ws["I1"].font = Font(name="Calibri", bold=True, size=11, color=BRANCO)
+    ws["I1"].fill = fill(VINHO)
+    ws["I1"].alignment = Alignment(horizontal="left", vertical="center")
+    ws["J1"].fill = fill(VINHO)
+    ws["I2"] = "Acréscimo luz e gás"
+    ws["I2"].font = Font(name="Calibri", size=10)
+    ws["J2"] = 0.20
+    ws["J2"].number_format = "0%"
+    ws["J2"].font = Font(name="Calibri", size=10)
+    ws["J2"].alignment = Alignment(horizontal="right")
 
-    # Note
-    note_row = total_row + 2
-    ws.merge_cells(f"A{note_row}:J{note_row}")
-    ws[f"A{note_row}"] = (
-        "Observação: 1ª e 2ª compras ainda não foram lançadas. "
-        "Edite os valores na coluna H — o total e os percentuais atualizam sozinhos. "
-        "Use o filtro da linha 4 para ver só uma compra ou categoria."
-    )
-    ws[f"A{note_row}"].font = Font(name="Calibri", italic=True, size=9, color=MUTED)
+    # —— RESUMO ——
+    ws.merge_cells("I4:J4")
+    ws["I4"] = "RESUMO"
+    ws["I4"].font = Font(name="Calibri", bold=True, size=11, color=BRANCO)
+    ws["I4"].fill = fill(VINHO)
+    ws["J4"].fill = fill(VINHO)
 
-    # Print area
-    ws.print_area = f"A1:J{note_row}"
+    ws["I5"] = "Subtotal das compras"
+    ws["J5"] = f"=SUM(C{first}:C{last})"
+    money2(ws["J5"])
+    ws["J5"].font = Font(name="Calibri", size=10)
 
-    # ---------- Resumo por compra ----------
-    rs = wb.create_sheet("Resumo por compra")
-    rs.sheet_properties.tabColor = CARAMELO
-    rs.merge_cells("A1:D1")
-    rs["A1"] = "GASTO POR COMPRA"
-    rs["A1"].font = Font(name="Calibri", bold=True, size=18, color=CHOCOLATE)
-    rs["A1"].fill = fill(CREME)
-    rs.row_dimensions[1].height = 26
-    rs["A2"] = "Consolidado da terceira à sexta compra"
-    rs["A2"].font = Font(name="Calibri", italic=True, size=11, color=MUTED)
-    rs.merge_cells("A2:D2")
-    rs["A2"].fill = fill(CREME)
+    ws["I6"] = "Luz e gás (20%)"
+    ws["J6"] = "=J5*J2"
+    money2(ws["J6"])
+    ws["J6"].font = Font(name="Calibri", size=10)
 
-    for i, h in enumerate(["Nº", "Compra", "Itens", "Total (R$)"], 1):
-        rs.cell(4, i, h)
-    apply_header(rs, 4, 4)
+    ws["I7"] = "Custo total c/ luz e gás"
+    ws["J7"] = "=J5+J6"
+    money2(ws["J7"])
+    ws["I7"].font = Font(name="Calibri", bold=True, size=10)
+    ws["J7"].font = Font(name="Calibri", bold=True, size=11)
 
-    # Use SUMIF against the detail sheet so Excel stays live
-    resumo_start = 5
-    for idx, compra in enumerate(COMPRAS):
-        r = resumo_start + idx
-        rs.cell(r, 1, compra["compra"]).alignment = Alignment(horizontal="center", vertical="center")
-        rs.cell(r, 2, compra["nome"])
-        rs.cell(r, 3, f"=COUNTIF('Compras e Custos'!A:A,A{r})")
-        rs.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
-        rs.cell(r, 4, f"=SUMIF('Compras e Custos'!A:A,A{r},'Compras e Custos'!H:H)")
-        money(rs.cell(r, 4))
-        bg = OFFWHITE if idx % 2 == 0 else CREME
-        for c in range(1, 5):
-            rs.cell(r, c).fill = fill(bg)
-            rs.cell(r, c).font = Font(name="Calibri", size=12, color=TEXTO)
-            rs.cell(r, c).border = thin_border()
-            rs.cell(r, c).alignment = Alignment(vertical="center")
-        rs.cell(r, 1).alignment = Alignment(horizontal="center", vertical="center")
-        rs.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
-        rs.row_dimensions[r].height = 20
-
-    resumo_end = resumo_start + len(COMPRAS) - 1
-    tot = resumo_end + 1
-    rs.merge_cells(f"A{tot}:C{tot}")
-    rs.cell(tot, 1, "TOTAL GERAL")
-    rs.cell(tot, 1).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-    rs.cell(tot, 1).fill = fill(CHOCOLATE)
-    rs.cell(tot, 1).alignment = Alignment(horizontal="right", vertical="center")
-    for c in range(1, 5):
-        rs.cell(tot, c).fill = fill(CHOCOLATE)
-        rs.cell(tot, c).border = thin_border()
-        rs.cell(tot, c).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-    rs.cell(tot, 4, f"=SUM(D{resumo_start}:D{resumo_end})")
-    money(rs.cell(tot, 4))
-    rs.cell(tot, 4).font = Font(name="Calibri", bold=True, size=13, color=CARAMELO)
-    rs.cell(tot, 4).fill = fill(CHOCOLATE)
-
-    rs.column_dimensions["A"].width = 8
-    rs.column_dimensions["B"].width = 22
-    rs.column_dimensions["C"].width = 12
-    rs.column_dimensions["D"].width = 16
-
-    chart = BarChart()
-    chart.type = "col"
-    chart.title = "Gasto por compra (R$)"
-    chart.y_axis.title = "Reais"
-    chart.style = 10
-    data = Reference(rs, min_col=4, min_row=4, max_row=resumo_end)
-    cats = Reference(rs, min_col=2, min_row=resumo_start, max_row=resumo_end)
-    chart.add_data(data, titles_from_data=True)
-    chart.set_categories(cats)
-    chart.shape = 4
-    chart.legend = None
-    chart.y_axis.numFmt = '"R$" #,##0'
-    chart.width = 15
-    chart.height = 8
-    rs.add_chart(chart, "F3")
-
-    # ---------- Resumo por categoria ----------
-    cs = wb.create_sheet("Resumo por categoria")
-    cs.sheet_properties.tabColor = VINHO
-    cs.merge_cells("A1:C1")
-    cs["A1"] = "GASTO POR CATEGORIA"
-    cs["A1"].font = Font(name="Calibri", bold=True, size=18, color=CHOCOLATE)
-    cs["A1"].fill = fill(CREME)
-    cs.row_dimensions[1].height = 26
-    cs.merge_cells("A2:C2")
-    cs["A2"] = "Como o dinheiro se divide entre ingredientes, embalagens e utensílios"
-    cs["A2"].font = Font(name="Calibri", italic=True, size=11, color=MUTED)
-    cs["A2"].fill = fill(CREME)
-
-    for i, h in enumerate(["Categoria", "Total (R$)", "% do gasto"], 1):
-        cs.cell(4, i, h)
-    apply_header(cs, 4, 3)
-
-    categorias = ["Ingrediente", "Embalagem", "Utensílio"]
-    for idx, cat in enumerate(categorias):
-        r = 5 + idx
-        cs.cell(r, 1, cat)
-        cs.cell(r, 2, f"=SUMIF('Compras e Custos'!E:E,A{r},'Compras e Custos'!H:H)")
-        money(cs.cell(r, 2))
-        cs.cell(r, 3, f"=IF($B$8=0,0,B{r}/$B$8)")
-        cs.cell(r, 3).number_format = "0.0%"
-        cs.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
-        bg = OFFWHITE if idx % 2 == 0 else CREME
-        for c in range(1, 4):
-            cs.cell(r, c).fill = fill(bg)
-            cs.cell(r, c).font = Font(name="Calibri", size=12, color=TEXTO)
-            cs.cell(r, c).border = thin_border()
-            cs.cell(r, c).alignment = Alignment(vertical="center")
-        cs.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
-
-    cs.merge_cells("A8:A8")
-    cs.cell(8, 1, "TOTAL")
-    cs.cell(8, 2, "=SUM(B5:B7)")
-    money(cs.cell(8, 2))
-    cs.cell(8, 3, "=SUM(C5:C7)")
-    cs.cell(8, 3).number_format = "0%"
-    for c in range(1, 4):
-        cs.cell(8, c).fill = fill(CHOCOLATE)
-        cs.cell(8, c).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-        cs.cell(8, c).border = thin_border()
-        cs.cell(8, c).alignment = Alignment(vertical="center")
-    cs.cell(8, 2).font = Font(name="Calibri", bold=True, size=13, color=CARAMELO)
-    cs.cell(8, 2).fill = fill(CHOCOLATE)
-    cs.cell(8, 3).alignment = Alignment(horizontal="center", vertical="center")
-
-    cs.column_dimensions["A"].width = 18
-    cs.column_dimensions["B"].width = 16
-    cs.column_dimensions["C"].width = 14
-
-    pie = PieChart()
-    pie.title = "Participação no gasto"
-    labels = Reference(cs, min_col=1, min_row=5, max_row=7)
-    pdata = Reference(cs, min_col=2, min_row=4, max_row=7)
-    pie.add_data(pdata, titles_from_data=True)
-    pie.set_categories(labels)
-    pie.dataLabels = DataLabelList()
-    pie.dataLabels.showPercent = True
-    pie.dataLabels.showVal = False
-    pie.dataLabels.showCatName = True
-    pie.width = 14
-    pie.height = 9
-    cs.add_chart(pie, "E3")
-
-    # ---------- Estoque consolidado ----------
-    es = wb.create_sheet("Estoque consolidado")
-    es.sheet_properties.tabColor = VERDE
-    es.merge_cells("A1:E1")
-    es["A1"] = "MESMOS PRODUTOS SOMADOS ENTRE COMPRAS"
-    es["A1"].font = Font(name="Calibri", bold=True, size=18, color=CHOCOLATE)
-    es["A1"].fill = fill(CREME)
-    es.row_dimensions[1].height = 26
-    es.merge_cells("A2:E2")
-    es["A2"] = "Útil para ver quanto já entrou de leite condensado, creme de leite etc."
-    es["A2"].font = Font(name="Calibri", italic=True, size=11, color=MUTED)
-    es["A2"].fill = fill(CREME)
-
-    for i, h in enumerate(
-        ["Produto", "Categoria", "Qtd total", "Gasto total (R$)", "Custo médio unit. (R$)"], 1
-    ):
-        es.cell(4, i, h)
-    apply_header(es, 4, 5)
-
-    # Unique products in order of first appearance
-    seen = []
-    for compra in COMPRAS:
-        for item in compra["itens"]:
-            if item["produto"] not in seen:
-                seen.append(item["produto"])
-
-    for idx, nome in enumerate(seen):
-        r = 5 + idx
-        # category from first occurrence
-        cat = next(
-            item["categoria"]
-            for compra in COMPRAS
-            for item in compra["itens"]
-            if item["produto"] == nome
+    for r in range(5, 8):
+        ws.cell(r, 9).font = Font(
+            name="Calibri",
+            size=10,
+            bold=(r == 7),
         )
-        es.cell(r, 1, nome)
-        es.cell(r, 2, cat)
-        es.cell(r, 3, f"=SUMIF('Compras e Custos'!C:C,A{r},'Compras e Custos'!F:F)")
-        es.cell(r, 4, f"=SUMIF('Compras e Custos'!C:C,A{r},'Compras e Custos'!H:H)")
-        es.cell(r, 5, f"=IF(C{r}=0,0,D{r}/C{r})")
-        money(es.cell(r, 4))
-        money(es.cell(r, 5))
-        es.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
-        es.cell(r, 2).alignment = Alignment(horizontal="center", vertical="center")
-        bg = OFFWHITE if idx % 2 == 0 else CREME
-        for c in range(1, 6):
-            es.cell(r, c).fill = fill(bg)
-            es.cell(r, c).font = Font(name="Calibri", size=11, color=TEXTO)
-            es.cell(r, c).border = thin_border()
-            es.cell(r, c).alignment = Alignment(vertical="center")
-        es.cell(r, 2).alignment = Alignment(horizontal="center", vertical="center")
-        es.cell(r, 3).alignment = Alignment(horizontal="center", vertical="center")
+        ws.cell(r, 9).alignment = Alignment(vertical="center")
 
-    last_est = 4 + len(seen)
-    tot_e = last_est + 1
-    es.merge_cells(f"A{tot_e}:C{tot_e}")
-    es.cell(tot_e, 1, "TOTAL GERAL")
-    es.cell(tot_e, 4, f"=SUM(D5:D{last_est})")
-    money(es.cell(tot_e, 4))
-    for c in range(1, 6):
-        es.cell(tot_e, c).fill = fill(CHOCOLATE)
-        es.cell(tot_e, c).font = Font(name="Calibri", bold=True, size=12, color=CREME)
-        es.cell(tot_e, c).border = thin_border()
-    es.cell(tot_e, 1).alignment = Alignment(horizontal="right", vertical="center")
-    es.cell(tot_e, 4).font = Font(name="Calibri", bold=True, size=13, color=CARAMELO)
-    es.cell(tot_e, 4).fill = fill(CHOCOLATE)
+    # gasto só das compras novas (3ª–6ª), para conferência
+    ws["I8"] = "Só 3ª a 6ª compra"
+    ws["J8"] = f'=SUMIF(G{first}:G{last},"*Terceira*",C{first}:C{last})+SUMIF(G{first}:G{last},"*Quarta*",C{first}:C{last})+SUMIF(G{first}:G{last},"*Quinta*",C{first}:C{last})+SUMIF(G{first}:G{last},"*Sexta*",C{first}:C{last})'
+    money2(ws["J8"])
+    ws["I8"].font = Font(name="Calibri", italic=True, size=9, color=CINZA_TXT)
+    ws["J8"].font = Font(name="Calibri", italic=True, size=9, color=CINZA_TXT)
 
-    es.column_dimensions["A"].width = 40
-    es.column_dimensions["B"].width = 14
-    es.column_dimensions["C"].width = 12
-    es.column_dimensions["D"].width = 20
-    es.column_dimensions["E"].width = 24
+    # —— Adicionais ——
+    ws["I10"] = "Adicionais"
+    ws["J10"] = "Peso (g)"
+    for c in (9, 10):
+        ws.cell(10, c).font = Font(name="Calibri", bold=True, size=10, color=BRANCO)
+        ws.cell(10, c).fill = fill(AZUL)
+        ws.cell(10, c).alignment = Alignment(horizontal="center", vertical="center")
+    for i, (nome, peso) in enumerate(ADICIONAIS):
+        r = 11 + i
+        bg = AZUL3 if i % 2 == 0 else AZUL2
+        ws.cell(r, 9, nome)
+        ws.cell(r, 10, peso)
+        for c in (9, 10):
+            ws.cell(r, c).fill = fill(bg)
+            ws.cell(r, c).font = Font(name="Calibri", size=10)
+            ws.cell(r, c).border = thin("B8CCE4")
+        ws.cell(r, 10).alignment = Alignment(horizontal="center", vertical="center")
 
-    # ---------- Instruções ----------
-    ins = wb.create_sheet("Como usar")
-    ins.sheet_properties.tabColor = MUTED
-    ins.merge_cells("A1:B1")
-    ins["A1"] = "COMO USAR ESTA PLANILHA"
-    ins["A1"].font = Font(name="Calibri", bold=True, size=18, color=CHOCOLATE)
-    ins["A1"].fill = fill(CREME)
-    ins.row_dimensions[1].height = 26
-    instrucoes = [
-        ("Abrir no Excel", "Arquivo → Abrir, ou dê dois cliques neste .xlsx. No celular, use Excel ou Google Planilhas."),
-        ("Abrir no Google Planilhas", "Drive → Novo → Upload → este arquivo. Ou Planilhas → Arquivo → Importar."),
-        ("Lançar 1ª e 2ª compras", "Na aba Compras e Custos, insira linhas acima do TOTAL (antes da linha 23). Copie uma linha existente para manter fórmulas de %."),
-        ("Corrigir um preço", "Altere só a coluna H (Valor total). Custo unitário e % recalculam sozinhos."),
-        ("Filtrar", "Use as setinhas da linha 4 para ver só uma compra, só ingredientes, etc."),
-        ("Resumos", "As abas Resumo por compra, Resumo por categoria e Estoque consolidado leem a aba principal com fórmulas — não edite os totais à mão."),
-        ("Total atual", "Terceira + quarta + quinta + sexta compra = R$ 416,56."),
+    # nota
+    nota_row = last + 2
+    ws.merge_cells(f"A{nota_row}:G{nota_row}")
+    ws[f"A{nota_row}"] = (
+        "PRÓXIMO PASSO: envie as receitas para calcular o custo de cada doce e sugerir preço de venda."
+    )
+    ws[f"A{nota_row}"].font = Font(name="Calibri", italic=True, size=10, color=VINHO)
+    ws[f"A{nota_row}"].fill = fill(ROSA)
+    ws[f"A{nota_row}"].alignment = Alignment(horizontal="left", vertical="center")
+    for c in range(1, 8):
+        ws.cell(nota_row, c).fill = fill(ROSA)
+    ws.row_dimensions[nota_row].height = 18
+
+    # aba resumo por compra (extra, não muda o modelo principal)
+    rs = wb.create_sheet("Por compra")
+    rs.sheet_properties.tabColor = VINHO2
+    rs["A1"] = "GASTO POR COMPRA"
+    rs["A1"].font = Font(name="Calibri", bold=True, size=14, color=BRANCO)
+    rs.merge_cells("A1:C1")
+    rs["A1"].fill = fill(VINHO)
+    rs["B1"].fill = fill(VINHO)
+    rs["C1"].fill = fill(VINHO)
+    for i, h in enumerate(["Compra", "Itens", "Total (R$)"], 1):
+        cell = rs.cell(3, i, h)
+        cell.font = Font(name="Calibri", bold=True, size=10, color=BRANCO)
+        cell.fill = fill(VINHO2)
+        cell.alignment = Alignment(horizontal="center")
+    compras = [
+        (1, "1ª — compra inicial", ""),
+        (2, "2ª — segunda compra", "Segunda"),
+        (3, "3ª — terceira compra", "Terceira"),
+        (4, "4ª — quarta compra", "Quarta"),
+        (5, "5ª — quinta compra", "Quinta"),
+        (6, "6ª — sexta compra", "Sexta"),
     ]
-    ins["A3"] = "Tópico"
-    ins["B3"] = "O que fazer"
-    apply_header(ins, 3, 2)
-    for i, (t, d) in enumerate(instrucoes):
-        r = 4 + i
-        ins.cell(r, 1, t).font = Font(name="Calibri", bold=True, size=11, color=CHOCOLATE)
-        ins.cell(r, 2, d).font = Font(name="Calibri", size=11, color=TEXTO)
-        ins.cell(r, 2).alignment = Alignment(wrap_text=True, vertical="center")
-        bg = OFFWHITE if i % 2 == 0 else CREME
-        for c in range(1, 3):
-            ins.cell(r, c).fill = fill(bg)
-            ins.cell(r, c).border = thin_border()
-            ins.cell(r, c).alignment = Alignment(vertical="center", wrap_text=True)
-        ins.row_dimensions[r].height = 36
-    ins.column_dimensions["A"].width = 28
-    ins.column_dimensions["B"].width = 110
+    # inicial = linhas sem observação de compra nomeada e não segunda
+    rs["A4"] = "1ª — compra inicial"
+    rs["B4"] = f"=COUNTIFS('Compras e Custos'!G{first}:G{last},\"\")"
+    rs["C4"] = f"=SUMIFS('Compras e Custos'!C{first}:C{last},'Compras e Custos'!G{first}:G{last},\"\")"
+    money2(rs["C4"])
+    for i, (n, nome, key) in enumerate(compras[1:], start=5):
+        rs.cell(i, 1, nome)
+        rs.cell(i, 2, f"=COUNTIF('Compras e Custos'!G{first}:G{last},\"*{key}*\")")
+        rs.cell(i, 3, f"=SUMIF('Compras e Custos'!G{first}:G{last},\"*{key}*\",'Compras e Custos'!C{first}:C{last})")
+        money2(rs.cell(i, 3))
+    rs["A10"] = "TOTAL GERAL"
+    rs["B10"] = "=SUM(B4:B9)"
+    rs["C10"] = "=SUM(C4:C9)"
+    money2(rs["C10"])
+    for c in range(1, 4):
+        rs.cell(10, c).fill = fill(VINHO)
+        rs.cell(10, c).font = Font(name="Calibri", bold=True, size=11, color=BRANCO)
+    for r in range(4, 10):
+        for c in range(1, 4):
+            rs.cell(r, c).font = Font(name="Calibri", size=11)
+            rs.cell(r, c).border = thin()
+            rs.cell(r, c).alignment = Alignment(vertical="center")
+        rs.cell(r, 2).alignment = Alignment(horizontal="center")
+    rs.column_dimensions["A"].width = 28
+    rs.column_dimensions["B"].width = 10
+    rs.column_dimensions["C"].width = 14
 
-    # freeze panes already set
-    # Named range for total
-    from openpyxl.workbook.defined_name import DefinedName
-
-    wb.defined_names.add(DefinedName(name="TotalGeral", attr_text=f"'Compras e Custos'!$H${total_row}"))
-
-    out = "/home/user/calculadora-boleado/Compras_e_Custos_Boleado.xlsx"
+    out = "/home/user/calculadora-boleado/planilha_custos_confeitaria_atualizada.xlsx"
     wb.save(out)
-    print(f"saved {out} total_row={total_row} last_data={last_data}")
+    print("saved", out, "rows", first, last, "itens", len(ITENS))
+    print("subtotal", round(sum(i[2] for i in ITENS), 2))
+    print("novas", round(sum(i[2] for i in ITENS if i[6] >= 3), 2))
     return out
 
 

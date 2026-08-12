@@ -1,143 +1,99 @@
-const COMPRAS = [
-  {
-    n: 3,
-    nome: "Terceira compra",
-    itens: [
-      { produto: "Chocolate em pó", detalhe: "200 g", categoria: "Ingrediente", qtd: 1, unidade: "pct", valor: 39.9 },
-      { produto: "Margarina", detalhe: "250 g", categoria: "Ingrediente", qtd: 1, unidade: "pote", valor: 6.98 },
-    ],
-  },
-  {
-    n: 4,
-    nome: "Quarta compra",
-    itens: [
-      { produto: "Caixa para cento de doces", detalhe: "3 unidades", categoria: "Embalagem", qtd: 3, unidade: "un", valor: 10.47 },
-      { produto: "Granulado", detalhe: "—", categoria: "Ingrediente", qtd: 1, unidade: "pct", valor: 19.99 },
-      { produto: "Chocolate em pó 50%", detalhe: "—", categoria: "Ingrediente", qtd: 1, unidade: "pct", valor: 38.99 },
-      { produto: "Leite condensado", detalhe: "6 unidades", categoria: "Ingrediente", qtd: 6, unidade: "lata", valor: 41.44 },
-      { produto: "Creme de leite", detalhe: "8 unidades", categoria: "Ingrediente", qtd: 8, unidade: "cx", valor: 21.52 },
-      { produto: "Forminha de brigadeiro", detalhe: "200 unidades", categoria: "Embalagem", qtd: 200, unidade: "un", valor: 6.0 },
-    ],
-  },
-  {
-    n: 5,
-    nome: "Quinta compra",
-    itens: [
-      { produto: "Saco de confeitar", detalhe: "25 unidades", categoria: "Utensílio", qtd: 25, unidade: "un", valor: 13.99 },
-      { produto: "Coco em flocos", detalhe: "500 g", categoria: "Ingrediente", qtd: 1, unidade: "pct", valor: 25.99 },
-      { produto: "Biscoito Oreo", detalhe: "270 g", categoria: "Ingrediente", qtd: 1, unidade: "pct", valor: 11.99 },
-      { produto: "Pote redondo 150 ml", detalhe: "150 ml", categoria: "Embalagem", qtd: 1, unidade: "un", valor: 11.59 },
-      { produto: "Saco Kraft", detalhe: "20 unidades", categoria: "Embalagem", qtd: 20, unidade: "un", valor: 14.99 },
-      { produto: "Carimbo de brigadeiros", detalhe: "1 unidade", categoria: "Utensílio", qtd: 1, unidade: "un", valor: 15.99 },
-      { produto: "Leite condensado", detalhe: "10 unidades", categoria: "Ingrediente", qtd: 10, unidade: "lata", valor: 69.9 },
-      { produto: "Creme de leite", detalhe: "7 unidades", categoria: "Ingrediente", qtd: 7, unidade: "cx", valor: 18.83 },
-      { produto: "Embalagem quadrada para brigadeiro", detalhe: "15 unidades", categoria: "Embalagem", qtd: 15, unidade: "un", valor: 18.0 },
-    ],
-  },
-  {
-    n: 6,
-    nome: "Sexta compra",
-    itens: [
-      { produto: "Barra de chocolate", detalhe: "—", categoria: "Ingrediente", qtd: 1, unidade: "un", valor: 30.0 },
-    ],
-  },
+const ITENS = [
+  ["Utilidades", "Papel-alumínio", 4.39, 1, "rolo", "", 1],
+  ["Utilidades", "Plástico filme", 5.59, 1, "rolo", "", 1],
+  ["Utilidades", "Papel-toalha", 4.39, 2, "rolos", "", 1],
+  ["Utilidades", "Saco de confeitar", 7.5, 5, "unidades", "", 1],
+  ["Utilidades", "Touca Descartável", 5, 5, "unidades", "", 1],
+  ["Utilidades", "Durex", 4.5, 1, "unidade", "", 1],
+  ["Utilidades", "Grampeador com grampos", 12, 1, "conjunto", "", 1],
+  ["Utilidades", "Peneira", 19.29, 1, "unidade", "", 1],
+  ["Ingredientes", "Chocolate em pó", 39.8, 200, "gramas", "", 1],
+  ["Ingredientes", "Margarina Qualy", 6.98, 250, "gramas", "", 1],
+  ["Ingredientes", "Paçoca", 23.9, 700, "gramas", "", 1],
+  ["Ingredientes", "Leite em pó", 8.99, 200, "gramas", "", 1],
+  ["Ingredientes", "Biscoito Oreo", 8.58, 180, "gramas", "", 1],
+  ["Ingredientes", "Leite condensado", 29.12, 1580, "gramas", "", 1],
+  ["Ingredientes", "Creme de leite", 14.96, 800, "gramas", "", 1],
+  ["Ingredientes", "Pacote de bala", 7.98, 500, "gramas", "", 1],
+  ["Ingredientes", "Granulado", 19.98, 400, "gramas", "", 1],
+  ["Ingredientes", "Pacotão de Bis", 12.98, 201.6, "gramas", "", 1],
+  ["Ingredientes", "Morango", 10.9, 220, "gramas", "", 1],
+  ["Ingredientes", "Barra de chocolate Fracionado", 29.9, 1000, "gramas", "", 1],
+  ["Embalagens", "Adesivos", 19.34, 70, "unidades", "", 1],
+  ["Embalagens", "Pote 250 ml", 15, 24, "unidades", "", 1],
+  ["Embalagens", "Pote 140 ml", 15.9, 25, "unidades", "", 1],
+  ["Embalagens", "Forminha de brigadeiro", 3.5, 100, "unidades", "", 1],
+  ["Embalagens", "Colherzinhas", 5.99, 50, "unidades", "", 1],
+  ["Embalagens", "Saco chup-chup", 2.99, 100, "unidades", "", 1],
+  ["Embalagens", "Embalagem quadrada de brigadeiro", 4.99, 10, "unidades", "", 1],
+  ["Embalagens", "Pote de brinde", 6.5, 10, "unidades", "", 1],
+  ["Embalagens", "Saco Kraft", 29.9, 50, "unidades", "", 1],
+  ["Embalagens", "Embalagem trufas", 30, 300, "unidades", "", 1],
+  ["Embalagens", "Saco de confeitar GRANDE", 20, 10, "unidades", "Segunda compra", 2],
+  ["Utilidades", "Forma pra fazer as trufas (não descartável)", 35.98, 2, "formas", "Segunda compra - INVESTIMENTO, não descartável", 2],
+  ["Ingredientes", "Chocolate em pó", 39.9, 200, "gramas", "Terceira compra", 3],
+  ["Ingredientes", "Margarina Qualy", 6.98, 250, "gramas", "Terceira compra", 3],
+  ["Embalagens", "Caixa para cento de doces", 10.47, 3, "unidades", "Quarta compra", 4],
+  ["Ingredientes", "Granulado", 19.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4],
+  ["Ingredientes", "Chocolate em pó 50%", 38.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4],
+  ["Ingredientes", "Leite condensado", 41.44, 2370, "gramas", "Quarta compra (6 latas de 395 g)", 4],
+  ["Ingredientes", "Creme de leite", 21.52, 1600, "gramas", "Quarta compra (8 caixas de 200 g)", 4],
+  ["Embalagens", "Forminha de brigadeiro", 6, 200, "unidades", "Quarta compra", 4],
+  ["Utilidades", "Saco de confeitar", 13.99, 25, "unidades", "Quinta compra", 5],
+  ["Ingredientes", "Coco em flocos", 25.99, 500, "gramas", "Quinta compra", 5],
+  ["Ingredientes", "Biscoito Oreo", 11.99, 270, "gramas", "Quinta compra", 5],
+  ["Embalagens", "Pote redondo 150 ml", 11.59, 1, "pacote", "Quinta compra (qtd. do pacote não informada)", 5],
+  ["Embalagens", "Saco Kraft", 14.99, 20, "unidades", "Quinta compra", 5],
+  ["Utilidades", "Carimbo de brigadeiros", 15.99, 1, "unidade", "Quinta compra", 5],
+  ["Ingredientes", "Leite condensado", 69.9, 3950, "gramas", "Quinta compra (10 latas de 395 g)", 5],
+  ["Ingredientes", "Creme de leite", 18.83, 1400, "gramas", "Quinta compra (7 caixas de 200 g)", 5],
+  ["Embalagens", "Embalagem quadrada de brigadeiro", 18, 15, "unidades", "Quinta compra", 5],
+  ["Ingredientes", "Barra de chocolate", 30, 1, "unidade", "Sexta compra (peso não informado)", 6],
 ];
 
-const LINHAS = COMPRAS.flatMap((c) =>
-  c.itens.map((item) => ({ ...item, n: c.n, compra: c.nome }))
-);
+const ADICIONAIS = [
+  ["Granulado", 5],
+  ["Morango", 16],
+  ["Biscoito Oreo", 9],
+  ["Pacotão de Bis", 6],
+  ["Paçoca", 5],
+  ["Leite em pó", 9],
+];
 
-const TOTAL = LINHAS.reduce((s, i) => s + i.valor, 0);
+const brl = (n, d = 2) =>
+  n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: d, maximumFractionDigits: d });
 
-const brl = (n) =>
-  n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const qtdFmt = (n) =>
+  Number.isInteger(n) ? String(n) : String(n).replace(".", ",");
 
-const tagClass = (cat) =>
-  cat === "Ingrediente" ? "ing" : cat === "Embalagem" ? "emb" : "ute";
-
-function renderCards() {
-  const el = document.getElementById("cards");
-  el.innerHTML = COMPRAS.map((c) => {
-    const t = c.itens.reduce((s, i) => s + i.valor, 0);
-    return `<article class="card">
-      <div class="n">${c.n}ª compra</div>
-      <strong>${brl(t)}</strong>
-      <span>${c.itens.length} ${c.itens.length === 1 ? "item" : "itens"}</span>
-    </article>`;
-  }).join("");
-}
-
-function linhasFiltradas() {
-  const compra = document.getElementById("filtro-compra").value;
-  const cat = document.getElementById("filtro-cat").value;
-  return LINHAS.filter((l) => {
-    if (compra !== "todas" && String(l.n) !== compra) return false;
-    if (cat !== "todas" && l.categoria !== cat) return false;
-    return true;
-  });
-}
-
-function renderTabela() {
-  const rows = linhasFiltradas();
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = rows
-    .map((l) => {
-      const unit = l.valor / l.qtd;
-      const pct = (l.valor / TOTAL) * 100;
-      return `<tr>
-        <td>${l.n}ª</td>
-        <td><div class="prod">${l.produto}</div></td>
-        <td class="detalhe">${l.detalhe}</td>
-        <td><span class="tag ${tagClass(l.categoria)}">${l.categoria}</span></td>
-        <td class="num">${l.qtd} ${l.unidade}</td>
-        <td class="num">${brl(l.valor)}</td>
-        <td class="num">${brl(unit)}</td>
-        <td class="num">${pct.toFixed(1).replace(".", ",")}%</td>
+function render() {
+  const filtro = document.getElementById("filtro-compra").value;
+  const rows = ITENS.filter((i) => filtro === "todas" || String(i[6]) === filtro);
+  document.getElementById("tbody").innerHTML = rows
+    .map(([cat, prod, preco, qtd, unid, obs, g]) => {
+      const unit = qtd ? preco / qtd : 0;
+      return `<tr class="g${g}">
+        <td>${cat}</td>
+        <td>${prod}</td>
+        <td class="num">${brl(preco)}</td>
+        <td class="num">${qtdFmt(qtd)}</td>
+        <td>${unid}</td>
+        <td class="num">${brl(unit, 4)}</td>
+        <td>${obs}</td>
       </tr>`;
     })
     .join("");
-
-  const sub = rows.reduce((s, i) => s + i.valor, 0);
-  document.getElementById("total-filtrado").textContent = brl(sub);
-  document.getElementById("pct-filtrado").textContent =
-    TOTAL === 0 ? "—" : `${((sub / TOTAL) * 100).toFixed(1).replace(".", ",")}%`;
 }
 
-function renderBars() {
-  const maxCompra = Math.max(
-    ...COMPRAS.map((c) => c.itens.reduce((s, i) => s + i.valor, 0))
-  );
-  document.getElementById("bars-compra").innerHTML = COMPRAS.map((c) => {
-    const t = c.itens.reduce((s, i) => s + i.valor, 0);
-    const w = (t / maxCompra) * 100;
-    return `<li>
-      <div class="bar-meta"><span>${c.nome}</span><strong>${brl(t)}</strong></div>
-      <div class="track"><div class="fill" style="width:${w}%"></div></div>
-    </li>`;
-  }).join("");
-
-  const cats = ["Ingrediente", "Embalagem", "Utensílio"].map((nome) => ({
-    nome,
-    t: LINHAS.filter((l) => l.categoria === nome).reduce((s, i) => s + i.valor, 0),
-  }));
-  document.getElementById("bars-cat").innerHTML = cats
-    .map((c) => {
-      const w = (c.t / TOTAL) * 100;
-      return `<li>
-        <div class="bar-meta"><span>${c.nome}</span><strong>${brl(c.t)} · ${w
-          .toFixed(1)
-          .replace(".", ",")}%</strong></div>
-        <div class="track"><div class="fill" style="width:${w}%"></div></div>
-      </li>`;
-    })
-    .join("");
-}
-
-document.getElementById("total-geral").textContent = brl(TOTAL);
-document.getElementById("filtro-compra").addEventListener("change", renderTabela);
-document.getElementById("filtro-cat").addEventListener("change", renderTabela);
-document.getElementById("btn-print").addEventListener("click", () => window.print());
-
-renderCards();
-renderTabela();
-renderBars();
+const subtotal = ITENS.reduce((s, i) => s + i[2], 0);
+const novas = ITENS.filter((i) => i[6] >= 3).reduce((s, i) => s + i[2], 0);
+const luz = subtotal * 0.2;
+document.getElementById("subtotal").textContent = brl(subtotal);
+document.getElementById("luz").textContent = brl(luz);
+document.getElementById("total").textContent = brl(subtotal + luz);
+document.getElementById("novas").textContent = brl(novas);
+document.getElementById("adicionais").innerHTML = ADICIONAIS.map(
+  ([n, p]) => `<tr><td>${n}</td><td>${p}</td></tr>`
+).join("");
+document.getElementById("filtro-compra").addEventListener("change", render);
+render();
