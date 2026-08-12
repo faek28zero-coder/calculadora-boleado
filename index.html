@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compras e Custos · Calculadora Boleado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="top">
+    <div class="brand">
+      <span class="mark">●</span>
+      <div>
+        <p class="eyebrow">Calculadora Boleado</p>
+        <h1>Compras e custos</h1>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="btn primary" href="Compras_e_Custos_Boleado.xlsx" download>
+        Abrir no Excel
+      </a>
+      <button class="btn ghost" type="button" id="btn-print">Imprimir</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="kicker">Terceira à sexta compra</p>
+      <p class="total-label">Total gasto até agora</p>
+      <p class="total" id="total-geral">R$ 0,00</p>
+      <p class="hint">1ª e 2ª compras ainda não foram lançadas.</p>
+    </section>
+
+    <section class="cards" id="cards"></section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Tabela de compras</h2>
+        <div class="filters">
+          <label>
+            Compra
+            <select id="filtro-compra">
+              <option value="todas">Todas</option>
+              <option value="3">3ª — Terceira</option>
+              <option value="4">4ª — Quarta</option>
+              <option value="5">5ª — Quinta</option>
+              <option value="6">6ª — Sexta</option>
+            </select>
+          </label>
+          <label>
+            Categoria
+            <select id="filtro-cat">
+              <option value="todas">Todas</option>
+              <option value="Ingrediente">Ingrediente</option>
+              <option value="Embalagem">Embalagem</option>
+              <option value="Utensílio">Utensílio</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nº</th>
+              <th>Produto</th>
+              <th>Detalhe</th>
+              <th>Categoria</th>
+              <th class="num">Qtd</th>
+              <th class="num">Valor</th>
+              <th class="num">Unitário</th>
+              <th class="num">%</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">Total filtrado</td>
+              <td class="num" id="total-filtrado">R$ 0,00</td>
+              <td></td>
+              <td class="num" id="pct-filtrado">—</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="split">
+      <article class="panel">
+        <h2>Por compra</h2>
+        <ul class="bars" id="bars-compra"></ul>
+      </article>
+      <article class="panel">
+        <h2>Por categoria</h2>
+        <ul class="bars" id="bars-cat"></ul>
+      </article>
+    </section>
+
+    <section class="panel note">
+      <h2>Excel</h2>
+      <p>
+        A planilha tem 5 abas: <strong>Compras e Custos</strong>,
+        <strong>Resumo por compra</strong>, <strong>Resumo por categoria</strong>,
+        <strong>Estoque consolidado</strong> e <strong>Como usar</strong>.
+        Os totais são fórmulas — se você corrigir um preço, o restante atualiza.
+      </p>
+      <p class="excel-links">
+        <a class="btn primary" href="Compras_e_Custos_Boleado.xlsx" download>Baixar .xlsx</a>
+        <a class="btn ghost" id="link-office" href="Compras_e_Custos_Boleado.xlsx" target="_blank" rel="noopener">
+          Abrir arquivo
+        </a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Calculadora Boleado · controle de compras da confeitaria</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
