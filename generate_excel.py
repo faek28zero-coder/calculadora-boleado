@@ -66,8 +66,8 @@ ITENS = [
     ("Ingredientes", "Margarina Qualy", 6.98, 250, "gramas", "Terceira compra", 3),
     # —— quarta compra ——
     ("Embalagens", "Caixa para cento de doces", 10.47, 3, "unidades", "Quarta compra", 4),
-    ("Ingredientes", "Granulado", 19.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4),
-    ("Ingredientes", "Chocolate em pó 50%", 38.99, 1, "pacote", "Quarta compra (peso do pacote não informado)", 4),
+    ("Ingredientes", "Granulado", 19.99, 400, "gramas", "Quarta compra", 4),
+    ("Ingredientes", "Chocolate em pó 50%", 38.99, 200, "gramas", "Quarta compra", 4),
     ("Ingredientes", "Leite condensado", 41.44, 2370, "gramas", "Quarta compra (6 latas de 395 g)", 4),
     ("Ingredientes", "Creme de leite", 21.52, 1600, "gramas", "Quarta compra (8 caixas de 200 g)", 4),
     ("Embalagens", "Forminha de brigadeiro", 6.00, 200, "unidades", "Quarta compra", 4),
@@ -75,14 +75,14 @@ ITENS = [
     ("Utilidades", "Saco de confeitar", 13.99, 25, "unidades", "Quinta compra", 5),
     ("Ingredientes", "Coco em flocos", 25.99, 500, "gramas", "Quinta compra", 5),
     ("Ingredientes", "Biscoito Oreo", 11.99, 270, "gramas", "Quinta compra", 5),
-    ("Embalagens", "Pote redondo 150 ml", 11.59, 1, "pacote", "Quinta compra (qtd. do pacote não informada)", 5),
+    ("Embalagens", "Pote redondo 150 ml", 11.59, 25, "unidades", "Quinta compra", 5),
     ("Embalagens", "Saco Kraft", 14.99, 20, "unidades", "Quinta compra", 5),
     ("Utilidades", "Carimbo de brigadeiros", 15.99, 1, "unidade", "Quinta compra", 5),
     ("Ingredientes", "Leite condensado", 69.90, 3950, "gramas", "Quinta compra (10 latas de 395 g)", 5),
     ("Ingredientes", "Creme de leite", 18.83, 1400, "gramas", "Quinta compra (7 caixas de 200 g)", 5),
     ("Embalagens", "Embalagem quadrada de brigadeiro", 18.00, 15, "unidades", "Quinta compra", 5),
     # —— sexta compra ——
-    ("Ingredientes", "Barra de chocolate", 30.00, 1, "unidade", "Sexta compra (peso não informado)", 6),
+    ("Ingredientes", "Barra de chocolate", 30.00, 1000, "gramas", "Sexta compra", 6),
 ]
 
 ADICIONAIS = [
