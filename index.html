@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora Boleado — Custos da Confeitaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@360;450;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="top">
+    <div>
+      <p class="eyebrow">A2B Confeitaria</p>
+      <h1>Calculadora Boleado</h1>
+      <p class="sub">Custo real do pote com ingredientes, embalagem e 20% de luz e gás.</p>
+    </div>
+    <div class="header-stats">
+      <div>
+        <span>Compras</span>
+        <strong id="statCompras">R$ 0</strong>
+      </div>
+      <div>
+        <span>C/ luz e gás</span>
+        <strong id="statTotal">R$ 0</strong>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="calc">Montar pote</button>
+    <button class="tab" data-tab="compras">Compras</button>
+    <button class="tab" data-tab="receitas">Receitas base</button>
+  </nav>
+
+  <main>
+    <section id="calc" class="panel on">
+      <div class="grid-2">
+        <article class="card">
+          <h2>Montagem</h2>
+          <label>Sabor / combinação
+            <select id="sabor"></select>
+          </label>
+          <label>Tamanho do pote
+            <select id="tamanho">
+              <option value="140">140 ml</option>
+              <option value="250" selected>250 ml</option>
+            </select>
+          </label>
+          <label>Quantidade de potes
+            <input type="number" id="qtd" min="1" value="1" />
+          </label>
+          <label>Margem de lucro desejada
+            <input type="range" id="margem" min="30" max="250" value="120" />
+            <span class="hint"><strong id="margemLbl">120%</strong> sobre o custo</span>
+          </label>
+          <fieldset class="checks">
+            <legend>Incluir na embalagem</legend>
+            <label class="chk"><input type="checkbox" id="incAdesivo" checked /> Adesivo</label>
+            <label class="chk"><input type="checkbox" id="incColher" checked /> Colherzinha</label>
+            <label class="chk"><input type="checkbox" id="incSaco" /> Saco Kraft</label>
+          </fieldset>
+        </article>
+
+        <article class="card result">
+          <h2>Resultado</h2>
+          <p class="flavor-name" id="flavorName">—</p>
+          <dl class="metrics">
+            <div><dt>Ingredientes</dt><dd id="cIng">R$ 0</dd></div>
+            <div><dt>Embalagem</dt><dd id="cEmb">R$ 0</dd></div>
+            <div><dt>Luz e gás (20%)</dt><dd id="cLuz">R$ 0</dd></div>
+            <div class="big"><dt>Custo unitário</dt><dd id="cUnit">R$ 0</dd></div>
+            <div class="price"><dt>Preço sugerido</dt><dd id="pSug">R$ 0</dd></div>
+            <div><dt>Lucro por pote</dt><dd id="lucro">R$ 0</dd></div>
+            <div><dt>Lote (qtd)</dt><dd id="lote">R$ 0</dd></div>
+          </dl>
+          <ul class="bom" id="bom"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="compras" class="panel">
+      <article class="card">
+        <h2>Controle de compras</h2>
+        <p class="muted">Edite preço e quantidade. O custo unitário atualiza na hora.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Categoria</th>
+                <th>Produto</th>
+                <th>Preço pago</th>
+                <th>Qtd</th>
+                <th>Conteúdo</th>
+                <th>Custo un.</th>
+              </tr>
+            </thead>
+            <tbody id="comprasBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section id="receitas" class="panel">
+      <article class="card">
+        <h2>Receitas base (por pote 250 ml)</h2>
+        <p class="muted">Pote 140 ml usa 56% das gramaturas da base. Adicionais seguem a planilha.</p>
+        <div id="receitasList"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Baseada na planilha de custos · acréscimo luz e gás 20% · atualize as compras sempre que repor estoque
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
