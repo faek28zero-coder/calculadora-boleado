@@ -56,6 +56,7 @@ struct Runtime {
     bool should_render = false;
     EyeImage eye[kEyes];
     bool session_running = false;
+    bool frame_open = false; // xrBeginFrame chamado e ainda não fechado com xrEndFrame
     bool active = false;
     XrEnvironmentBlendMode blend = XR_ENVIRONMENT_BLEND_MODE_OPAQUE;
     int64_t format = 0;
@@ -90,10 +91,8 @@ extern float g_game_aspect;
 extern int g_render_w;
 extern int g_render_h;
 
-// matrizes 4x4 em convenção de linha (v' = v · M), como o D3D do Xbox
-void mat_identity(float m[16]);
-void mat_mul(const float a[16], const float b[16], float out[16]); // out = a · b
-bool mat_invert(const float m[16], float out[16]);
+// Matrizes: vr_math.h (tudo inline e testado em tests/vr_math_test.cpp — não há implementação
+// de matriz compilada só no Windows).
 
 /** Aplica a pose do headset na câmera do jogo (chamado pelo thunk de 0x1DFFEC). */
 void apply_head_to_view(uint8_t *cam_base);

@@ -33,6 +33,12 @@ bool enabled();
 /** A sessão está rodando e focada: é ela que troca o present pelo envio ao headset. */
 bool active();
 
+/**
+ * O frame do runtime está aberto e esperando as duas imagens (entre frame_begin e frame_end).
+ * É a condição para o Swap entregar os olhos: `active()` só diz que a sessão está de pé.
+ */
+bool frame_ready();
+
 /** Última mensagem de erro legível (para o log e para a tela de configurações). */
 const char *last_error();
 

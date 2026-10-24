@@ -35,6 +35,7 @@
 #include <cstring>
 
 #include "vr/vr_internal.h"
+#include "vr/vr_math.h"
 
 extern "C" void __cdecl vr_eye_height_thunk();
 
@@ -100,41 +101,26 @@ void quat_rotate(const float q[4], const float v[3], float out[3])
     out[2] = v[2] + 2.0f * (x * ty - y * tx);
 }
 
-/** Projeção em convenção de linha (v' = v · P) com frustum off-axis. */
-void make_projection(float tan_l, float tan_r, float tan_b, float tan_t, float zn, float zf, float out[16])
-{
-    mat_identity(out);
-    const float w = tan_r - tan_l, h = tan_t - tan_b;
-    if (std::fabs(w) < 1e-8f || std::fabs(h) < 1e-8f) return;
-    out[0] = 2.0f * zn / w;
-    out[5] = 2.0f * zn / h;
-    out[8] = -(tan_r + tan_l) / w;
-    out[9] = -(tan_t + tan_b) / h;
-    out[10] = zf / (zf - zn);
-    out[11] = 1.0f;
-    out[14] = -zn * zf / (zf - zn);
-    out[15] = 0.0f;
-}
-
-/** V_olho · P_olho (V só carrega a separação dos olhos: a orientação já está na view do jogo). */
+/**
+ * V_olho · P_olho para um olho (a orientação já está na view do jogo; aqui só entra a separação
+ * lateral dos olhos, ±ipd/2). A matemática mora em vr_math.h, que é testada fora do Windows
+ * (tests/vr_math_test.cpp) — inclusive a armadilha do fator `zn` na projeção, que estava errada
+ * aqui e no vr_openxr.cpp.
+ */
 void build_eye(float ipd_half, float game_fov_deg, float aspect, int eye, float vp[16])
 {
-    const float tanx = std::tan(game_fov_deg * 0.5f * 3.14159265f / 180.0f);
-    const float tany = tanx / (aspect > 1e-3f ? aspect : 1.0f);
     const float zn = 0.05f, zf = 5000.0f;
-
-    float v[16], p[16];
-    mat_identity(v);
-    v[12] = (eye == 0 ? -ipd_half : ipd_half);
-
+    float fov[4];
     if (g_rt.view_count >= (uint32_t)kEyes) {
         const XrFovf &f = g_rt.views[eye].fov;
-        make_projection(std::tan(f.angleLeft), std::tan(f.angleRight), std::tan(f.angleDown), std::tan(f.angleUp), zn,
-                        zf, p);
+        fov[0] = std::tan(f.angleLeft);
+        fov[1] = std::tan(f.angleRight);
+        fov[2] = std::tan(f.angleDown);
+        fov[3] = std::tan(f.angleUp);
     } else {
-        make_projection(-tanx, tanx, -tany, tany, zn, zf, p);
+        vr_math::game_fov_tangents(game_fov_deg, aspect, fov); // sem runtime: FOV do jogo, um olho só
     }
-    mat_mul(v, p, vp);
+    vr_math::eye_view_projection(ipd_half, eye, fov, zn, zf, vp);
 }
 
 } // namespace
@@ -210,21 +196,27 @@ void pose_frame_update(float game_fov_deg, float aspect)
 {
     g_game_fov_deg = game_fov_deg;
     g_game_aspect = aspect;
-    mat_identity(g_identity);
-    const float ipd_half = std::max(0.0f, g_cfg.vr_ipd) * 0.001f * 0.5f;
+    vr_math::identity(g_identity);
+    const float ipd_half = std::max(0.0f, g_cfg.vr_ipd) * 0.001f * 0.5f; // mm -> m -> metade
+    const float zn = 0.05f, zf = 5000.0f;
 
-    float mono[16], mono_inv[16];
-    build_eye(0.0f, game_fov_deg, aspect, 0, mono);
-    const bool ok = mat_invert(mono, mono_inv);
+    // A projeção que o jogo usa (mono): FOV horizontal do jogo x aspecto do render target.
+    float mono_fov[4];
+    vr_math::game_fov_tangents(game_fov_deg, aspect, mono_fov);
 
     for (int e = 0; e < kEyes; e++) {
-        if (!ok) {
-            mat_identity(g_clip[e]);
-            continue;
+        float eye_fov[4];
+        if (g_rt.view_count >= (uint32_t)kEyes) {
+            const XrFovf &f = g_rt.views[e].fov;
+            eye_fov[0] = std::tan(f.angleLeft);
+            eye_fov[1] = std::tan(f.angleRight);
+            eye_fov[2] = std::tan(f.angleDown);
+            eye_fov[3] = std::tan(f.angleUp);
+        } else {
+            std::memcpy(eye_fov, mono_fov, sizeof mono_fov); // sem runtime: nada de estéreo
         }
-        float eye_vp[16];
-        build_eye(ipd_half, game_fov_deg, aspect, e, eye_vp);
-        mat_mul(mono_inv, eye_vp, g_clip[e]);
+        // C = (V_mono·P_mono)⁻¹ · (V_olho·P_olho)  ->  constante c201..c204 do shader
+        vr_math::eye_clip_matrix(ipd_half, e, mono_fov, eye_fov, zn, zf, g_clip[e]);
     }
     g_pose_ok = true;
 }
@@ -307,6 +299,9 @@ extern "C" void __cdecl vr_apply_view(uint8_t *cam)
     vr::internal::apply_head_to_view(cam);
 }
 
+#if defined(_MSC_VER)
+// O port exige MSVC (asm inline x86), então este thunk é MSVC-only por natureza. O guarda existe
+// para que o resto do módulo possa ser checado com outro compilador (tests/syntax_check.sh).
 extern "C" __declspec(naked) void vr_eye_height_thunk()
 {
     __asm {
@@ -323,3 +318,6 @@ extern "C" __declspec(naked) void vr_eye_height_thunk()
         ret
     }
 }
+#else
+extern "C" void vr_eye_height_thunk() {} // sem MSVC não há asm inline: o patch não é aplicado
+#endif

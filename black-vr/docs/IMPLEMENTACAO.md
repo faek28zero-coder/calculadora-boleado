@@ -62,6 +62,17 @@ no meio do frame quebra a lógica (e o `Swap` do jogo é o único ponto em que o
    C = (V_mono · P_mono)⁻¹ · (V_olho · P_olho)
    ```
 
+   A conta mora em `src/vr/vr_math.h` (inline, sem D3D/OpenXR) e é testada em
+   `tests/vr_math_test.cpp`. Duas armadilhas que o teste pegou, e que ficam registradas:
+
+   - **o fator `zn` na projeção assimétrica.** A fórmula clássica do D3DX (`2·zn/(r−l)`) vale
+     quando `l/r/t/b` são coordenadas da borda *no plano do near*. As tangentes do `XrFovf` são
+     a 1 m, então o fator é `2/(r−l)`. Multiplicar por `zn = 0,05` encolhia x/y 20× e a paralaxe
+     saía sem sentido.
+   - **o sinal do deslocamento da IPD.** O olho esquerdo está em x = −ipd/2 no mundo; um ponto no
+     eixo aparece em x = +ipd/2 no referencial **dele**, então a translação é +ipd/2. Invertido, o
+     estéreo fica "de dentro para fora" — funciona no olho e dá dor de cabeça em segundos.
+
    `P_olho` é a projeção **assimétrica** do headset (`XrFovf`: ângulos diferentes para esquerda,
    direita, cima, baixo, como todo headset real tem) com deslocamento de ±IPD/2, e `V_mono`/`P_mono`
    são as mesmas matrizes com IPD zero. Aplicar `C` é reprojetar o frame pronto no ponto de vista
@@ -193,8 +204,10 @@ teclado/controle seguem normais.
 
 ## 7. O que ainda falta
 
-1. **Compilar e rodar** (o item que domina todo o resto): ajustar os pontos de contato com o port e
-   medir. Nada aqui substitui um `black.log` de uma sessão real.
+1. **Compilar e rodar** (o item que domina todo o resto): o que já foi feito — matemática testada,
+   shader gerado verificado, sintaxe dos cinco arquivos checada, patches aplicando. O que falta é o
+   MSVC: os pontos de contato com o port (`HostRT` é interno do `device.cpp`) e o comportamento em
+   tempo de execução. Nada aqui substitui um `black.log` de uma sessão real.
 2. Caminho rápido D3D9Ex (seção 4).
 3. Renderização do jogo no aspecto/resolução do olho (hoje depende de `--resolution`; o certo é o
    módulo pedir `render_w×render_h` ao port em `start()`).

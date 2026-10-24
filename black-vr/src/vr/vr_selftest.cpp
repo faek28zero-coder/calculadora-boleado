@@ -125,7 +125,7 @@ void render_eye(int eye, int frame)
                                {(float)gx + 1, -1.6f, (float)gz},
                                {(float)gx + 1, -1.6f, (float)gz + 1},
                                {(float)gx, -1.6f, (float)gz + 1}};
-            float pxs[4], pys[4];
+            int pxs[4] = {0, 0, 0, 0}, pys[4] = {0, 0, 0, 0};
             bool ok = true;
             for (int i = 0; i < 4 && ok; i++) {
                 float nx, ny, d;

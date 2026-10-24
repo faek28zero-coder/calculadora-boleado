@@ -1,13 +1,41 @@
 diff --git a/loader/src/d3d/nv2a_vsh.cpp b/loader/src/d3d/nv2a_vsh.cpp
-index c1fb4b8..74bf445 100644
+index c1fb4b8..3767686 100644
 --- a/loader/src/d3d/nv2a_vsh.cpp
 +++ b/loader/src/d3d/nv2a_vsh.cpp
-@@ -333,6 +333,8 @@ std::string vsh_to_hlsl(const uint32_t *program, uint32_t count, uint32_t input_
+@@ -202,6 +202,13 @@ const char *hlsl_out(uint8_t a)
+ 
+ } // namespace
+ 
++// VR-only shader tail (vr/vr.h): four dots against c201..c204 carry the mono clip position to
++// the eye's clip position. Outside VR clip_matrix() is the identity, so the shader is identical.
++std::string vr_clip_tail()
++{
++    return "  o.pos = float4(dot(o.pos, vrRow0), dot(o.pos, vrRow1), dot(o.pos, vrRow2), dot(o.pos, vrRow3));\n";
++}
++
+ std::string vsh_to_hlsl(const uint32_t *program, uint32_t count, uint32_t input_mask)
+ {
+     std::string s;
+@@ -212,6 +219,14 @@ std::string vsh_to_hlsl(const uint32_t *program, uint32_t count, uint32_t input_
+          "float4 fogParams : register(c198);\n"   // start, end, density
+          "float4 fogMode : register(c199);\n"     // weights: linear, exp, exp2, none (oFog is the factor)
+          "float4 vmScale : register(c200);\n"     // clip x/y factor: the first-person gun at the game's FOV (fov.cpp)
++         // VR (vr/vr.h): the mono clip -> eye clip matrix, as four rows in c201..c204. Four float4
++         // registers with explicit dots instead of a float4x4: HLSL packs matrices column-major by
++         // default, and this shader never uses mul() with a matrix otherwise, so a transposed upload
++         // would be silent. With dots, row i of the row-major matrix is register c(201+i), full stop.
++         "float4 vrRow0 : register(c201);\n"
++         "float4 vrRow1 : register(c202);\n"
++         "float4 vrRow2 : register(c203);\n"
++         "float4 vrRow3 : register(c204);\n"
+          "struct VSIn {\n";
+     bool any_input = false;
+     for (int i = 0; i < 16; i++)
+@@ -333,6 +348,7 @@ std::string vsh_to_hlsl(const uint32_t *program, uint32_t count, uint32_t input_
           "  o.pos.w = w;\n"
           "  o.pos.xyz = (oPos.xyz - vpOffset.xyz) / vpScale.xyz * w;\n"
           "  o.pos.xy *= vmScale.xy;\n"
-+         // VR (vr/vr.h): leva o clip mono do jogo para o clip do olho. Fora do VR c201 é a identidade.
-+         "  o.pos = mul(o.pos, c201);\n"
++         + vr_clip_tail() +
           "  o.d0 = oD0; o.d1 = oD1;\n"
           "  o.t0 = oT0 * float4(texScale[0].xy, 1, 1); o.t1 = oT1 * float4(texScale[1].xy, 1, 1);\n"
           "  o.t2 = oT2 * float4(texScale[2].xy, 1, 1); o.t3 = oT3 * float4(texScale[3].xy, 1, 1);\n"

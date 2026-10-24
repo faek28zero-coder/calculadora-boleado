@@ -1,17 +1,18 @@
 diff --git a/loader/src/d3d/device.cpp b/loader/src/d3d/device.cpp
-index 28609f8..2c72e47 100644
+index 28609f8..d08b128 100644
 --- a/loader/src/d3d/device.cpp
 +++ b/loader/src/d3d/device.cpp
-@@ -13,6 +13,8 @@
+@@ -13,6 +13,9 @@
  #include "d3d/state.h"
  #include "d3d/vshader.h"
  #include "kernel/kexports.h"
++#include "fov.h"
 +#include "vr/vr.h"
 +#include "vr/vr_frame.h"
  #include "xthread.h"
  
  #include <d3dcompiler.h>
-@@ -1293,6 +1295,20 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+@@ -1293,6 +1296,20 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
      perf::swap_begin();
      pace_swap();
      present_backbuffer();
@@ -20,7 +21,7 @@ index 28609f8..2c72e47 100644
 +    // no Swap anterior: é ele que dá a pose para a câmera do jogo e adquire as imagens do headset.
 +    // Aqui só falta entregar os dois olhos: o esquerdo é este quadro, o direito é o mesmo frame
 +    // reexecutado com a matriz de clip do outro olho (vr_frame.h).
-+    if (vr::active()) {
++    if (vr::frame_ready()) {
 +        HostRT &bb = host_rt(g_backbuffer);
 +        vr::submit_frame(bb.tex, 0);
 +        vr::render_second_eye(host3d::dev(), bb.tex);
@@ -32,11 +33,32 @@ index 28609f8..2c72e47 100644
      capture_frame();
      uint32_t frames = ++g_frame_count;
      memdump_frame(frames);
-@@ -1322,6 +1338,7 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+@@ -1322,6 +1339,28 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
      if (frames % 60 == 0 || frames < 4)
          logf("[d3d] frame %u presented (%u draws, %u skipped since last report)", frames, g_st.draws, g_st.draws_skipped);
      if (frames % 60 == 0 || frames < 4) g_st.draws = g_st.draws_skipped = 0;
-+    if (vr::enabled()) vr::frame_begin(); // espera o frame do runtime e localiza as views do próximo
++    // VR: sobe a sessão na primeira vez (no-op depois) e abre o frame do runtime, que é o que
++    // localiza as views do PRÓXIMO frame do jogo. A ordem importa: frame_begin() primeiro, porque
++    // é ele que dá a pose e o FOV do headset usados logo abaixo.
++    if (vr::enabled()) {
++        vr::start_once(host3d::window());
++        vr::frame_begin();
++    }
++    if (vr::active()) {
++        static bool fov_applied;
++        if (!fov_applied) {
++            // Em VR o jogo tem de usar o FOV do headset, senão a borda do quadro do jogo aparece
++            // dentro do campo de visão. `vr_fov = 0` no black.ini pede exatamente isso.
++            const float want = g_cfg.vr_fov > 0.0f ? g_cfg.vr_fov : vr::headset_fov();
++            fov_set(want);
++            g_cfg.fov = want;
++            fov_applied = true;
++            logf("[vr] FOV do jogo em VR: %.1f graus (headset: %.1f)", want, vr::headset_fov());
++        }
++        vr::set_game_render_size(g_width, g_height);
++        // O jogo projeta com o aspecto do vídeo (16:9 anamórfico no buffer 640x480 em widescreen).
++        vr::pose_frame_update(g_cfg.fov, g_cfg.widescreen ? 16.0f / 9.0f : 4.0f / 3.0f);
++    }
      if (auto cb = dev_field<void(__cdecl *)(void *)>(DEV_VBLANKCALLBACK)) {
          static std::atomic<bool> noted{false};
          if (!noted.exchange(true)) logf("[d3d] vblank callback %s is set by the game", sym_name((uint32_t)(uintptr_t)cb).c_str());

@@ -26,7 +26,26 @@ PC pelo port, este módulo não tem o que mostrar — e é assim de propósito.
 | Segundo olho por replay dos draws do frame (`vr_frame.h`) | escrito |
 | Controles do headset → pad Xbox (`XInputGetState`) | escrito |
 | Teste do headset sem o jogo (`--vr-selftest`) | escrito |
-| Build verificado nesta árvore | **não** — sem MSVC/Windows aqui; veja *Estado do build* |
+| Matemática do estéreo e shader gerado | **testados aqui** (`./tests/run.sh`, 4 grupos, 3300+ verificações) |
+| Build completo no MSVC | **não** — sem Windows aqui; veja *Estado do build* |
+
+## Testes (rodam sem Windows e sem o jogo)
+
+```bash
+./tests/run.sh
+```
+
+1. **matemática do estéreo** — `vr_math.h` contra o caminho direto do olho (o mesmo ponto do mundo
+   pelos dois caminhos tem de dar o mesmo NDC). Foi este teste que achou dois erros reais na
+   primeira versão: o fator `zn` errado na projeção assimétrica e o sinal trocado do deslocamento
+   da IPD.
+2. **contrato do shader** — os registradores `c201..c204`, a forma por `dot` (sem `float4x4`, que
+   dependeria do empacotamento de matriz do HLSL) e o upload de **quatro** registradores.
+3. **sintaxe do módulo** — os cinco `.cpp` de `src/vr/` compilados com stubs de Win32/D3D9/D3D11.
+   Achou um `float*` onde a lambda esperava `int*`, bindings do OpenXR com nome errado e `strcpy_s`
+   (que é MSVC-only).
+4. **patches + gerador de shader** — aplica os seis patches no `black-pc` e compila/executa o
+   `nv2a_vsh.cpp` do port para olhar o HLSL que o jogo vai compilar de verdade.
 
 O que ainda não está resolvido e está documentado sem enfeite em
 [`docs/IMPLEMENTACAO.md`](docs/IMPLEMENTACAO.md): leitura do back buffer pela CPU (é o caminho lento,

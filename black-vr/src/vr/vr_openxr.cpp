@@ -34,6 +34,7 @@
 #include "openxr.h"
 #include "openxr_platform.h"
 #include "vr/vr_internal.h"
+#include "vr/vr_math.h"
 
 namespace vr {
 namespace internal {
@@ -87,7 +88,24 @@ XR_FN(xrAcquireSwapchainImage);
 XR_FN(xrWaitSwapchainImage);
 XR_FN(xrReleaseSwapchainImage);
 XR_FN(xrGetD3D11GraphicsRequirementsKHR);
+XR_FN(xrGetActionStateFloat);
+XR_FN(xrGetActionStateBoolean);
+XR_FN(xrGetActionStateVector2f);
+XR_FN(xrLocateSpace);
+XR_FN(xrApplyHapticFeedback);
 #undef XR_FN
+
+/** Copia um nome para um campo de tamanho fixo do OpenXR (o strcpy_s é MSVC-only). */
+void copy_name(char *dst, size_t size, const char *src)
+{
+    if (!dst || !size) return;
+    size_t n = 0;
+    while (n + 1 < size && src && src[n]) {
+        dst[n] = src[n];
+        n++;
+    }
+    dst[n] = 0;
+}
 
 template <typename T>
 bool bind(T &fn, const char *name)
@@ -226,9 +244,9 @@ bool create_instance()
 
     static const char *wanted[] = {"XR_KHR_D3D11_enable"};
     XrInstanceCreateInfo ci = {XR_TYPE_INSTANCE_CREATE_INFO};
-    strcpy_s(ci.applicationInfo.applicationName, "BLACK VR");
+    copy_name(ci.applicationInfo.applicationName, sizeof ci.applicationInfo.applicationName, "BLACK VR (black-vr)");
     ci.applicationInfo.applicationVersion = 1;
-    strcpy_s(ci.applicationInfo.engineName, "black-pc");
+    copy_name(ci.applicationInfo.engineName, sizeof ci.applicationInfo.engineName, "black-pc");
     ci.applicationInfo.engineVersion = 1;
     ci.applicationInfo.apiVersion = XR_CURRENT_API_VERSION;
     ci.enabledExtensionCount = 1;
@@ -321,7 +339,7 @@ bool create_swapchains()
     std::vector<int64_t> formats(n ? n : 1);
     if (n) p_xrEnumerateSwapchainFormats(g_rt.session, n, &n, formats.data());
     // O jogo já sai com gamma aplicado (present_backbuffer): UNORM, nunca _SRGB (gamma em dobro).
-    g_rt.format = formats.empty() ? DXGI_FORMAT_B8G8R8A8_UNORM : formats[0];
+    g_rt.format = formats.empty() ? (int64_t)DXGI_FORMAT_B8G8R8A8_UNORM : (int64_t)formats[0];
     for (int64_t f : formats)
         if (f == DXGI_FORMAT_B8G8R8A8_UNORM) g_rt.format = f;
 
@@ -357,15 +375,15 @@ bool create_actions()
 {
     internal::Actions &a = g_rt.actions;
     XrActionSetCreateInfo asci = {XR_TYPE_ACTION_SET_CREATE_INFO};
-    strcpy_s(asci.actionSetName, "gameplay");
-    strcpy_s(asci.localizedActionSetName, "Gameplay");
+    copy_name(asci.actionSetName, sizeof asci.actionSetName, "gameplay");
+    copy_name(asci.localizedActionSetName, sizeof asci.localizedActionSetName, "Gameplay");
     if (!check(p_xrCreateActionSet(g_rt.instance, &asci, &a.set), "xrCreateActionSet")) return false;
 
     auto make = [&](XrAction &act, XrActionType t, const char *name, const char *localized) {
         XrActionCreateInfo ci = {XR_TYPE_ACTION_CREATE_INFO};
-        strcpy_s(ci.actionName, name);
+        copy_name(ci.actionName, sizeof ci.actionName, name);
         ci.actionType = t;
-        strcpy_s(ci.localizedActionName, localized);
+        copy_name(ci.localizedActionName, sizeof ci.localizedActionName, localized);
         return check(p_xrCreateAction(a.set, &ci, &act), "xrCreateAction");
     };
     if (!make(a.trigger, XR_ACTION_TYPE_FLOAT_INPUT, "trigger", "Atirar") ||
@@ -545,6 +563,8 @@ void read_action_vector2(XrAction a, float out[2])
 /** Envia ao runtime o que foi escrito nas duas imagens e termina o frame. */
 void finish_frame()
 {
+    if (!g_rt.frame_open) return; // sem BeginFrame não há EndFrame
+    g_rt.frame_open = false;
     for (int e = 0; e < internal::kEyes; e++) {
         internal::EyeImage &ei = g_rt.eye[e];
         if (!ei.acquired) continue;
@@ -583,66 +603,6 @@ void finish_frame()
 // ================================================================
 
 namespace internal {
-
-void mat_identity(float m[16])
-{
-    memset(m, 0, 16 * sizeof(float));
-    m[0] = m[5] = m[10] = m[15] = 1.0f;
-}
-
-void mat_mul(const float a[16], const float b[16], float out[16])
-{
-    float r[16];
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
-            r[i * 4 + j] = a[i * 4 + 0] * b[0 * 4 + j] + a[i * 4 + 1] * b[1 * 4 + j] + a[i * 4 + 2] * b[2 * 4 + j] +
-                           a[i * 4 + 3] * b[3 * 4 + j];
-    memcpy(out, r, sizeof r);
-}
-
-bool mat_invert(const float m[16], float out[16])
-{
-    // adjunta 4x4 (a mesma rotina clássica usada em motores; sem casos especiais)
-    float inv[16];
-    inv[0] = m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] + m[9] * m[7] * m[14] +
-             m[13] * m[6] * m[11] - m[13] * m[7] * m[10];
-    inv[4] = -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] - m[8] * m[7] * m[14] -
-             m[12] * m[6] * m[11] + m[12] * m[7] * m[10];
-    inv[8] = m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] + m[8] * m[7] * m[13] +
-             m[12] * m[5] * m[11] - m[12] * m[7] * m[9];
-    inv[12] = -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] - m[8] * m[6] * m[13] -
-              m[12] * m[5] * m[10] + m[12] * m[6] * m[9];
-    inv[1] = -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] - m[9] * m[3] * m[14] -
-             m[13] * m[2] * m[11] + m[13] * m[3] * m[10];
-    inv[5] = m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] + m[8] * m[3] * m[14] +
-             m[12] * m[2] * m[11] - m[12] * m[3] * m[10];
-    inv[9] = -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] - m[8] * m[3] * m[13] -
-             m[12] * m[1] * m[11] + m[12] * m[3] * m[9];
-    inv[13] = m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] + m[8] * m[2] * m[13] +
-              m[12] * m[1] * m[10] - m[12] * m[2] * m[9];
-    inv[2] = m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] + m[5] * m[3] * m[14] +
-             m[13] * m[2] * m[7] - m[13] * m[3] * m[6];
-    inv[6] = -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] - m[4] * m[3] * m[14] -
-             m[12] * m[2] * m[7] + m[12] * m[3] * m[6];
-    inv[10] = m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] + m[4] * m[3] * m[13] +
-              m[12] * m[1] * m[7] - m[12] * m[3] * m[5];
-    inv[14] = -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] - m[4] * m[2] * m[13] -
-              m[12] * m[1] * m[6] + m[12] * m[2] * m[5];
-    inv[3] = -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] - m[5] * m[3] * m[10] -
-             m[9] * m[2] * m[7] + m[9] * m[3] * m[6];
-    inv[7] = m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] + m[4] * m[3] * m[10] +
-             m[8] * m[2] * m[7] - m[8] * m[3] * m[6];
-    inv[11] = -m[0] * m[5] * m[11] + m[0] * m[7] * m[9] + m[4] * m[1] * m[11] - m[4] * m[3] * m[9] -
-              m[8] * m[1] * m[7] + m[8] * m[3] * m[5];
-    inv[15] = m[0] * m[5] * m[10] - m[0] * m[6] * m[9] - m[4] * m[1] * m[10] + m[4] * m[2] * m[9] +
-              m[8] * m[1] * m[6] - m[8] * m[2] * m[5];
-
-    float det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
-    if (std::fabs(det) < 1e-12f) return false;
-    det = 1.0f / det;
-    for (int i = 0; i < 16; i++) out[i] = inv[i] * det;
-    return true;
-}
 
 bool upload_eye(int eye, const uint8_t *bgra, uint32_t width, uint32_t height, uint32_t pitch)
 {
@@ -751,6 +711,8 @@ bool enabled() { return internal::g_requested.load(); }
 
 bool active() { return internal::g_active.load() && g_rt.session_running; }
 
+bool frame_ready() { return g_rt.frame_open && g_rt.session_running; }
+
 const char *last_error() { return g_error; }
 
 bool has_tracked_controllers() { return internal::controllers_seen(); }
@@ -815,7 +777,8 @@ void frame_begin()
     if (XR_FAILED(p_xrWaitFrame(g_rt.session, &wi, &fs))) return;
 
     XrFrameBeginInfo bi = {XR_TYPE_FRAME_BEGIN_INFO};
-    p_xrBeginFrame(g_rt.session, &bi);
+    if (XR_FAILED(p_xrBeginFrame(g_rt.session, &bi))) return;
+    g_rt.frame_open = true;
 
     g_rt.display_time = fs.predictedDisplayTime;
     g_rt.display_period = fs.predictedDisplayPeriod;

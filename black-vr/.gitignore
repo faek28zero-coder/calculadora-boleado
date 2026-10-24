@@ -28,3 +28,5 @@ CMakeFiles/
 .vscode/
 .idea/
 *.log
+
+# os stubs de teste são cópias de headers do port (GPL-2.0, igual a este repo) e ficam versionados

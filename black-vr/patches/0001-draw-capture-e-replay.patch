@@ -1,5 +1,5 @@
 diff --git a/loader/src/d3d/draw.cpp b/loader/src/d3d/draw.cpp
-index ec13310..855327a 100644
+index ec13310..a87572f 100644
 --- a/loader/src/d3d/draw.cpp
 +++ b/loader/src/d3d/draw.cpp
 @@ -12,6 +12,8 @@
@@ -11,31 +11,32 @@ index ec13310..855327a 100644
  
  #include <wincodec.h>
  
-@@ -624,6 +626,23 @@ void upload_vs_constants(IDirect3DDevice9 *d)
+@@ -624,6 +626,24 @@ void upload_vs_constants(IDirect3DDevice9 *d)
      k[32] = k[33] = fov_viewmodel_scale(); // c200: the first-person gun keeps the game's FOV
      k[34] = k[35] = 1.0f;
      d->SetVertexShaderConstantF(192, k, 9);
-+    // c201 (VR only, see vr/vr.h): the translated vertex shader ends with `o.pos = mul(o.pos, c201)`,
-+    // which takes the mono clip position to that eye's clip position. Outside VR it must be the
-+    // identity, so the shader does not have to know whether the headset is on.
++    // c201..c204 (VR only, see vr/vr.h): the translated vertex shader ends with four dots against these
++    // registers, which takes the mono clip position to that eye's clip position (row i of a row-major
++    // matrix = register c(201+i); the shader has no float4x4, so there is no packing ambiguity).
++    // Outside VR they must be the identity, so the shader does not have to know whether the headset is on.
 +    static int clip_eye = -1;
 +    static unsigned clip_serial = ~0u;
 +    if (vr::enabled()) {
 +        if (clip_eye != vr::eye() || clip_serial != vr::pose_serial()) {
-+            d->SetVertexShaderConstantF(201, vr::clip_matrix(vr::eye()), 1);
++            d->SetVertexShaderConstantF(201, vr::clip_matrix(vr::eye()), 4);
 +            clip_eye = vr::eye();
 +            clip_serial = vr::pose_serial();
 +        }
 +    } else if (clip_serial != 0) {
 +        static const float identity[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
-+        d->SetVertexShaderConstantF(201, identity, 1);
++        d->SetVertexShaderConstantF(201, identity, 4);
 +        clip_eye = 0;
 +        clip_serial = 0;
 +    }
  }
  
  // Fixed-function path: express the same scaling as a texture transform (when the game sets none).
-@@ -836,10 +855,14 @@ void draw_up(uint32_t xprim, uint32_t verts, const void *data, uint32_t stride)
+@@ -836,10 +856,14 @@ void draw_up(uint32_t xprim, uint32_t verts, const void *data, uint32_t stride)
      if (!p.count) return;
      perf::add_draw(verts, verts * stride);
      IDirect3DDevice9 *d = host3d::dev();
@@ -53,7 +54,7 @@ index ec13310..855327a 100644
  }
  
  void draw_indexed_up(uint32_t xprim, uint32_t nidx, const uint16_t *idx, const void *verts, uint32_t stride)
-@@ -871,8 +894,9 @@ void draw_indexed_up(uint32_t xprim, uint32_t nidx, const uint16_t *idx, const v
+@@ -871,8 +895,9 @@ void draw_indexed_up(uint32_t xprim, uint32_t nidx, const uint16_t *idx, const v
          for (uint32_t i = 0; i < nidx; i++) g_tmp_indices[i] = idx[i] - base;
          idx = g_tmp_indices.data();
      }
@@ -65,7 +66,7 @@ index ec13310..855327a 100644
  }
  
  const uint8_t *stream_data(uint32_t stream)
-@@ -1191,3 +1215,233 @@ const Hle *hle_draw_table(size_t *count)
+@@ -1191,3 +1216,233 @@ const Hle *hle_draw_table(size_t *count)
  }
  
  } // namespace xd3d
