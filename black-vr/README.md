@@ -16,6 +16,15 @@ PC pelo port, este módulo não tem o que mostrar — e é assim de propósito.
 
 ---
 
+## Estado atual (24/10)
+
+- **A cópia do jogo está verificada**: o `default.xbe` do usuário é o **NTSC-U original**
+  (`df2739c3…b68f6`), a build que o port reconhece. Nada a corrigir no lado do jogo.
+- O **port 0.2.0 já roda** na máquina dele (log de 4h24, 910 mil quadros, GTX 1650, 3440×1440, saída limpa).
+- O `compilar.bat` **instala em cima dessa pasta**: compila `0.3.0 + VR`, guarda o programa antigo em
+  `_port-antigo\`, migra `game\savedata` → `port\savedata` e cria `TESTAR-OCULOS.bat` + `JOGAR-VR.bat`.
+- Falta o que só roda na máquina dele: compilar no MSVC e abrir o headset.
+
 ## O que funciona (e o que é trabalho em aberto)
 
 | Peça | Estado |
@@ -56,6 +65,10 @@ fecha na sua máquina).
 ---
 
 ## Como montar
+
+**Estado atual:** a cópia do jogo já foi verificada (NTSC-U original, hash `DF2739C3…B68F5`) e o port
+0.2.0 roda na máquina do usuário. `compilar.bat` agora **instala em cima dessa pasta** e cria
+`TESTAR-OCULOS.bat` + `JOGAR-VR.bat`, preservando saves e configurações.
 
 **Sem termos técnicos?** Abra **[LEIA-ME-SIMPLES.txt](LEIA-ME-SIMPLES.txt)** — explica tudo em linguagem de gente.
 

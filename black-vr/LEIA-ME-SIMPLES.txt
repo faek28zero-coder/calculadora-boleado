@@ -1,67 +1,71 @@
-BLACK EM VR — EXPLICAÇÃO SEM TERMOS TÉCNICOS
-=============================================
+BLACK EM VR — O QUE FAZER (SEM TERMOS TÉCNICOS)
+=================================================
 
-O QUE A GENTE ESTÁ FAZENDO
---------------------------
-O jogo BLACK (de 2006) rodando no seu PC, com o óculos de realidade virtual.
-É o jogo de verdade. Não é imitação, não é um jogo parecido, não é site.
-Você liga o óculos, move a cabeça e está dentro do jogo.
+BOA NOTÍCIA: EU VI O SEU JOGO
+-----------------------------
+Baixei e conferi a sua cópia do BLACK que você colocou no Drive.
+Ela é a versão original americana — exatamente a que o meu trabalho
+precisa. Pode ficar tranquilo: o jogo está certo.
 
-
-ONDE A GENTE ESTÁ
------------------
-Pense numa receita de bolo. Faltam duas coisas:
-
-1) O BOLO (o jogo) .......... você já tem, está no seu Drive.
-   Mas eu não consigo abrir o seu arquivo: ele tem 1,25 GB e eu só consigo
-   receber arquivos de até 100 MB. Não é falta de vontade, é um limite daqui.
-
-2) O FORNO (o programa) ..... esse eu já escrevi, está pronto aqui na pasta.
-   Só que ele precisa ser "assado" no SEU computador, porque eu não tenho
-   um computador com Windows nem placa de vídeo pra isso. Quem assa é um
-   programa grátis da Microsoft, e você só precisa dar dois cliques.
+E mais: o arquivo de registro que estava na pasta mostra que você já
+jogou ele no PC por quase 4 horas e meia ontem (até saiu do jogo
+normalmente). Ou seja, a parte de PC já funciona na sua máquina.
 
 
-O QUE VOCÊ FAZ AGORA (3 PASSOS)
--------------------------------
-PASSO 1. Abra o seu arquivo RAR no Drive e extraia (descompacte).
-        É como abrir um zip. Vai aparecer uma pasta com os arquivos do jogo.
+O QUE FALTA
+-----------
+Falta uma coisa só: o programa que faz esse jogo aparecer dentro do
+óculos. Esse programa eu escrevi. Ele precisa ser "montado" no seu
+computador — eu não tenho um PC com Windows nem placa de vídeo aqui.
 
-PASSO 2. Dê dois cliques no arquivo "conferir-jogo.bat" (está nesta pasta).
-        Arraste a pasta do jogo para dentro da janelinha preta que abrir.
-        Ele vai dizer, em português: SERVE ou NÃO SERVE.
-        No fim ele abre um texto chamado LISTA.txt.
-
-PASSO 3. Copie o texto do LISTA.txt e cole aqui no chat.
-
-Pronto. Só isso. Três passos.
+Quem monta é o próprio Windows, sozinho, depois que você dá dois
+cliques no arquivo compilar.bat. Leva uns 20 minutos.
 
 
-POR QUE ESSE TESTE É NECESSÁRIO
--------------------------------
-O jogo BLACK foi vendido em várias versões pelo mundo, e a versão em
-português foi traduzida por fãs (não é oficial). O meu programa foi feito
-para a versão original, em inglês. Se o seu arquivo for a versão traduzida,
-o programa não reconhece e não roda.
+O QUE VOCÊ FAZ (UM PASSO SÓ)
+----------------------------
+1. Instale 3 programas grátis da Microsoft, se ainda não tiver:
+   - Visual Studio 2022 (marque "Desenvolvimento para desktop com C++")
+   - Git for Windows
+   - CMake
+   (Eles são grandes e demoram pra instalar. Pode fazer com calma.)
 
-Não dá pra saber isso pelo nome do arquivo. Só abrindo e olhando.
-É exatamente o que o conferir-jogo.bat faz pra você — sozinho, em 10 segundos.
-
-
-SE O RESULTADO FOR "NÃO SERVE"
-------------------------------
-Não é o fim. Existem três motivos comuns, e eu te digo qual é o seu quando
-você colar o LISTA.txt aqui. O mais comum é: o arquivo que você baixou é a
-versão de PlayStation 2. O meu trabalho é para a versão de Xbox — são jogos
-diferentes por dentro, mesmo sendo o mesmo BLACK na capa.
+2. Dê dois cliques em compilar.bat
+   - Ele abre uma janela preta e pergunta onde está o seu BLACK.
+   - Arraste a pasta do BLACK (a que tem o default.xbe dentro)
+     para dentro dessa janela e aperte Enter.
+   - Depois disso, não mexa mais. Ele baixa, monta, compila e instala.
+   - No fim, ele abre a sua pasta sozinho.
 
 
-O QUE FALTA DEPOIS DISSO
-------------------------
-Duas coisas, e eu te aviso na hora certa, com calma, sem pressa:
+O QUE VAI APARECER NA SUA PASTA NO FIM
+--------------------------------------
+Dois arquivos novos:
 
-- Instalar 3 programas grátis no seu PC (Microsoft).
-- Dar dois cliques no "compilar.bat". Ele faz todo o resto sozinho e leva
-  mais ou menos 20 minutos.
+  TESTAR-OCULOS.bat ... abra este PRIMEIRO.
+      Teste de 30 segundos. Você põe o óculos e deve ver:
+      um chão, uma régua de 10 centímetros e um alvo a 2 metros.
+      Serve para confirmar que está tudo no lugar e do tamanho certo.
+      Não é o jogo ainda. É o teste do óculos.
 
-Aí você abre o jogo e põe o óculos.
+  JOGAR-VR.bat ........ depois desse, é sempre este.
+      Abre o BLACK dentro do óculos.
+
+E uma pasta _port-antigo, com o programa antigo guardado.
+Nada seu é apagado. Seus saves vão para o lugar novo automaticamente.
+
+
+O QUE VOCÊ VAI SENTIR (pra não se decepcionar)
+----------------------------------------------
+- O jogo é o original de 2006, não um remake. Visual de 2006.
+- Você vai poder olhar em volta mexendo a cabeça, de verdade.
+- Sua placa de vídeo é uma GTX 1650: dá pra jogar, mas não no talo.
+  Se ficar pesado, a gente abaixa a qualidade. Me avise como ficou.
+- A primeira vez costuma ter detalhe pra ajustar. É normal. Você me
+  diz o que viu e eu corrijo.
+
+
+SE DER ERRO
+-----------
+A janela preta diz o que deu errado, em português. Tira um print e
+manda aqui. Nada é perdido: você conserta e roda de novo.

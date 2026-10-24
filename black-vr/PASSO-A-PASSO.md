@@ -7,7 +7,7 @@ três coisas, nesta ordem:
 
 | # | O que | De onde vem |
 |---|---|---|
-| 1 | **A sua cópia do BLACK** (o `default.xbe` do Xbox) | sua — extraída do disco que você já tem |
+| 1 | **A sua cópia do BLACK** (o `default.xbe` do Xbox) | ✅ **já resolvido** — a que você pôs no Drive é a NTSC-U original |
 | 2 | **O programa compilado** (`black.exe` + `blackrt.dll`) | sai do `compilar.bat` deste pacote |
 | 3 | **Um runtime de VR** instalado | SteamVR, Meta Quest Link, WMR, Virtual Desktop… |
 
@@ -25,6 +25,20 @@ programa pronto — o jogo é da Criterion/EA, e compilar é o passo 2 abaixo.
   No instalador, marque **"Desenvolvimento para desktop com C++"**. (É grande; pode ir tomando um café.)
 - **Runtime de VR** — se você usa SteamVR, ele já serve. Se usa Quest por cabo/air link, o app da Meta
   instala o runtime sozinho. Se não tem nenhum, o jogo ainda roda em tela plana.
+
+### Você já tem o port 0.2.0 instalado?
+
+Ótimo — o `compilar.bat` foi feito para rodar **em cima** dessa instalação, sem apagar nada:
+
+- ele acha o `default.xbe` sozinho (inclusive dentro de `game\`);
+- confere o hash do seu jogo e te avisa se não for NTSC-U/PAL;
+- compila a versão **0.3.0 + VR** e instala em `port\`;
+- guarda o programa antigo em `_port-antigo\`;
+- leva os saves de `game\savedata` para `port\savedata` e o `black.ini` junto;
+- cria `TESTAR-OCULOS.bat` e `JOGAR-VR.bat` na pasta principal.
+
+O 0.3.0 traz, entre outras coisas, o **lean** (inclinar/inclinação lateral) que o módulo de VR usa como
+base do movimento de cabeça — por isso a versão de base é essa e não a 0.2.0.
 
 ## 2. Compile (um duplo clique)
 
