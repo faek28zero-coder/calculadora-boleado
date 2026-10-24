@@ -57,6 +57,9 @@ fecha na sua máquina).
 
 ## Como montar
 
+**Se você não mexe em código:** siga o [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md) — são dois duplos
+cliques (`compilar.bat`) e a sua cópia do jogo. O resto desta seção é a versão manual.
+
 Pré-requisitos no Windows:
 
 - Visual Studio 2022 com **C++ para x86** (o loader é 32 bits e usa asm inline da MSVC);
