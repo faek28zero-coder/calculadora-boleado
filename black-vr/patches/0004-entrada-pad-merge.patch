@@ -1,0 +1,43 @@
+diff --git a/loader/src/input/xinput.cpp b/loader/src/input/xinput.cpp
+index 464615b..db243f7 100644
+--- a/loader/src/input/xinput.cpp
++++ b/loader/src/input/xinput.cpp
+@@ -9,6 +9,7 @@
+ #include "input/bindings.h"
+ #include "input/mouselook.h"
+ #include "input/movies.h"
++#include "vr/vr.h"
+ #include "xbe.h"
+ 
+ #include <algorithm>
+@@ -316,6 +317,30 @@ void read_pad(uint32_t port, XGamepad &g)
+     if (!bindings::capture_poll(focus, raw_wheel)) // while the key bindings page waits for a key, keys bind instead
+         bindings::apply(g.wButtons, g.bAnalogButtons, g.sThumbLX, g.sThumbLY, g.sThumbRX, g.sThumbRY, focus, live, wheel);
+     movies_poll(g.wButtons, g.bAnalogButtons, bindings::menu_select_held());
++    // VR (vr/vr.h): os controles do headset entram como mais um pad. Depois do pad físico, das teclas e
++    // dos atalhos, então quem estiver com o controle na mão continua funcionando igual.
++    if (vr::active()) {
++        vr::Pad vp;
++        vp.lx = g.sThumbLX;
++        vp.ly = g.sThumbLY;
++        vp.rx = g.sThumbRX;
++        vp.ry = g.sThumbRY;
++        vp.buttons = g.wButtons;
++        vp.lt = g.bAnalogButtons[6];
++        vp.rt = g.bAnalogButtons[7];
++        vr::pad_merge(&vp);
++        g.sThumbLX = vp.lx;
++        g.sThumbLY = vp.ly;
++        g.sThumbRX = vp.rx;
++        g.sThumbRY = vp.ry;
++        g.wButtons = vp.buttons;
++        if (vp.buttons & 0x1000) g.bAnalogButtons[0] = 255; // A
++        if (vp.buttons & 0x2000) g.bAnalogButtons[1] = 255; // B
++        if (vp.buttons & 0x4000) g.bAnalogButtons[2] = 255; // X (recarregar, por padrão)
++        if (vp.buttons & 0x8000) g.bAnalogButtons[3] = 255; // Y
++        g.bAnalogButtons[6] = vp.lt;
++        g.bAnalogButtons[7] = vp.rt;
++    }
+ }
+ 
+ } // namespace

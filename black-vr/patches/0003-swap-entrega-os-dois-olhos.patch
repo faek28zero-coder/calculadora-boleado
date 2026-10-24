@@ -1,0 +1,42 @@
+diff --git a/loader/src/d3d/device.cpp b/loader/src/d3d/device.cpp
+index 28609f8..2c72e47 100644
+--- a/loader/src/d3d/device.cpp
++++ b/loader/src/d3d/device.cpp
+@@ -13,6 +13,8 @@
+ #include "d3d/state.h"
+ #include "d3d/vshader.h"
+ #include "kernel/kexports.h"
++#include "vr/vr.h"
++#include "vr/vr_frame.h"
+ #include "xthread.h"
+ 
+ #include <d3dcompiler.h>
+@@ -1293,6 +1295,20 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+     perf::swap_begin();
+     pace_swap();
+     present_backbuffer();
++    if (vr::enabled()) vr::start_once(host3d::window()); // sobe o headset na primeira vez
++    // VR: o quadro do jogo acabou de ser desenhado (e já foi para a janela). `vr::frame_begin()` rodou
++    // no Swap anterior: é ele que dá a pose para a câmera do jogo e adquire as imagens do headset.
++    // Aqui só falta entregar os dois olhos: o esquerdo é este quadro, o direito é o mesmo frame
++    // reexecutado com a matriz de clip do outro olho (vr_frame.h).
++    if (vr::active()) {
++        HostRT &bb = host_rt(g_backbuffer);
++        vr::submit_frame(bb.tex, 0);
++        vr::render_second_eye(host3d::dev(), bb.tex);
++        vr::frame_end();
++        // O replay deixa o device no estado do último draw gravado: devolve o render target do jogo.
++        bind_render_target(g_st.render_target ? g_st.render_target : g_backbuffer, g_st.depth_stencil);
++        apply_viewport();
++    }
+     capture_frame();
+     uint32_t frames = ++g_frame_count;
+     memdump_frame(frames);
+@@ -1322,6 +1338,7 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+     if (frames % 60 == 0 || frames < 4)
+         logf("[d3d] frame %u presented (%u draws, %u skipped since last report)", frames, g_st.draws, g_st.draws_skipped);
+     if (frames % 60 == 0 || frames < 4) g_st.draws = g_st.draws_skipped = 0;
++    if (vr::enabled()) vr::frame_begin(); // espera o frame do runtime e localiza as views do próximo
+     if (auto cb = dev_field<void(__cdecl *)(void *)>(DEV_VBLANKCALLBACK)) {
+         static std::atomic<bool> noted{false};
+         if (!noted.exchange(true)) logf("[d3d] vblank callback %s is set by the game", sym_name((uint32_t)(uintptr_t)cb).c_str());

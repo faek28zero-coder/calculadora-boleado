@@ -1,0 +1,315 @@
+diff --git a/loader/src/d3d/draw.cpp b/loader/src/d3d/draw.cpp
+index ec13310..855327a 100644
+--- a/loader/src/d3d/draw.cpp
++++ b/loader/src/d3d/draw.cpp
+@@ -12,6 +12,8 @@
+ #include "d3d/vshader.h"
+ #include "fov.h"
+ #include "perf.h"
++#include "vr/vr.h"
++#include "vr/vr_frame.h"
+ 
+ #include <wincodec.h>
+ 
+@@ -624,6 +626,23 @@ void upload_vs_constants(IDirect3DDevice9 *d)
+     k[32] = k[33] = fov_viewmodel_scale(); // c200: the first-person gun keeps the game's FOV
+     k[34] = k[35] = 1.0f;
+     d->SetVertexShaderConstantF(192, k, 9);
++    // c201 (VR only, see vr/vr.h): the translated vertex shader ends with `o.pos = mul(o.pos, c201)`,
++    // which takes the mono clip position to that eye's clip position. Outside VR it must be the
++    // identity, so the shader does not have to know whether the headset is on.
++    static int clip_eye = -1;
++    static unsigned clip_serial = ~0u;
++    if (vr::enabled()) {
++        if (clip_eye != vr::eye() || clip_serial != vr::pose_serial()) {
++            d->SetVertexShaderConstantF(201, vr::clip_matrix(vr::eye()), 1);
++            clip_eye = vr::eye();
++            clip_serial = vr::pose_serial();
++        }
++    } else if (clip_serial != 0) {
++        static const float identity[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
++        d->SetVertexShaderConstantF(201, identity, 1);
++        clip_eye = 0;
++        clip_serial = 0;
++    }
+ }
+ 
+ // Fixed-function path: express the same scaling as a texture transform (when the game sets none).
+@@ -836,10 +855,14 @@ void draw_up(uint32_t xprim, uint32_t verts, const void *data, uint32_t stride)
+     if (!p.count) return;
+     perf::add_draw(verts, verts * stride);
+     IDirect3DDevice9 *d = host3d::dev();
+-    if (p.quads)
+-        d->DrawIndexedPrimitiveUP(p.type, 0, verts, p.count, quad_indices(verts / 4), D3DFMT_INDEX16, data, stride);
+-    else
++    if (p.quads) {
++        const uint16_t *qi = quad_indices(verts / 4);
++        vr_draw::capture_draw(p.type, p.count, 0, verts, qi, data, stride);
++        d->DrawIndexedPrimitiveUP(p.type, 0, verts, p.count, qi, D3DFMT_INDEX16, data, stride);
++    } else {
++        vr_draw::capture_draw(p.type, p.count, 0, verts, nullptr, data, stride);
+         d->DrawPrimitiveUP(p.type, p.count, data, stride);
++    }
+ }
+ 
+ void draw_indexed_up(uint32_t xprim, uint32_t nidx, const uint16_t *idx, const void *verts, uint32_t stride)
+@@ -871,8 +894,9 @@ void draw_indexed_up(uint32_t xprim, uint32_t nidx, const uint16_t *idx, const v
+         for (uint32_t i = 0; i < nidx; i++) g_tmp_indices[i] = idx[i] - base;
+         idx = g_tmp_indices.data();
+     }
+-    host3d::dev()->DrawIndexedPrimitiveUP(p.type, 0, mx - mn + 1, p.count, idx, D3DFMT_INDEX16,
+-                                          (const uint8_t *)verts + (size_t)mn * stride, stride);
++    const uint8_t *base_verts = (const uint8_t *)verts + (size_t)mn * stride;
++    vr_draw::capture_draw(p.type, p.count, 0, mx - mn + 1, idx, base_verts, stride);
++    host3d::dev()->DrawIndexedPrimitiveUP(p.type, 0, mx - mn + 1, p.count, idx, D3DFMT_INDEX16, base_verts, stride);
+ }
+ 
+ const uint8_t *stream_data(uint32_t stream)
+@@ -1191,3 +1215,233 @@ const Hle *hle_draw_table(size_t *count)
+ }
+ 
+ } // namespace xd3d
++
++// ============================================================
++//  VR: gravação do frame e replay para o segundo olho
++//
++//  O contrato está em vr/vr_frame.h. A implementação mora aqui porque este é o único lugar
++//  do port que sabe reexecutar um draw: tem o estado (g_st + as tabelas do Xbox), o
++//  begin_draw() que o traduz para o D3D9 e o draw em si.
++//
++//  Por draw são gravados o estado completo (HleState, render states, texture stages e as
++//  constantes do vertex shader) e a geometria final que foi para o D3D9. Estado e constantes
++//  são deduplicados contra o registro anterior, então o custo por draw é quase só a geometria.
++//
++//  Limitação da v1 (docs/IMPLEMENTACAO.md): só entram os draws cujo render target é o back
++//  buffer. Os passes intermediários (buffers de efeito, sombras) não são reexecutados por olho.
++// ============================================================
++namespace xd3d {
++namespace vr_impl {
++
++namespace {
++
++constexpr size_t kMaxBytes = 64u << 20; // teto de memória de um frame gravado
++
++struct StateSnap {
++    HleState st;
++    uint32_t rs[XRS_MAX];
++    uint32_t ts[4][32];
++};
++
++struct ConstSnap {
++    float c[192][4];
++};
++
++struct DrawRec {
++    uint32_t state; // índice em g_states
++    uint32_t consts; // índice em g_consts
++    uint32_t type;   // D3DPRIMITIVETYPE
++    uint32_t prims;  // primitivas (não vértices)
++    uint32_t nverts; // vértices referenciados (MinVertexIndex é sempre 0 aqui)
++    uint32_t stride;
++    uint32_t idx_first;
++    uint32_t idx_count;
++    uint32_t vtx_first;
++    uint32_t vtx_bytes;
++};
++
++std::vector<StateSnap> g_states;
++std::vector<ConstSnap> g_consts;
++std::vector<DrawRec> g_draws;
++std::vector<uint16_t> g_indices;
++std::vector<uint8_t> g_verts;
++size_t g_bytes;
++float g_replay_ms;
++bool g_recording;
++bool g_full;
++
++void reset()
++{
++    g_states.clear();
++    g_consts.clear();
++    g_draws.clear();
++    g_indices.clear();
++    g_verts.clear();
++    g_bytes = 0;
++    g_full = false;
++}
++
++} // namespace
++
++void capture_begin()
++{
++    reset();
++    g_recording = true;
++}
++
++void capture_end() { g_recording = false; }
++
++void capture_draw(uint32_t type, uint32_t prims, int32_t minv, uint32_t nverts, const uint16_t *indices, const void *verts,
++                  uint32_t stride)
++{
++    (void)minv; // o port rebaseia os índices: MinVertexIndex é 0 nas duas chamadas
++    if (!g_recording || g_full || !verts || !nverts || !stride) return;
++    // Só o frame principal: passes em render targets próprios já estão dentro do back buffer.
++    if (g_st.render_target && g_st.render_target != g_backbuffer) return;
++
++    const size_t idx_count = indices ? (size_t)prims * 3 : 0;
++    const size_t vbytes = (size_t)nverts * stride;
++    const size_t ibytes = idx_count * sizeof(uint16_t);
++    if (g_bytes + vbytes + ibytes > kMaxBytes) {
++        g_full = true;
++        logf("[vr] gravação do frame cheia (%zu draws, %.1f MB): o resto do frame não será repetido no olho direito",
++             g_draws.size(), g_bytes / (1024.0 * 1024.0));
++        return;
++    }
++
++    StateSnap cur;
++    cur.st = g_st;
++    memcpy(cur.rs, render_state(), sizeof cur.rs);
++    for (int st = 0; st < 4; st++) memcpy(cur.ts[st], texture_state(st), sizeof cur.ts[st]);
++    if (g_states.empty() || memcmp(&g_states.back().st, &cur.st, sizeof cur.st) ||
++        memcmp(g_states.back().rs, cur.rs, sizeof cur.rs) || memcmp(g_states.back().ts, cur.ts, sizeof cur.ts)) {
++        g_states.push_back(cur);
++        g_bytes += sizeof cur;
++    }
++
++    if (g_st.vs_constants) {
++        const float *src = &g_st.vs_constants[0][0];
++        if (g_consts.empty() || memcmp(g_consts.back().c, src, sizeof(ConstSnap::c))) {
++            ConstSnap cs;
++            memcpy(cs.c, src, sizeof cs.c);
++            g_consts.push_back(cs);
++            g_bytes += sizeof cs;
++        }
++    }
++    if (g_consts.empty()) {
++        ConstSnap zero = {};
++        g_consts.push_back(zero);
++    }
++
++    DrawRec rec = {};
++    rec.state = (uint32_t)g_states.size() - 1;
++    rec.consts = (uint32_t)g_consts.size() - 1;
++    rec.type = type;
++    rec.prims = prims;
++    rec.nverts = nverts;
++    rec.stride = stride;
++    rec.vtx_first = (uint32_t)g_verts.size();
++    rec.vtx_bytes = (uint32_t)vbytes;
++    g_verts.insert(g_verts.end(), (const uint8_t *)verts, (const uint8_t *)verts + vbytes);
++    if (indices && idx_count) {
++        rec.idx_first = (uint32_t)g_indices.size();
++        rec.idx_count = (uint32_t)idx_count;
++        g_indices.insert(g_indices.end(), indices, indices + idx_count);
++    }
++    g_draws.push_back(rec);
++    g_bytes += vbytes + ibytes + sizeof rec;
++}
++
++void replay()
++{
++    IDirect3DDevice9 *d = host3d::dev();
++    if (!d || g_draws.empty()) return;
++
++    LARGE_INTEGER t0, t1;
++    QueryPerformanceCounter(&t0);
++
++    // O jogo continua depois do replay: guarda o estado que ele deixou.
++    HleState saved_st = g_st;
++    static std::vector<uint32_t> saved_rs, saved_ts;
++    saved_rs.assign(render_state(), render_state() + XRS_MAX);
++    saved_ts.resize(4 * 32);
++    for (int st = 0; st < 4; st++) memcpy(&saved_ts[(size_t)st * 32], texture_state(st), 32 * sizeof(uint32_t));
++
++    Surface *bound_z = nullptr;
++    uint32_t skipped = 0;
++    for (const DrawRec &rec : g_draws) {
++        const StateSnap &st8 = g_states[rec.state];
++        g_st = st8.st;
++        memcpy(render_state(), st8.rs, sizeof st8.rs);
++        for (int s = 0; s < 4; s++) memcpy(texture_state(s), st8.ts[s], sizeof st8.ts[s]);
++        g_st.vs_constants = const_cast<float (*)[4]>(g_consts[rec.consts].c);
++
++        if (bound_z != g_st.depth_stencil) {
++            bind_render_target(g_backbuffer, g_st.depth_stencil);
++            bound_z = g_st.depth_stencil;
++        }
++        apply_viewport();
++        forget_sent_state(); // o cache de "o que já foi enviado" não vale depois de trocar tudo
++
++        DrawCtx ctx;
++        if (!begin_draw(ctx)) {
++            skipped++;
++            continue;
++        }
++        const uint8_t *v = g_verts.data() + rec.vtx_first;
++        if (rec.idx_count)
++            d->DrawIndexedPrimitiveUP((D3DPRIMITIVETYPE)rec.type, 0, rec.nverts, rec.prims, g_indices.data() + rec.idx_first,
++                                      D3DFMT_INDEX16, v, rec.stride);
++        else
++            d->DrawPrimitiveUP((D3DPRIMITIVETYPE)rec.type, rec.prims, v, rec.stride);
++    }
++    host3d::end_scene();
++    forget_sent_state();
++
++    g_st = saved_st;
++    memcpy(render_state(), saved_rs.data(), sizeof(uint32_t) * XRS_MAX);
++    for (int s = 0; s < 4; s++) memcpy(texture_state(s), &saved_ts[(size_t)s * 32], 32 * sizeof(uint32_t));
++
++    QueryPerformanceCounter(&t1);
++    static double freq;
++    if (!freq) {
++        LARGE_INTEGER f;
++        QueryPerformanceFrequency(&f);
++        freq = (double)f.QuadPart;
++    }
++    g_replay_ms = (float)((t1.QuadPart - t0.QuadPart) * 1000.0 / (freq ? freq : 1.0));
++    if (skipped) logf("[vr] replay: %u draws pulados (sem pipeline no D3D9)", skipped);
++}
++
++uint32_t draw_count() { return (uint32_t)g_draws.size(); }
++uint32_t byte_count() { return (uint32_t)g_bytes; }
++float replay_ms() { return g_replay_ms; }
++
++} // namespace vr_impl
++} // namespace xd3d
++
++// ---- contrato com o módulo de VR (vr/vr_frame.h) ----
++
++namespace vr_draw {
++
++void capture_begin() { xd3d::vr_impl::capture_begin(); }
++void capture_end() { xd3d::vr_impl::capture_end(); }
++
++void capture_draw(uint32_t type, uint32_t prims, int32_t minv, uint32_t nverts, const uint16_t *indices, const void *verts,
++                  uint32_t stride)
++{
++    xd3d::vr_impl::capture_draw(type, prims, minv, nverts, indices, verts, stride);
++}
++
++void replay() { xd3d::vr_impl::replay(); }
++
++Stats stats()
++{
++    Stats s;
++    s.draws = xd3d::vr_impl::draw_count();
++    s.bytes = xd3d::vr_impl::byte_count();
++    s.last_replay_ms = xd3d::vr_impl::replay_ms();
++    return s;
++}
++
++} // namespace vr_draw
+diff --git a/loader/src/d3d/state.h b/loader/src/d3d/state.h
+index a63563e..2f04864 100644
+--- a/loader/src/d3d/state.h
++++ b/loader/src/d3d/state.h
+@@ -81,6 +81,9 @@ void init_default_states(); // what the original CreateDevice puts in the state
+ bool debug_frame_active();  // --debug-frame N: true while frame N is being built
+ 
+ // ---- device (device.cpp) ----
++extern Surface *g_backbuffer, *g_depthbuffer;
++void bind_render_target(Surface *rt, Surface *z); // the host color/depth the Xbox target maps to
++void apply_viewport(); ----
+ void viewport_transform(float *scale, float *offset); // NV2A screen = clip / w * scale + offset
+ void host_viewport_transform(float *scale, float *offset); // the same for the host viewport (undoing screen space)
+ void update_viewport_constants();                     // c-38 / c-37 = viewport scale / offset

@@ -1,30 +1,30 @@
-# dependências / build
-node_modules/
-dist/
-build/
-
-# Unity
-unity/Library/
-unity/Temp/
-unity/Logs/
-unity/Obj/
-unity/obj/
-unity/Build/
-unity/Builds/
-unity/UserSettings/
-unity/*.csproj
-unity/*.sln
-unity/*.apk
-unity/*.unitypackage
-
-# sistema
-.DS_Store
-Thumbs.db
-*.log
-
-# nada de dados do jogo, nunca
+# --- nada derivado do jogo entra aqui (direitos da Criterion/EA) ---
+game/
 *.xbe
 *.iso
 *.xiso
-game/
-assets/
+*.xso
+work/
+ghidra/
+*.xdb
+
+# --- build ---
+build/
+out/
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.lib
+*.exp
+*.map
+CMakeCache.txt
+CMakeFiles/
+.vs/
+*.user
+
+# --- ferramentas / editor ---
+.vscode/
+.idea/
+*.log

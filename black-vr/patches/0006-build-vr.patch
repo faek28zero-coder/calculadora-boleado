@@ -1,0 +1,29 @@
+diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
+index 74476db..3c23437 100644
+--- a/loader/CMakeLists.txt
++++ b/loader/CMakeLists.txt
+@@ -67,12 +67,22 @@ add_library(blackrt SHARED
+   src/audio/dsound.cpp
+   src/audio/output.cpp
+   src/input/xinput.cpp
++  # VR (openxr): the module lives in src/vr, same tree as the port's own sources.
++  src/vr/vr.cpp
++  src/vr/vr_openxr.cpp
++  src/vr/vr_pose.cpp
++  src/vr/vr_input.cpp
++  src/vr/vr_selftest.cpp
+ )
+-target_include_directories(blackrt PRIVATE src)
++target_include_directories(blackrt PRIVATE src
++  # OpenXR headers (vendored, Apache-2.0: vendor/openxr/openxr.h + openxr_platform.h in this repo).
++  # No import library: the loader is opened at run time (vr_openxr.cpp), so a machine without a
++  # VR runtime still runs the game flat.
++  ${CMAKE_CURRENT_SOURCE_DIR}/../vendor/openxr)
+ target_compile_definitions(blackrt PRIVATE WIN32_LEAN_AND_MEAN NOMINMAX _CRT_SECURE_NO_WARNINGS UNICODE _UNICODE
+   BLACK_VERSION="${PROJECT_VERSION}")
+ target_compile_options(blackrt PRIVATE /W3 /utf-8 /EHsc)
+-target_link_libraries(blackrt PRIVATE ntdll bcrypt d3d9 d3dcompiler windowscodecs ole32 user32 gdi32 winmm dbghelp advapi32 shell32)
++target_link_libraries(blackrt PRIVATE ntdll bcrypt d3d9 d3d11 dxgi d3dcompiler windowscodecs ole32 user32 gdi32 winmm dbghelp advapi32 shell32)
+ # Xbox SEH handlers run through the same fs:[0] chain; no SafeSEH tables anywhere in the process.
+ target_link_options(blackrt PRIVATE /SAFESEH:NO /MAP) # blackrt.map: port addresses in crash logs -> functions
+ 

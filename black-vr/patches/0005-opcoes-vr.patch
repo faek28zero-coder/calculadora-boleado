@@ -1,0 +1,141 @@
+diff --git a/loader/src/common.h b/loader/src/common.h
+index c7eeeec..5619e15 100644
+--- a/loader/src/common.h
++++ b/loader/src/common.h
+@@ -81,6 +81,17 @@ struct Config {
+     float lean_offset = 0.35f; // (--lean-angle, --lean-offset)
+     bool reload_blur = true;   // the game's screen blur while reloading (reload_blur.cpp; --no-reload-blur, PC SETTINGS)
+     float fov = 70.0f;         // horizontal field of view in play, degrees (fov.cpp; --fov, PC SETTINGS; the game's is 70)
++    // VR (vr/vr.h): the OpenXR headset. `vr` is black.ini `vr = 1` or --vr; without a runtime the game
++    // keeps running flat, so these settings are harmless on a machine with no headset.
++    bool vr = false;
++    float vr_ipd = 63.0f;            // --vr-ipd: interpupillary distance in mm
++    float vr_move_scale = 1.0f;      // --vr-move-scale: how much real head movement moves the body
++    float vr_snap_turn = 30.0f;      // --vr-snap-turn: degrees per flick of the right stick (0 = off)
++    float vr_fov = 0.0f;             // --vr-fov: game FOV in VR; 0 = follow the headset
++    uint32_t vr_reload_button = 0x4000; // --vr-reload-button: Xbox button mask the right squeeze presses
++    bool vr_input = true;            // --no-vr-input: headset controls do not become the Xbox pad
++    bool vr_hud = true;              // --no-vr-hud: the 2D overlay (HUD) is not repeated per eye
++    int vr_selftest = 0;             // --vr-selftest N: show the calibration scene for N seconds and exit
+     bool skip_movies = true;   // A / START skip any movie, also unseen ones (input/movies.cpp; --no-movie-skip, PC SETTINGS)
+     bool known_build = false;  // the XBE is the address-table source build (NTSC-U)
+     bool pal_build = false;    // exact PAL European XBE analyzed for compatibility
+diff --git a/loader/src/main.cpp b/loader/src/main.cpp
+index 96b4c72..8be2e52 100644
+--- a/loader/src/main.cpp
++++ b/loader/src/main.cpp
+@@ -22,6 +22,7 @@
+ #include "kernel/xboxkrnl.h"
+ #include "xbe.h"
+ #include "xthread.h"
++#include "vr/vr.h"
+ 
+ #include <bcrypt.h>
+ #include <shellapi.h>
+@@ -97,6 +98,12 @@ void usage()
+            "  --lean-angle D    tactical lean: view roll at full lean in degrees (default 10); --lean-offset M: eye shift (0.35; PC SETTINGS > TWEAKS)\n"
+            "  --no-reload-blur  no screen blur while reloading (default: on, as the original); --reload-blur\n"
+            "  --fov D           horizontal field of view in play, 50-120 degrees (default 70, the game's; PC SETTINGS > VIDEO)\n"
++           "  --vr              play in the headset (OpenXR): stereo per-eye projection, head tracking, VR controllers as the pad\n"
++           "  --vr-ipd MM       interpupillary distance (default 63); --vr-move-scale F: real head movement -> body movement (1.0)\n"
++           "  --vr-snap-turn D  comfort snap turn per right-stick flick, degrees (30; 0 = continuous only)\n"
++           "  --vr-fov D        game FOV while in VR, degrees (0 = follow the headset, which is what you want)\n"
++           "  --no-vr-input     ignore the headset controllers (keyboard/mouse/pad only); --no-vr-hud: no 2D overlay per eye\n"
++           "  --vr-selftest N   show the VR calibration scene for N seconds without the game (checks the headset alone)\n"
+            "  --no-movie-skip   movies skip only as in the original (default: A / START skip every movie)\n"
+            "  --no-pc-menus     no PC SETTINGS pages in the game's Options menu (built at start into cache\\menus\n"
+            "                    next to black.exe)\n"
+@@ -227,6 +234,28 @@ bool parse_args()
+             else g_cfg.lean_offset = std::clamp(f, -2.0f, 2.0f);
+         } else if (a == L"--no-reload-blur") { g_cfg.reload_blur = false; settings_mark_cli("reloadblur"); }
+         else if (a == L"--reload-blur") { g_cfg.reload_blur = true; settings_mark_cli("reloadblur"); }
++        else if (a == L"--vr") { g_cfg.vr = true; settings_mark_cli("vr"); }
++        else if (a == L"--no-vr") { g_cfg.vr = false; settings_mark_cli("vr"); }
++        else if (a == L"--no-vr-input") { g_cfg.vr_input = false; settings_mark_cli("vr_input"); }
++        else if (a == L"--no-vr-hud") { g_cfg.vr_hud = false; settings_mark_cli("vr_hud"); }
++        else if (a == L"--vr-ipd" || a == L"--vr-move-scale" || a == L"--vr-snap-turn" || a == L"--vr-fov" ||
++                 a == L"--vr-reload-button") {
++            std::wstring v;
++            if (!next(v)) return false;
++            float f = (float)_wtof(v.c_str());
++            if (a == L"--vr-ipd") { g_cfg.vr_ipd = std::clamp(f, 45.0f, 80.0f); settings_mark_cli("vr_ipd"); }
++            else if (a == L"--vr-move-scale") { g_cfg.vr_move_scale = std::clamp(f, 0.0f, 3.0f); settings_mark_cli("vr_move_scale"); }
++            else if (a == L"--vr-snap-turn") { g_cfg.vr_snap_turn = std::clamp(f, 0.0f, 90.0f); settings_mark_cli("vr_snap_turn"); }
++            else if (a == L"--vr-fov") { g_cfg.vr_fov = std::clamp(f, 0.0f, 170.0f); settings_mark_cli("vr_fov"); }
++            else { g_cfg.vr_reload_button = (uint32_t)f; settings_mark_cli("vr_reload_button"); }
++            g_cfg.vr = true;
++        }
++        else if (a == L"--vr-selftest") {
++            std::wstring v;
++            if (!next(v)) return false;
++            g_cfg.vr_selftest = std::max(1, _wtoi(v.c_str()));
++            g_cfg.vr = true;
++        }
+         else if (a == L"--fov") {
+             settings_mark_cli("fov");
+             std::wstring v;
+@@ -435,6 +464,13 @@ int run(void *reserve, unsigned reserve_size)
+ 
+     log_init(g_cfg.log_path);
+     g_exit_event = CreateEventW(nullptr, TRUE, FALSE, nullptr);
++    if (g_cfg.vr_selftest) {
++        // --vr-selftest N: testa o headset sem o jogo (calibração de escala/IPD, ver vr_selftest.cpp).
++        vr::Settings vrs;
++        vrs.ipd_mm = g_cfg.vr_ipd;
++        vr::configure(vrs);
++        return vr::selftest(host3d::window(), g_cfg.vr_selftest) ? 0 : 1;
++    }
+     logc("BLACK loader " BLACK_VERSION " (blackrt) - XBE %s, hdd %s, log %s%s%s", narrow(g_cfg.xbe_path).c_str(), narrow(g_cfg.hdd_dir).c_str(),
+          narrow(g_cfg.log_path).c_str(), g_cfg.trace ? ", trace" : "", g_cfg.strict ? ", strict" : "");
+     logf("address-space stub: reserve %p + 0x%x", reserve, reserve_size);
+@@ -509,6 +545,20 @@ int run(void *reserve, unsigned reserve_size)
+     if (supported_build) install_reload_blur_patch();
+     if (supported_build) install_lean_patch();
+     if (supported_build) install_fov_patch();
++    if (supported_build && g_cfg.vr) {
++        // vr/vr.h: camera patch (head pose on the game's view matrix) + settings for the module.
++        vr::Settings vrs;
++        vrs.ipd_mm = g_cfg.vr_ipd;
++        vrs.move_scale = g_cfg.vr_move_scale;
++        vrs.snap_turn_deg = g_cfg.vr_snap_turn;
++        vrs.game_fov = g_cfg.vr_fov;
++        vrs.reload_button = (uint16_t)g_cfg.vr_reload_button;
++        vrs.input = g_cfg.vr_input;
++        vrs.hud_in_headset = g_cfg.vr_hud;
++        vrs.fps = g_cfg.fps;
++        vr::configure(vrs);
++        vr::install();
++    }
+     if (supported_build) install_bigbuf_patch();
+     if (supported_build) install_fe_calls();
+     if (supported_build && g_cfg.pc_menus) { // the in-game PC SETTINGS pages, from the user's own front-end file
+diff --git a/loader/src/settings.cpp b/loader/src/settings.cpp
+index b54c64f..0908b7d 100644
+--- a/loader/src/settings.cpp
++++ b/loader/src/settings.cpp
+@@ -60,6 +60,14 @@ void settings_load()
+         else if (k == "lean_angle") g_cfg.lean_angle = std::clamp(v, -45.0f, 45.0f);
+         else if (k == "lean_offset") g_cfg.lean_offset = std::clamp(v, -2.0f, 2.0f);
+         else if (k == "fov") g_cfg.fov = std::clamp(v, 50.0f, 120.0f);
++        else if (k == "vr") g_cfg.vr = v != 0;
++        else if (k == "vr_ipd") g_cfg.vr_ipd = std::clamp(v, 45.0f, 80.0f);
++        else if (k == "vr_move_scale") g_cfg.vr_move_scale = std::clamp(v, 0.0f, 3.0f);
++        else if (k == "vr_snap_turn") g_cfg.vr_snap_turn = std::clamp(v, 0.0f, 90.0f);
++        else if (k == "vr_fov") g_cfg.vr_fov = std::clamp(v, 0.0f, 170.0f);
++        else if (k == "vr_input") g_cfg.vr_input = v != 0;
++        else if (k == "vr_hud") g_cfg.vr_hud = v != 0;
++        else if (k == "vr_reload_button") g_cfg.vr_reload_button = (uint32_t)v;
+         else if (k == "skipanymovie") g_cfg.skip_movies = v != 0;
+         else if (k == "reverb") g_cfg.reverb = v != 0;
+         else if (k == "reverb_gain") g_cfg.reverb_gain = std::clamp(v, 0.0f, 8.0f);
+@@ -92,6 +100,10 @@ void settings_save()
+     fprintf(f, "weapon_buffers_mb = %u\n", g_cfg.buf_mb);
+     fprintf(f, "lean_angle = %.1f\nlean_offset = %.3f\n", g_cfg.lean_angle, g_cfg.lean_offset);
+     fprintf(f, "fov = %.1f\n", g_cfg.fov);
++    fprintf(f, "vr = %d\nvr_ipd = %.1f\nvr_move_scale = %.3f\nvr_snap_turn = %.1f\nvr_fov = %.1f\n", g_cfg.vr ? 1 : 0,
++            g_cfg.vr_ipd, g_cfg.vr_move_scale, g_cfg.vr_snap_turn, g_cfg.vr_fov);
++    fprintf(f, "vr_input = %d\nvr_hud = %d\nvr_reload_button = %u\n", g_cfg.vr_input ? 1 : 0, g_cfg.vr_hud ? 1 : 0,
++            g_cfg.vr_reload_button);
+     fprintf(f, "skipanymovie = %d\n", g_cfg.skip_movies ? 1 : 0);
+     fprintf(f, "seamfill = %d\n", g_cfg.seam_fill ? 1 : 0);
+     fprintf(f, "effectsnative = %d\n", g_cfg.effects_native ? 1 : 0);

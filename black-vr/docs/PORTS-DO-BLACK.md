@@ -104,4 +104,4 @@ headset.
 
 Todo o mérito do trabalho pesado é dos autores citados: Spark198rus, TGP482, portingpete, euspring1,
 LucasRamos96, snuri00 (`ps2-web-recomp`) e a comunidade do XboxDev (`extract-xiso`). Este repositório
-apenas estuda como um mod de VR poderia se acoplar a eles.
+não é um port: é a camada de VR que se acopla ao `black-pc` (ver `IMPLEMENTACAO.md`).
