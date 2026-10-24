@@ -22,6 +22,30 @@ Depois abra:
 | three.js (principal) | http://localhost:8080/webxr-three/ |
 | A-Frame | http://localhost:8080/webxr-aframe/ |
 
+## 1b. Abrir sem rodar nada (link público via jsDelivr)
+
+Como o projeto já está em um repositório público, dá para servir os arquivos com HTTPS pelo
+**jsDelivr**, sem servidor local e sem conta:
+
+```
+https://cdn.jsdelivr.net/gh/faek28zero-coder/calculadora-boleado@<COMMIT>/black-vr/
+```
+
+Troque `<COMMIT>` pelo SHA do commit (ou `@v0.1.0` por uma tag). Exemplos:
+
+| O quê | URL |
+|---|---|
+| Hub | `.../black-vr/` |
+| three.js | `.../black-vr/webxr-three/` |
+| A-Frame | `.../black-vr/webxr-aframe/` |
+
+Por que funciona: o jsDelivr serve `.html`, `.css` e `.js` com o `Content-Type` correto e HTTPS — que
+é exatamente o que o WebXR exige. Use sempre um **SHA fixo**: assim o link não muda embaixo de você.
+Depois que o repositório próprio existir, o caminho oficial passa a ser GitHub Pages.
+
+> Atenção: o jsDelivr coloca um cache de 7 dias para arquivos referenciados por SHA (e cache mais
+> curto para tags/branch). Se editar o jogo, gere um commit novo e use o SHA novo.
+
 ## 2. Testar no headset (WebXR)
 
 1. O headset precisa alcançar o seu computador na mesma rede. Descubra o IP local:
