@@ -28,7 +28,8 @@ jobs:
       - name: Baixar o port (black-pc 0.3.0) e aplicar o modulo de VR
         shell: bash
         run: |
-          set -e
+          set -euxo pipefail
+          exec > >(tee -a dist-log.txt) 2>&1
           mkdir -p _fork/black-pc
           cd _fork/black-pc
           git init -q .
@@ -37,10 +38,10 @@ jobs:
           git checkout -q FETCH_HEAD
           cd ../..
           mkdir -p _fork/black-pc/loader/src/vr _fork/black-pc/vendor/openxr
-          cp src/vr/*.h src/vr/*.cpp _fork/black-pc/loader/src/vr/
-          cp vendor/openxr/*.h _fork/black-pc/vendor/openxr/
+          cp black-vr/src/vr/*.h black-vr/src/vr/*.cpp _fork/black-pc/loader/src/vr/
+          cp black-vr/vendor/openxr/*.h _fork/black-pc/vendor/openxr/
           cd _fork/black-pc
-          for p in ../../patches/*.patch; do
+          for p in ../../black-vr/patches/*.patch; do
             echo "aplicando $(basename "$p")"
             git apply --whitespace=nowarn "$p"
           done
@@ -51,20 +52,29 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          cmake -S _fork/black-pc/loader -B _fork/black-pc/loader/build -A Win32 -DCMAKE_BUILD_TYPE=Release > dist-log.txt 2>&1
-          echo "saida=$?" >> "$GITHUB_OUTPUT"
+          set +e
+          echo "=== CONFIGURAR ===" >> dist-log.txt
+          cmake -S _fork/black-pc/loader -B _fork/black-pc/loader/build -A Win32 -DCMAKE_BUILD_TYPE=Release >> dist-log.txt 2>&1
+          rc=$?
+          echo "config rc=$rc" >> dist-log.txt
           tail -30 dist-log.txt
+          exit $rc
 
       - name: Compilar
         id: build
         shell: bash
         continue-on-error: true
         run: |
+          set +e
+          echo "=== COMPILAR ===" >> dist-log.txt
           cmake --build _fork/black-pc/loader/build --config Release --parallel >> dist-log.txt 2>&1
-          echo "saida=$?" >> "$GITHUB_OUTPUT"
-          tail -60 dist-log.txt
+          rc=$?
+          echo "build rc=$rc" >> dist-log.txt
+          grep -nE "error|Error" dist-log.txt | head -40
+          exit $rc
 
       - name: Empacotar
+        if: always()
         shell: bash
         run: |
           mkdir -p dist
