@@ -16,9 +16,9 @@
 ## 🎯 Jogue agora
 
 **Sem instalar nada (link público, HTTPS):**
-`https://cdn.jsdelivr.net/gh/faek28zero-coder/calculadora-boleado@<COMMIT>/black-vr/`
-— troque `<COMMIT>` pelo SHA do último commit. Funciona no navegador do headset; abra a variante
-`webxr-three/`. Detalhes em [`docs/COMO-RODAR.md`](./docs/COMO-RODAR.md).
+`https://cdn.jsdelivr.net/gh/faek28zero-coder/calculadora-boleado@<COMMIT>/black-vr/webxr-three/index.html`
+— troque `<COMMIT>` pelo SHA do último commit (o `index.html` no fim é obrigatório).
+Funciona no navegador do headset. Detalhes em [`docs/COMO-RODAR.md`](./docs/COMO-RODAR.md).
 
 **Ou localmente:**
 

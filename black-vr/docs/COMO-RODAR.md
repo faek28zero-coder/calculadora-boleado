@@ -28,16 +28,18 @@ Como o projeto já está em um repositório público, dá para servir os arquivo
 **jsDelivr**, sem servidor local e sem conta:
 
 ```
-https://cdn.jsdelivr.net/gh/faek28zero-coder/calculadora-boleado@<COMMIT>/black-vr/
+https://cdn.jsdelivr.net/gh/faek28zero-coder/calculadora-boleado@<COMMIT>/black-vr/index.html
 ```
 
 Troque `<COMMIT>` pelo SHA do commit (ou `@v0.1.0` por uma tag). Exemplos:
 
 | O quê | URL |
 |---|---|
-| Hub | `.../black-vr/` |
-| three.js | `.../black-vr/webxr-three/` |
-| A-Frame | `.../black-vr/webxr-aframe/` |
+| Hub | `.../black-vr/index.html` |
+| three.js | `.../black-vr/webxr-three/index.html` |
+| A-Frame | `.../black-vr/webxr-aframe/index.html` |
+
+> O `index.html` é obrigatório no link: sem ele o jsDelivr devolve a listagem de arquivos.
 
 Por que funciona: o jsDelivr serve `.html`, `.css` e `.js` com o `Content-Type` correto e HTTPS — que
 é exatamente o que o WebXR exige. Use sempre um **SHA fixo**: assim o link não muda embaixo de você.
