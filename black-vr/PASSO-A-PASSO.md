@@ -50,7 +50,11 @@ diferentes e não funcionam.
 1. Extraia o disco com o [extract-xiso](https://github.com/XboxDev/extract-xiso):
    `extract-xiso -x Black.iso`
 2. Renomeie a pasta extraída para `game`.
-3. Confira que é a versão certa (PowerShell):
+3. Confira que é a versão certa. **O jeito fácil:** duplo clique em **`conferir-jogo.bat`** e
+   arraste a pasta do jogo para a janela — ele calcula o SHA-256, diz "SERVE" ou "NÃO SERVE" em
+   português e grava um `LISTA.txt` para você colar no chat.
+
+   Na mão, se preferir (PowerShell):
    ```powershell
    Get-FileHash game\default.xbe -Algorithm SHA256
    ```

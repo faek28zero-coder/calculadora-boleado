@@ -57,6 +57,8 @@ fecha na sua máquina).
 
 ## Como montar
 
+**Antes de tudo:** rode `conferir-jogo.bat` na sua cópia do jogo — ele diz se a versão serve.
+
 **Se você não mexe em código:** olhe o [diagrama](docs/COMO-JOGAR.png) e siga o [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md) — são dois duplos
 cliques (`compilar.bat`) e a sua cópia do jogo. O resto desta seção é a versão manual.
 
