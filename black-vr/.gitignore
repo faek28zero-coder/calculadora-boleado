@@ -1,0 +1,30 @@
+# dependências / build
+node_modules/
+dist/
+build/
+
+# Unity
+unity/Library/
+unity/Temp/
+unity/Logs/
+unity/Obj/
+unity/obj/
+unity/Build/
+unity/Builds/
+unity/UserSettings/
+unity/*.csproj
+unity/*.sln
+unity/*.apk
+unity/*.unitypackage
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# nada de dados do jogo, nunca
+*.xbe
+*.iso
+*.xiso
+game/
+assets/
