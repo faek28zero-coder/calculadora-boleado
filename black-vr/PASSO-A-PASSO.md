@@ -1,5 +1,7 @@
 # Passo a passo (sem mexer em código)
 
+![Como jogar](docs/COMO-JOGAR.png)
+
 Este repositório é o **módulo de VR**, não o jogo pronto. Para jogar BLACK no headset você precisa de
 três coisas, nesta ordem:
 

@@ -57,7 +57,7 @@ fecha na sua máquina).
 
 ## Como montar
 
-**Se você não mexe em código:** siga o [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md) — são dois duplos
+**Se você não mexe em código:** olhe o [diagrama](docs/COMO-JOGAR.png) e siga o [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md) — são dois duplos
 cliques (`compilar.bat`) e a sua cópia do jogo. O resto desta seção é a versão manual.
 
 Pré-requisitos no Windows:
