@@ -57,6 +57,19 @@ diferentes e não funcionam.
    - NTSC-U: `DF2739C372D254A90AEECCF5971D12097F22D89FBB90DB021FDA96DD4DEB68F6`
    - PAL: `67F35121CCF622E7A293C402219596FE6456CA4C3D27E6F8139E449264DA30F0`
 
+### Atenção: cópia traduzida (PT-BR) não serve
+
+Só funcionam as duas versões **originais** listadas acima, com o hash exato. Pacotes "PT-BR",
+"traduzido", "repack" ou "versão PC nativa" que circulam por aí quase sempre são uma destas coisas:
+
+- um **XBE traduzido** (fã-tradução): o texto muda, o código muda de endereço e o port não reconhece
+  a build — em geral ele recusa; forçando com `--force`, ele trava;
+- uma **ISO de PlayStation 2** traduzida: o port é do jogo de **Xbox**, não abre ISO de PS2;
+- um **port já compilado** por outra pessoa: aí ele roda, mas em tela plana e sem as nossas emendas.
+
+Se o seu arquivo não bater com um dos dois hashes, o caminho é conseguir o disco de Xbox original
+(NTSC-U ou PAL). Não existe atalho aqui.
+
 ## 4. Monte a pasta e rode
 
 ```
