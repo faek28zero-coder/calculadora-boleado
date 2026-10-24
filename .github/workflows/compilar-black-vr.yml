@@ -8,10 +8,12 @@ name: compilar-black-vr
 on:
   push:
     branches: ["arena/**"]
-    paths-ignore:
-      - "dist/**"
-      - "**.md"
   workflow_dispatch:
+
+# um build por vez; um push novo cancela o anterior
+concurrency:
+  group: compilar-black-vr-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
