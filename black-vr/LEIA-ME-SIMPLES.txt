@@ -1,0 +1,67 @@
+BLACK EM VR — EXPLICAÇÃO SEM TERMOS TÉCNICOS
+=============================================
+
+O QUE A GENTE ESTÁ FAZENDO
+--------------------------
+O jogo BLACK (de 2006) rodando no seu PC, com o óculos de realidade virtual.
+É o jogo de verdade. Não é imitação, não é um jogo parecido, não é site.
+Você liga o óculos, move a cabeça e está dentro do jogo.
+
+
+ONDE A GENTE ESTÁ
+-----------------
+Pense numa receita de bolo. Faltam duas coisas:
+
+1) O BOLO (o jogo) .......... você já tem, está no seu Drive.
+   Mas eu não consigo abrir o seu arquivo: ele tem 1,25 GB e eu só consigo
+   receber arquivos de até 100 MB. Não é falta de vontade, é um limite daqui.
+
+2) O FORNO (o programa) ..... esse eu já escrevi, está pronto aqui na pasta.
+   Só que ele precisa ser "assado" no SEU computador, porque eu não tenho
+   um computador com Windows nem placa de vídeo pra isso. Quem assa é um
+   programa grátis da Microsoft, e você só precisa dar dois cliques.
+
+
+O QUE VOCÊ FAZ AGORA (3 PASSOS)
+-------------------------------
+PASSO 1. Abra o seu arquivo RAR no Drive e extraia (descompacte).
+        É como abrir um zip. Vai aparecer uma pasta com os arquivos do jogo.
+
+PASSO 2. Dê dois cliques no arquivo "conferir-jogo.bat" (está nesta pasta).
+        Arraste a pasta do jogo para dentro da janelinha preta que abrir.
+        Ele vai dizer, em português: SERVE ou NÃO SERVE.
+        No fim ele abre um texto chamado LISTA.txt.
+
+PASSO 3. Copie o texto do LISTA.txt e cole aqui no chat.
+
+Pronto. Só isso. Três passos.
+
+
+POR QUE ESSE TESTE É NECESSÁRIO
+-------------------------------
+O jogo BLACK foi vendido em várias versões pelo mundo, e a versão em
+português foi traduzida por fãs (não é oficial). O meu programa foi feito
+para a versão original, em inglês. Se o seu arquivo for a versão traduzida,
+o programa não reconhece e não roda.
+
+Não dá pra saber isso pelo nome do arquivo. Só abrindo e olhando.
+É exatamente o que o conferir-jogo.bat faz pra você — sozinho, em 10 segundos.
+
+
+SE O RESULTADO FOR "NÃO SERVE"
+------------------------------
+Não é o fim. Existem três motivos comuns, e eu te digo qual é o seu quando
+você colar o LISTA.txt aqui. O mais comum é: o arquivo que você baixou é a
+versão de PlayStation 2. O meu trabalho é para a versão de Xbox — são jogos
+diferentes por dentro, mesmo sendo o mesmo BLACK na capa.
+
+
+O QUE FALTA DEPOIS DISSO
+------------------------
+Duas coisas, e eu te aviso na hora certa, com calma, sem pressa:
+
+- Instalar 3 programas grátis no seu PC (Microsoft).
+- Dar dois cliques no "compilar.bat". Ele faz todo o resto sozinho e leva
+  mais ou menos 20 minutos.
+
+Aí você abre o jogo e põe o óculos.
