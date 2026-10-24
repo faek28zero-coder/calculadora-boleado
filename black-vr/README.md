@@ -3,6 +3,10 @@
 > Protótipo de FPS em realidade virtual inspirado em **BLACK** (Criterion Games, 2006), construído do
 > zero por **vibecoding** em três stacks: **three.js/WebXR**, **A-Frame** e **Unity/OpenXR**.
 
+![Arte conceitual do estande de tiro: galpão industrial em ruínas, alvos de silhueta e faixas de perigo laranja](docs/img/hero.png)
+
+<sub>Arte conceitual original gerada para o projeto — não é captura do jogo e não usa assets de BLACK.</sub>
+
 [![Abrir demo](https://img.shields.io/badge/DEMO-WEBXR-ff6a13?style=for-the-badge)](#-jogue-agora)
 [![Licença](https://img.shields.io/badge/c%C3%B3digo-MIT-blue?style=for-the-badge)](./LICENSE)
 [![Assets](https://img.shields.io/badge/assets-0%25%20do%20jogo-brightgreen?style=for-the-badge)](#aviso-legal)
