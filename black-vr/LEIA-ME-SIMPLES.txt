@@ -22,6 +22,22 @@ Quem monta é o próprio Windows, sozinho, depois que você dá dois
 cliques no arquivo compilar.bat. Leva uns 20 minutos.
 
 
+DUAS MANEIRAS DE DEIXAR O PROGRAMA PRONTO
+----------------------------------------
+A) PELO GITHUB, SEM INSTALAR NADA (mais fácil)
+   Eu já escrevi tudo para o GitHub compilar no lugar do seu PC.
+   Só falta ligar um interruptor, que só você pode ligar:
+     1. abra github.com/faek28zero-coder/calculadora-boleado/settings/actions
+     2. marque "Allow all actions and reusable workflows"
+     3. clique Save
+     4. me diga aqui: "liguei"
+   Depois disso é comigo. Você só baixa um zip no fim.
+   (Detalhes no arquivo COMPILAR-SEM-INSTALAR-NADA.md)
+
+B) NO SEU PC (funciona com certeza, mas instala 3 programas)
+   Siga o passo a passo abaixo.
+
+
 O QUE VOCÊ FAZ (UM PASSO SÓ)
 ----------------------------
 1. Instale 3 programas grátis da Microsoft, se ainda não tiver:
