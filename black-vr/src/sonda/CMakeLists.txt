@@ -13,5 +13,5 @@ set(VR_SONDA_NAME "vr-sonda" CACHE STRING "nome do executavel da sonda")
 add_executable(${VR_SONDA_NAME} sonda.cpp)
 
 target_include_directories(${VR_SONDA_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../vendor/openxr")
-target_link_libraries(${VR_SONDA_NAME} PRIVATE d3d11 dxgi advapi32 ole32)
+target_link_libraries(${VR_SONDA_NAME} PRIVATE d3d11 dxgi advapi32 ole32 psapi)
 target_compile_definitions(${VR_SONDA_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)

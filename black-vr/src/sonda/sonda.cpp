@@ -25,6 +25,8 @@
 //    8 = como 7, mas a sessão é criada numa thread própria (pilha de 8 MB)
 //    9 = API 1.0.0 com debug_utils (isola a versão da API do mensageiro)
 //   10 = caminho inteiro + quadro colorido no óculos por 20 s (use a de 64 bits)
+//   11 = como 10, tentando a sessão 3 vezes
+//   12 = como 10, com o mensageiro do runtime ligado (ele diz o motivo)
 //    0 = roda 4 e depois 1
 // ============================================================
 #define WIN32_LEAN_AND_MEAN
@@ -42,6 +44,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <vector>
+#include <psapi.h>
 
 #ifndef XR_USE_PLATFORM_WIN32
 #define XR_USE_PLATFORM_WIN32 1
@@ -61,13 +64,21 @@ const char *g_step = "inicio";
 
 void say(const char *fmt, ...)
 {
-    if (!g_file) return;
+    char linha[2048];
     va_list ap;
     va_start(ap, fmt);
-    vfprintf(g_file, fmt, ap);
+    vsnprintf(linha, sizeof linha, fmt, ap);
     va_end(ap);
-    fputc('\n', g_file);
-    fflush(g_file);
+    if (g_file) {
+        fputs(linha, g_file);
+        fputc('\n', g_file);
+        fflush(g_file);
+    }
+    // tambem na tela: se o relatorio se perder, a janela ja mostra tudo
+    fputs("[sonda] ", stdout);
+    fputs(linha, stdout);
+    fputc('\n', stdout);
+    fflush(stdout);
 }
 
 // ---------------------------------------------------------------- módulos / memória
@@ -336,6 +347,43 @@ void dump_active_runtime()
     }
 }
 
+// O runtime reclamou de "VirtualLock failed (1453)" e de "StartThread failed":
+// os dois acontecem quando falta memoria/commit. Isto mostra os numeros.
+void dump_memory()
+{
+    MEMORYSTATUSEX ms = {};
+    ms.dwLength = sizeof ms;
+    if (GlobalMemoryStatusEx(&ms)) {
+        say("memoria do PC: %llu MB no total, %llu MB livres; commit %llu de %llu MB",
+            (unsigned long long)(ms.ullTotalPhys >> 20), (unsigned long long)(ms.ullAvailPhys >> 20),
+            (unsigned long long)((ms.ullTotalPageFile - ms.ullAvailPageFile) >> 20),
+            (unsigned long long)(ms.ullTotalPageFile >> 20));
+        say("carga da memoria: %lu%%", (unsigned long)ms.dwMemoryLoad);
+        if (ms.ullTotalPhys <= ms.ullTotalPageFile)
+            say("  (sem arquivo de paginacao: o commit e igual a memoria fisica)");
+    }
+    PROCESS_MEMORY_COUNTERS_EX pmc = {};
+    if (GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof pmc)) {
+        say("este programa: %llu MB em uso, pico %llu MB",
+            (unsigned long long)(pmc.WorkingSetSize >> 20), (unsigned long long)(pmc.PeakWorkingSetSize >> 20));
+    }
+    DWORD handles = 0;
+    if (GetProcessHandleCount(GetCurrentProcess(), &handles)) say("descritores abertos: %lu", (unsigned long)handles);
+    int threads = 0;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+    if (snap != INVALID_HANDLE_VALUE) {
+        THREADENTRY32 te = {};
+        te.dwSize = sizeof te;
+        if (Thread32First(snap, &te)) {
+            do {
+                if (te.th32OwnerProcessID == GetCurrentProcessId()) threads++;
+            } while (Thread32Next(snap, &te));
+        }
+        CloseHandle(snap);
+    }
+    say("threads deste programa: %d", threads);
+}
+
 void dump_modules()
 {
     load_modules(true);
@@ -364,6 +412,7 @@ struct Opt {
     bool ate_instancia = false; // parar antes da sessão
     bool com = false;           // CoInitializeEx nesta thread
     bool desenhar = false;      // modo 10: montar o caminho inteiro e desenhar no óculos
+    int tentativas = 1;         // modo 11: quantas vezes tentar criar a sessao
 };
 
 struct Funcoes {
@@ -837,10 +886,18 @@ int rodada(const Opt &o, const Funcoes &f)
     XrSessionCreateInfo sci = {XR_TYPE_SESSION_CREATE_INFO};
     sci.next = &binding;
     sci.systemId = system;
+    dump_memory();
     XrSession session = XR_NULL_HANDLE;
-    r = create_session(instance, &sci, &session);
+    for (int tentativa = 1; tentativa <= o.tentativas; tentativa++) {
+        if (tentativa > 1) {
+            say("tentando de novo (tentativa %d de %d) depois de 2 s...", tentativa, o.tentativas);
+            Sleep(2000);
+        }
+        r = create_session(instance, &sci, &session);
+        if (XR_SUCCEEDED(r)) break;
+        say("xrCreateSession (tentativa %d): %s (%d)", tentativa, xr_name(r), (int)r);
+    }
     if (XR_FAILED(r)) {
-        say("xrCreateSession: %s (%d)", xr_name(r), (int)r);
         say("sonda: FALHOU");
         return 1;
     }
@@ -922,6 +979,19 @@ Opt opt_da_variante(int v)
         o.debug_utils = false;
         o.desenhar = true;
         break;
+    case 11:
+        o.nome = "11 como 10, mas tenta a sessao 3 vezes";
+        o.api_1_0 = true;
+        o.debug_utils = false;
+        o.desenhar = true;
+        o.tentativas = 3;
+        break;
+    case 12:
+        o.nome = "12 como 10, com o mensageiro do runtime ligado (ele diz o motivo)";
+        o.api_1_0 = true;
+        o.debug_utils = true;
+        o.desenhar = true;
+        break;
     default: o.nome = "1 (padrao)"; break;
     }
     return o;
@@ -956,6 +1026,7 @@ int main(int argc, char **argv)
     GetVersionExA(&vi);
     say("windows: %lu.%lu build %lu", (unsigned long)vi.dwMajorVersion, (unsigned long)vi.dwMinorVersion,
         (unsigned long)vi.dwBuildNumber);
+    dump_memory();
     dump_active_runtime();
 
     g_step = "carregar openxr_loader.dll";

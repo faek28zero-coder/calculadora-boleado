@@ -1,4 +1,4 @@
-BLACK em VR - pacote v10 (32 e 64 bits)
+BLACK em VR - pacote v11 (64 bits primeiro)
 ============================================================
 
 O que tem nesta pasta:
@@ -27,21 +27,22 @@ bits, e o programa que roda ele (blackrt.dll) tem de ser 32 bits tambem.
 Mas a parte do oculos pode virar um programa separado de 64 bits, e o
 aplicativo do oculos de 64 bits e o caminho "normal" dele.
 
-A v10 traz as duas versoes do mesmo teste (32 e 64 bits). A de 64 bits
-tem um teste novo: ela monta o caminho inteiro e DESENHA no oculos.
+A v11 traz as duas versoes do mesmo teste, e o relatorio mostra os
+numeros de memoria do PC (o aplicativo do oculos reclamou de falta de
+memoria no ultimo teste, e isso pode ser a causa).
 
 O que eu preciso de voce agora:
 
 1. Duplo clique em DIAGNOSTICO.bat.
-   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 10
-2. Ele roda os testes de 32 bits, depois os de 64 bits.
-3. No meio do caminho ele avisa e pede uma tecla: e a hora de colocar o
-   oculos na cabeca, porque vao aparecer imagens nele por 20 segundos.
+   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 11
+2. Ele pede uma tecla logo no comeco: coloque o oculos na cabeca.
+3. Depois disso sao os testes de 64 bits (com imagem no oculos) e os de
+   32 bits. Cada teste tem tempo limite: se um travar, ele e encerrado e
+   o resto continua.
 4. Ele pergunta se apareceu a imagem. Responda s ou n.
 5. Me mande o RELATORIO-VR.txt que ele deixa nesta pasta.
 
-Leva alguns minutos porque ele roda o jogo no fim. Nao feche a janela
-que abre no meio do caminho: ela e o proprio teste do oculos.
+Leva alguns minutos. Pode deixar rodando, mas nao feche a janela.
 
 
 TESTE RAPIDO SO DA IMAGEM

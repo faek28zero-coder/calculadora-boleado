@@ -1,7 +1,7 @@
 @echo off
 cd /d "%~dp0"
 echo ============================================================
-echo   TESTE DO OCULOS - versao 10 (programa de 64 bits)
+echo   TESTE DO OCULOS - pacote v11 (programa de 64 bits)
 echo ============================================================
 echo.
 echo Vai aparecer um quadro colorido DENTRO do oculos por 20 segundos.

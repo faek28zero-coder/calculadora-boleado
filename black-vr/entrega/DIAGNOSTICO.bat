@@ -7,13 +7,17 @@ rem ---- trava de versao: sem os dois testes, este .bat e o ANTIGO.
 if not exist "port\vr-sonda.exe" goto :antigo
 if not exist "port\x64\vr-sonda64.exe" goto :antigo
 
+rem ---- sem as janelas de "o programa parou de funcionar": elas travavam o teste
+reg add "HKCU\Software\Microsoft\Windows\Windows Error Reporting" /v DontShowUI /t REG_DWORD /d 1 /f >nul 2>&1
+
 echo ============================================================
-echo   BLACK VR - DIAGNOSTICO DA VERSAO 10
-echo   32 bits + 64 bits  (se este titulo nao aparecer, e o antigo)
+echo   BLACK VR - DIAGNOSTICO DA VERSAO 11
+echo   64 bits primeiro, depois 32 bits
+echo   (se este titulo nao aparecer, o arquivo e o antigo)
 echo ============================================================
 echo.
 
-echo === BLACK VR - diagnostico v10 (32 e 64 bits) === > "%REL%"
+echo === BLACK VR - diagnostico v11 (64 bits + 32 bits) === > "%REL%"
 echo data: %DATE%  %TIME% >> "%REL%"
 echo pasta: %CD% >> "%REL%"
 echo. >> "%REL%"
@@ -27,61 +31,36 @@ if exist "port\x64\vr-sonda64.exe" (echo port\x64\vr-sonda64.exe: SIM >> "%REL%"
 if exist "port\x64\openxr_loader.dll" (echo port\x64\openxr_loader.dll: SIM >> "%REL%") else (echo port\x64\openxr_loader.dll: NAO >> "%REL%")
 echo. >> "%REL%"
 
-rem ---- 1. teste separado do jogo, versao de 32 bits (a que o jogo usa hoje)
-rem      Se um modo cair, os outros continuam: e assim que se descobre qual caminho funciona.
-echo [TESTE 32 BITS - o caminho de hoje] >> "%REL%"
-for %%V in (4 3 6 9 1 7 8 2 5) do call :rodar %%V
-echo. >> "%REL%"
-for %%V in (4 3 6 9 1 7 8 2 5) do (
-  if exist "port\sonda-%%V.txt" (
-    echo. >> "%REL%"
-    type "port\sonda-%%V.txt" >> "%REL%"
-    del "port\sonda-%%V.txt" >nul 2>&1
-  )
-)
-echo. >> "%REL%"
-
-rem ---- 2. teste separado do jogo, versao de 64 bits (o caminho novo)
-echo [TESTE 64 BITS - o caminho novo] >> "%REL%"
-for %%V in (4 1) do call :rodar64 %%V
-echo. >> "%REL%"
-for %%V in (4 1) do (
-  if exist "port\x64\sonda64-%%V.txt" (
-    echo. >> "%REL%"
-    type "port\x64\sonda64-%%V.txt" >> "%REL%"
-    del "port\x64\sonda64-%%V.txt" >nul 2>&1
-  )
-)
-echo. >> "%REL%"
-
-rem ---- 3. o teste com imagem: 20 segundos desenhando dentro do oculos
-echo.
 echo  ============================================================
-echo    AGORA VAO APARECER IMAGENS NO OCULOS (20 segundos)
+echo    COLOQUE O OCULOS NA CABECA AGORA
 echo.
-echo    Coloque o oculos na cabeca e olhe para a tela.
-echo    Tem de aparecer um quadro colorido mudando de cor:
-echo    vermelho de um lado, verde do outro.
+echo    Os testes de 64 bits vao tentar desenhar no oculos:
+echo    um quadro colorido mudando de cor, vermelho de um lado
+echo    e verde do outro. Se voce ver isso, deu certo.
 echo  ============================================================
 echo.
 pause
-echo [TESTE 64 BITS COM IMAGEM - modo 10] >> "%REL%"
-call :rodar64img 10
+
+rem ---- 1. versao de 64 bits: o caminho novo
+echo [TESTE 64 BITS - o caminho novo] >> "%REL%"
+for %%V in (4 12 11 10) do call :rodar64 %%V
 echo. >> "%REL%"
-if exist "port\x64\sonda64-10.txt" (
-  type "port\x64\sonda64-10.txt" >> "%REL%"
-  del "port\x64\sonda64-10.txt" >nul 2>&1
-)
+
 set VIU=
-set /p VIU=Apareceu a imagem colorida no oculos? (s = sim, n = nao): 
+set /p VIU=Apareceu algum quadro colorido no oculos? (s = sim, n = nao): 
 echo resposta do usuario (apareceu imagem no oculos?): !VIU! >> "%REL%"
 echo. >> "%REL%"
 
-rem ---- 4. o jogo (apaga os rastros velhos antes)
+rem ---- 2. versao de 32 bits: confirma o lado antigo (só dois modos, o resto ja sabemos)
+echo [TESTE 32 BITS - o caminho de hoje] >> "%REL%"
+for %%V in (4 1) do call :rodar %%V
+call :mostrar32 4
+call :mostrar32 1
+echo. >> "%REL%"
+
+rem ---- 3. o jogo (apaga os rastros velhos antes)
 if exist "port\vr-trace.txt" del "port\vr-trace.txt" >nul 2>&1
 if exist "port\black.log" del "port\black.log" >nul 2>&1
-set XR_LOADER_DEBUG=
-set XR_DEBUG_FILE=
 if exist "port\blackrt.dll" (
   echo [JOGO] >> "%REL%"
   powershell -NoProfile -Command "Get-ChildItem -Path '%~dp0port' -Filter *.dll | Unblock-File -ErrorAction SilentlyContinue; Get-ChildItem -Path '%~dp0port' -Filter *.exe | Unblock-File -ErrorAction SilentlyContinue" >nul 2>&1
@@ -119,68 +98,80 @@ echo ------------------------------------------------------------
 pause
 exit /b
 
-:rodar
-set V=%1
-echo   - modo 32 bits %V% ... >> "%REL%"
-if not exist "port\vr-sonda.exe" exit /b
-del "port\xr-loader.log" >nul 2>&1
-pushd port
-set XR_LOADER_DEBUG=all
-set XR_DEBUG_FILE=%CD%\xr-loader.log
-vr-sonda.exe %V% > sonda-console-%V%.txt 2>&1
-set RC=!ERRORLEVEL!
-set XR_LOADER_DEBUG=
-set XR_DEBUG_FILE=
-popd
-echo     codigo !RC! >> "%REL%"
-if exist "port\sonda-console-%V%.txt" (
-  type "port\sonda-console-%V%.txt" >> "%REL%"
-  del "port\sonda-console-%V%.txt" >nul 2>&1
-)
-if exist "port\xr-loader.log" (
-  echo     --- log do conector (inicio) --- >> "%REL%"
-  powershell -NoProfile -Command "Get-Content '%~dp0port\xr-loader.log' -TotalCount 40" >> "%REL%" 2>nul
-  del "port\xr-loader.log" >nul 2>&1
-)
-exit /b
+rem ============================================================
+rem  Cada teste roda com tempo limite: se travar, e morto e o
+rem  relatorio continua (antes o teste travava a janela toda).
+rem ============================================================
 
 :rodar64
 set V=%1
+echo. >> "%REL%"
 echo   - modo 64 bits %V% ... >> "%REL%"
 if not exist "port\x64\vr-sonda64.exe" exit /b
-del "port\x64\xr-loader64.log" >nul 2>&1
+if exist "port\x64\xr-loader64.log" del "port\x64\xr-loader64.log" >nul 2>&1
 pushd port\x64
-set XR_LOADER_DEBUG=all
-set XR_DEBUG_FILE=%CD%\xr-loader64.log
-vr-sonda64.exe %V% > sonda-console64-%V%.txt 2>&1
-set RC=!ERRORLEVEL!
-set XR_LOADER_DEBUG=
-set XR_DEBUG_FILE=
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$env:XR_LOADER_DEBUG='all'; $env:XR_DEBUG_FILE=(Join-Path (Get-Location) 'xr-loader64.log');" ^
+  "$p = Start-Process -FilePath '.\vr-sonda64.exe' -ArgumentList %V% -PassThru -NoNewWindow " ^
+  "  -RedirectStandardOutput 'console64-%V%.txt' -RedirectStandardError 'erro64-%V%.txt';" ^
+  "if ($p.WaitForExit(120000)) { '    codigo ' + $p.ExitCode } else { $p.Kill(); '    TRAVOU: encerrado depois de 120 s' }" >> "%~dp0%REL%" 2>&1
 popd
-echo     codigo !RC! >> "%REL%"
-if exist "port\x64\sonda-console64-%V%.txt" (
-  type "port\x64\sonda-console64-%V%.txt" >> "%REL%"
-  del "port\x64\sonda-console64-%V%.txt" >nul 2>&1
+call :mostrar64 %V%
+exit /b
+
+:mostrar64
+set V=%1
+if exist "port\x64\sonda64-%V%.txt" (
+  type "port\x64\sonda64-%V%.txt" >> "%REL%"
+  del "port\x64\sonda64-%V%.txt" >nul 2>&1
+)
+if exist "port\x64\console64-%V%.txt" (
+  echo     --- saida da janela --- >> "%REL%"
+  type "port\x64\console64-%V%.txt" >> "%REL%"
+  del "port\x64\console64-%V%.txt" >nul 2>&1
+)
+if exist "port\x64\erro64-%V%.txt" (
+  echo     --- erros --- >> "%REL%"
+  type "port\x64\erro64-%V%.txt" >> "%REL%"
+  del "port\x64\erro64-%V%.txt" >nul 2>&1
 )
 if exist "port\x64\xr-loader64.log" (
   echo     --- log do conector de 64 bits (inicio) --- >> "%REL%"
-  powershell -NoProfile -Command "Get-Content '%~dp0port\x64\xr-loader64.log' -TotalCount 40" >> "%REL%" 2>nul
+  powershell -NoProfile -Command "Get-Content '%~dp0port\x64\xr-loader64.log' -TotalCount 30" >> "%REL%" 2>nul
   del "port\x64\xr-loader64.log" >nul 2>&1
 )
 exit /b
 
-:rodar64img
+:rodar
 set V=%1
-echo   - modo 64 bits %V% (com imagem) ... >> "%REL%"
-if not exist "port\x64\vr-sonda64.exe" exit /b
-pushd port\x64
-vr-sonda64.exe %V% > sonda-console64-%V%.txt 2>&1
-set RC=!ERRORLEVEL!
+echo. >> "%REL%"
+echo   - modo 32 bits %V% ... >> "%REL%"
+if not exist "port\vr-sonda.exe" exit /b
+if exist "port\xr-loader.log" del "port\xr-loader.log" >nul 2>&1
+pushd port
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$env:XR_LOADER_DEBUG='all'; $env:XR_DEBUG_FILE=(Join-Path (Get-Location) 'xr-loader.log');" ^
+  "$p = Start-Process -FilePath '.\vr-sonda.exe' -ArgumentList %V% -PassThru -NoNewWindow " ^
+  "  -RedirectStandardOutput 'console-%V%.txt' -RedirectStandardError 'erro-%V%.txt';" ^
+  "if ($p.WaitForExit(90000)) { '    codigo ' + $p.ExitCode } else { $p.Kill(); '    TRAVOU: encerrado depois de 90 s' }" >> "%~dp0%REL%" 2>&1
 popd
-echo     codigo !RC! >> "%REL%"
-if exist "port\x64\sonda-console64-%V%.txt" (
-  type "port\x64\sonda-console64-%V%.txt" >> "%REL%"
-  del "port\x64\sonda-console64-%V%.txt" >nul 2>&1
+exit /b
+
+:mostrar32
+set V=%1
+if exist "port\sonda-%V%.txt" (
+  type "port\sonda-%V%.txt" >> "%REL%"
+  del "port\sonda-%V%.txt" >nul 2>&1
+)
+if exist "port\console-%V%.txt" (
+  echo     --- saida da janela --- >> "%REL%"
+  type "port\console-%V%.txt" >> "%REL%"
+  del "port\console-%V%.txt" >nul 2>&1
+)
+if exist "port\erro-%V%.txt" (
+  echo     --- erros --- >> "%REL%"
+  type "port\erro-%V%.txt" >> "%REL%"
+  del "port\erro-%V%.txt" >nul 2>&1
 )
 exit /b
 
@@ -192,7 +183,7 @@ echo.
 echo   Faltam os arquivos:
 echo      port\vr-sonda.exe         (teste de 32 bits)
 echo      port\x64\vr-sonda64.exe   (teste de 64 bits)
-echo   Eles vem no pacote NOVO (BLACK-VR-pronto-v10.zip).
+echo   Eles vem no pacote NOVO (BLACK-VR-pronto-v11.zip).
 echo.
 echo   O que fazer:
 echo     1. Baixe o pacote novo pelo link que eu mandei.
