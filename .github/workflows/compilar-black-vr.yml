@@ -53,6 +53,24 @@ jobs:
           done
           echo "OK: emendas aplicadas"
 
+      - name: Compilar o conector OpenXR de 32 bits (openxr_loader.dll)
+        id: loader
+        shell: bash
+        continue-on-error: true
+        run: |
+          set +e
+          echo "=== OPENXR LOADER ===" >> dist-log.txt
+          curl -sL -o sdk.tgz "https://codeload.github.com/KhronosGroup/OpenXR-SDK/tar.gz/refs/tags/release-1.1.65"
+          tar xzf sdk.tgz
+          cd OpenXR-SDK-release-1.1.65
+          cmake -S . -B build32 -A Win32 -DDYNAMIC_LOADER=ON -DBUILD_API_LAYERS=OFF -DBUILD_TESTS=OFF \
+                -DBUILD_CONFORMANCE_TESTS=OFF -DBUILD_SAMPLES=OFF -DBUILD_LOADER=ON >> ../dist-log.txt 2>&1
+          cmake --build build32 --config Release --target openxr_loader >> ../dist-log.txt 2>&1
+          rc=$?
+          echo "loader rc=$rc" >> ../dist-log.txt
+          find build32 -name "openxr_loader.dll" >> ../dist-log.txt 2>&1
+          exit $rc
+
       - name: Configurar (MSVC x86)
         id: config
         shell: bash
@@ -88,6 +106,15 @@ jobs:
           if [ -f _fork/black-pc/loader/build/Release/black.exe ]; then
             cp _fork/black-pc/loader/build/Release/black.exe dist/
             cp _fork/black-pc/loader/build/Release/blackrt.dll dist/
+            # o conector OpenXR de 32 bits vai junto: sem ele nao ha VR, e o Meta/SteamVR nao instalam a versao x86
+            L=$(find OpenXR-SDK-release-1.1.65/build32 -name "openxr_loader.dll" -path "*Release*" | head -1)
+            if [ -n "$L" ]; then
+              cp "$L" dist/openxr_loader.dll
+              echo "openxr_loader.dll: $(stat -c%s "$L") bytes" >> dist/build-log.txt
+            else
+              echo "FALHOU: openxr_loader.dll de 32 bits nao foi gerado" >> dist/build-log.txt
+            fi
+            cp OpenXR-SDK-release-1.1.65/LICENSE dist/OPENXR-LICENSE.txt 2>/dev/null || true
             echo "PRONTO: binarios gerados" >> dist/build-log.txt
           else
             echo "FALHOU: black.exe nao foi gerado" >> dist/build-log.txt

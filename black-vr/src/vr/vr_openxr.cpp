@@ -173,8 +173,9 @@ bool load_loader()
     if (g_loader) return true;
     g_loader = LoadLibraryA("openxr_loader.dll");
     if (!g_loader) {
-        set_error("openxr_loader.dll não encontrado (instale o runtime do headset: SteamVR, Meta Quest Link, "
-                  "Windows Mixed Reality ou o runtime do fabricante)");
+        set_error("openxr_loader.dll não encontrado ao lado do black.exe. Este arquivo (versão de 32 bits) "
+                  "vem junto com o port — se ele sumiu, extraia o pacote de novo sem apagar nada. O app de VR "
+                  "do headset (Meta Quest Link, SteamVR) é outra coisa e sozinho não resolve.");
         return false;
     }
     p_xrGetInstanceProcAddr = (PFN_xrGetInstanceProcAddr)GetProcAddress(g_loader, "xrGetInstanceProcAddr");
