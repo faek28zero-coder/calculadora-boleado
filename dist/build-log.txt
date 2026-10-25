@@ -94,7 +94,7 @@ OK: emendas aplicadas
 -- Performing Test HAVE_UNREACHABLE_CODE - Failed
 -- Performing Test HAVE_CPP20_EXTENSIONS
 -- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (22.9s)
+-- Configuring done (24.4s)
 -- Generating done (0.1s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -193,7 +193,7 @@ build32/src/tests/loader_test/Release/openxr_loader.dll
 -- Performing Test HAVE_UNREACHABLE_CODE - Failed
 -- Performing Test HAVE_CPP20_EXTENSIONS
 -- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (12.8s)
+-- Configuring done (13.2s)
 -- Generating done (0.1s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -253,7 +253,7 @@ build64/src/tests/loader_test/Release/openxr_loader.dll
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.1s)
+-- Configuring done (3.2s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -352,7 +352,7 @@ build rc=0
 -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (1.7s)
+-- Configuring done (1.8s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/probe/build
 MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
@@ -364,32 +364,6 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
   Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/probe/CMakeLists.txt
 sonda: Error [SPEC | xrGetInstanceProcAddr | VUID-xrGetInstanceProcAddr-function-parameter] : Invalid Function pointer
 FALHOU: sem xrCreateInstance
-=== SONDA DE VR ===
--- Building for: Visual Studio 18 2026
--- The CXX compiler identification is MSVC 19.51.36260.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done (1.7s)
--- Generating done (0.0s)
-CMake Warning (unused-cli):
-  Manually-specified variables were not used by the project:
-
-    CMAKE_BUILD_TYPE
-
-
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/sonda-build
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
-  sonda.cpp
-  vr-sonda.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\sonda-build\Release\vr-sonda.exe
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
-sonda rc=0
-sonda-build/Release/vr-sonda.exe
 === SONDA DE VR 64 BITS ===
 -- Building for: Visual Studio 18 2026
 -- The CXX compiler identification is MSVC 19.51.36260.0
@@ -398,7 +372,7 @@ sonda-build/Release/vr-sonda.exe
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.7s)
+-- Configuring done (1.8s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -417,6 +391,5 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
 sonda64 rc=0
 sonda64-build/Release/vr-sonda64.exe
 openxr_loader.dll: 612352 bytes
-vr-sonda.exe: 154624 bytes
 x64: vr-sonda64.exe 194048 bytes, openxr_loader.dll 671744 bytes
 PRONTO: binarios gerados
