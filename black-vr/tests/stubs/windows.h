@@ -66,6 +66,7 @@ struct NT_TIB { void *ExceptionList, *StackBase, *StackLimit; };
 #define GetCurrentThread() ((void*)0)
 #define GetCurrentProcess() ((void*)0)
 #define GetCurrentProcessId() 0ul
+#define GetCurrentThreadId() 0ul
 inline int CloseHandle(void *) { return 1; }
 #define CP_ACP 0
 inline int WideCharToMultiByte(int, unsigned long, const wchar_t *, int, char *, int, const char *, int *) { return 0; }
@@ -84,10 +85,12 @@ inline BOOL FreeLibrary(HMODULE) { return 1; }
 inline DWORD GetLastError() { return 0; }
 struct MODULEINFO;
 inline unsigned int GetModuleFileNameA(HMODULE, char *, unsigned int) { return 0; }
-struct MEMORY_BASIC_INFORMATION { void *BaseAddress; void *AllocationBase; unsigned long State; };
+struct MEMORY_BASIC_INFORMATION { void *BaseAddress; void *AllocationBase; unsigned long State; unsigned long Protect; unsigned long long RegionSize; };
 #define MEM_COMMIT 0x1000
 #define MEM_RESERVE 0x2000
 #define MEM_FREE 0x10000
+#define PAGE_NOACCESS 0x01
+#define PAGE_GUARD 0x100
 inline unsigned long VirtualQuery(const void *, MEMORY_BASIC_INFORMATION *, unsigned long) { return 0; }
 using PVECTORED_EXCEPTION_HANDLER = long (*)(struct _EXCEPTION_POINTERS *);
 inline void *AddVectoredExceptionHandler(unsigned long, PVECTORED_EXCEPTION_HANDLER) { return nullptr; }

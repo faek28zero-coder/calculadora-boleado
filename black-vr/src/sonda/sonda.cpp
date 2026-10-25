@@ -132,10 +132,17 @@ LONG CALLBACK on_fault(EXCEPTION_POINTERS *info)
     CONTEXT *ctx = (CONTEXT *)info->ContextRecord;
     if (ctx) {
         say("*** eip %p esp %p ebp %p", (void *)ctx->Eip, (void *)ctx->Esp, (void *)ctx->Ebp);
-        const uintptr_t *sp = (const uintptr_t *)ctx->Esp;
+        const uintptr_t sp = (uintptr_t)ctx->Esp;
         int printed = 0;
-        for (int i = 0; i < 512 && printed < 14; i++) {
-            uintptr_t v = sp[i];
+        for (int i = 0; i < 320 && printed < 14; i++) {
+            const uintptr_t addr = sp + (uintptr_t)i * 4;
+            MEMORY_BASIC_INFORMATION mbi = {};
+            if (!VirtualQuery((const void *)addr, &mbi, sizeof mbi) || mbi.State != MEM_COMMIT ||
+                (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD))) {
+                say("*** pilha: parou em %p (memoria nao mapeada)", (void *)addr);
+                break;
+            }
+            const uintptr_t v = *(const uintptr_t *)addr;
             if (v < 0x10000) continue;
             const ModInfo *m = find_mod(v);
             if (!m) continue;

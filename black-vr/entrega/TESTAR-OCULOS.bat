@@ -20,7 +20,7 @@ echo.
 echo Terminou com codigo %CODE%   (0 = o oculos respondeu)
 if exist "port\vr-trace.txt" (
   echo.
-  echo --- ultimas linhas do rastro ---
-  powershell -NoProfile -Command "Get-Content '%~dp0port\vr-trace.txt' -Tail 25" 2>nul
+  echo --- rastro completo (o que interessa pode estar bem no alto) ---
+  type "port\vr-trace.txt"
 )
 pause

@@ -9,12 +9,12 @@ rem      ninguem perceber que o pacote novo nunca foi extraido (foi o que aconte
 if not exist "port\vr-sonda.exe" goto :antigo
 
 echo ============================================================
-echo   BLACK VR - DIAGNOSTICO DA VERSAO 7
+echo   BLACK VR - DIAGNOSTICO DA VERSAO 8
 echo   (se este titulo nao aparecer, o arquivo e o antigo)
 echo ============================================================
 echo.
 
-echo === BLACK VR - diagnostico v7 === > "%REL%"
+echo === BLACK VR - diagnostico v8 === > "%REL%"
 echo data: %DATE%  %TIME% >> "%REL%"
 echo pasta: %CD% >> "%REL%"
 echo. >> "%REL%"

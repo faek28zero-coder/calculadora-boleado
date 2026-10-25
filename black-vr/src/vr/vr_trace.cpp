@@ -123,27 +123,53 @@ void dump_relevant_modules()
     }
 }
 
-/** "Backtrace de pobre": percorre a pilha e anota o que aponta para dentro de um módulo. */
+/** A faixa [a, a+n) esta em memoria de verdade? (testa pagina por pagina) */
+bool readable(uintptr_t a, size_t n)
+{
+    const uintptr_t end = a + n;
+    while (a < end) {
+        MEMORY_BASIC_INFORMATION mbi = {};
+        if (!VirtualQuery((const void *)a, &mbi, sizeof mbi)) return false;
+        if (mbi.State != MEM_COMMIT) return false;
+        if (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD)) return false;
+        const uintptr_t next = (uintptr_t)mbi.BaseAddress + mbi.RegionSize;
+        if (next <= a) return false;
+        a = next;
+    }
+    return true;
+}
+
+/** "Backtrace de pobre": percorre a pilha e anota o que aponta para dentro de um modulo. */
 void dump_stack(EXCEPTION_POINTERS *info)
 {
     load_modules();
     CONTEXT *ctx = (CONTEXT *)info->ContextRecord;
     if (!ctx) return;
+    line("*** thread %lu", (unsigned long)GetCurrentThreadId());
     line("*** registradores: eip %p esp %p ebp %p eax %p ebx %p ecx %p edx %p esi %p edi %p",
          (void *)ctx->Eip, (void *)ctx->Esp, (void *)ctx->Ebp, (void *)ctx->Eax, (void *)ctx->Ebx,
          (void *)ctx->Ecx, (void *)ctx->Edx, (void *)ctx->Esi, (void *)ctx->Edi);
 
     // Endereços na pilha que caem em código: os primeiros são as chamadas mais recentes.
-    const uintptr_t *sp = (const uintptr_t *)ctx->Esp;
+    //
+    // CUIDADO (25/10, v7): este laço já matou o próprio rastro. Ele lia 512 palavras a partir
+    // do ESP sem conferir se aquilo era memória mapeada; quando a pilha estava quase vazia
+    // (ESP logo abaixo do topo), a leitura passava do topo, caía em memória livre, e o
+    // capturador de falha estourava DENTRO do capturador de falha — o relatório mostrava o
+    // estouro dele e escondia o erro de verdade. Agora: só lê o que está commitado e para na
+    // primeira página inválida.
+    const uintptr_t sp = (uintptr_t)ctx->Esp;
     int printed = 0;
-    uintptr_t last_mod_base = 0;
-    for (int i = 0; i < 512 && printed < 14; i++) {
-        uintptr_t v = sp[i];
-        if (v < 0x10000 || v > 0x7FFFFFFF) continue;
+    for (int i = 0; i < 320 && printed < 14; i++) {
+        const uintptr_t addr = sp + (uintptr_t)i * 4;
+        if (!readable(addr, 4)) {
+            line("*** pilha: parou em %p (memoria nao mapeada; nao li mais nada)", (void *)addr);
+            break;
+        }
+        const uintptr_t v = *(const uintptr_t *)addr;
+        if (v < 0x10000) continue;
         const ModInfo *m = find_mod(v);
         if (!m) continue;
-        if (m->base == last_mod_base && printed > 0 && i > 0 && (v & 0xFFF) == 0) continue;
-        last_mod_base = m->base;
         line("*** pilha[%d]: %s + 0x%llx", i * 4, m->name, (unsigned long long)(v - m->base));
         printed++;
     }
@@ -156,13 +182,15 @@ LONG CALLBACK on_exception(EXCEPTION_POINTERS *info)
         code != EXCEPTION_STACK_OVERFLOW && code != EXCEPTION_INT_DIVIDE_BY_ZERO)
         return EXCEPTION_CONTINUE_SEARCH;
 
+    static int handled;
+    handled++;
     char mod[300];
     describe((uintptr_t)info->ExceptionRecord->ExceptionAddress, mod, sizeof mod);
     const ULONG_PTR rw = info->ExceptionRecord->ExceptionInformation[0];
     const ULONG_PTR at = info->ExceptionRecord->ExceptionInformation[1];
     line("");
-    line("*** FALHA 0x%08lx em %p  (%s)", (unsigned long)code,
-         info->ExceptionRecord->ExceptionAddress, mod);
+    line("*** FALHA 0x%08lx em %p  (%s)%s", (unsigned long)code, info->ExceptionRecord->ExceptionAddress, mod,
+         handled > 1 ? "  [estouro dentro do proprio rastro: o erro original esta acima]" : "");
     if (code == EXCEPTION_ACCESS_VIOLATION) {
         char atmod[300];
         describe((uintptr_t)at, atmod, sizeof atmod);
