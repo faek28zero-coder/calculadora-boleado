@@ -94,7 +94,7 @@ OK: emendas aplicadas
 -- Performing Test HAVE_UNREACHABLE_CODE - Failed
 -- Performing Test HAVE_CPP20_EXTENSIONS
 -- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (24.0s)
+-- Configuring done (21.8s)
 -- Generating done (0.1s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -154,7 +154,7 @@ build32/src/tests/loader_test/Release/openxr_loader.dll
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.2s)
+-- Configuring done (3.0s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -233,18 +233,38 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_ope
   vr_input.cpp
   vr_selftest.cpp
   vr_trace.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(2,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(2,9):
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(10,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(10,9):
       'WIN32_LEAN_AND_MEAN' previously declared on the command line
   
   Generating Code...
-     Creating library D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.lib and object D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.exp
-  blackrt.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\blackrt.dll
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
-  stub.c
-  black.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\black.exe
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
-build rc=0
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,32): error C2665: 'strrchr': no overloaded function could convert all the argument types [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\string.h(512,28):
+      could be 'char *strrchr(char *const ,const int)'
+          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,32):
+          'char *strrchr(char *const ,const int)': cannot convert argument 1 from 'WCHAR [260]' to 'char *const '
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,42):
+              Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime_string.h(76,38):
+      or       'const char *strrchr(const char *,int)'
+          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,32):
+          'const char *strrchr(const char *,int)': cannot convert argument 1 from 'WCHAR [260]' to 'const char *'
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,42):
+              Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,32):
+      while trying to match the argument list '(WCHAR [260], char)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,71): error C2446: ':': no conversion from 'WCHAR [260]' to 'const char *' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,71):
+      Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45): warning C4473: 'snprintf' : not enough arguments passed for format string [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45):
+      placeholders and their parameters expect 1 variadic arguments, but 0 were provided
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45):
+      the missing variadic argument 1 is required by format string '%s'
+  
+build rc=1
 === SONDA DO CONECTOR ===
 -- Building for: Visual Studio 18 2026
 -- The C compiler identification is MSVC 19.51.36260.0
@@ -253,7 +273,7 @@ build rc=0
 -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (1.8s)
+-- Configuring done (1.6s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/probe/build
 MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
@@ -265,5 +285,31 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
   Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/probe/CMakeLists.txt
 sonda: Error [SPEC | xrGetInstanceProcAddr | VUID-xrGetInstanceProcAddr-function-parameter] : Invalid Function pointer
 FALHOU: sem xrCreateInstance
-openxr_loader.dll: 612352 bytes
-PRONTO: binarios gerados
+=== SONDA DE VR ===
+-- Building for: Visual Studio 18 2026
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.7s)
+-- Generating done (0.0s)
+CMake Warning (unused-cli):
+  Manually-specified variables were not used by the project:
+
+    CMAKE_BUILD_TYPE
+
+
+-- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/sonda-build
+MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
+  sonda.cpp
+D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(164,10): error C2065: 'XR_ERROR_SYSTEM_ID_INVALID': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(164,10): error C2051: case expression not constant [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
+sonda rc=1
+FALHOU: black.exe nao foi gerado
+_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdC/CompilerIdC.exe
+_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdCXX/CompilerIdCXX.exe
