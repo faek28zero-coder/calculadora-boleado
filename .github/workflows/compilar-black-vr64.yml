@@ -150,6 +150,18 @@ jobs:
           ls -la dist >> dist/build-log.txt
           exit 0
 
+      - name: Mandar os binarios de volta para o branch (o zip vai pro Drive daqui)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          git config user.name "black-vr builder"
+          git config user.email "builder@users.noreply.github.com"
+          git add -f dist
+          git diff --cached --quiet || git commit -m "build: binarios 64 bits [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+          echo "push rc=$?"
+
       - name: Guardar como artifact
         if: always()
         uses: actions/upload-artifact@v4

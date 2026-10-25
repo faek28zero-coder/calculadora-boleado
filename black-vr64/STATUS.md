@@ -9,3 +9,5 @@
   Precisa do segredo `XBE_URL` (link direto do `default.xbe` do jogador), porque o
   CMake do port exige o XBE na hora de compilar.
 - Sem `XBE_URL` o build para depois da emenda, com mensagem clara no log.
+
+- 25/10: build de 64 bits passa a devolver os binarios para o branch (o artifact do GitHub nao e alcancavel daqui); o zip vai pro Drive.
