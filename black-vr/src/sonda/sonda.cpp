@@ -359,8 +359,8 @@ void dump_memory()
             (unsigned long long)((ms.ullTotalPageFile - ms.ullAvailPageFile) >> 20),
             (unsigned long long)(ms.ullTotalPageFile >> 20));
         say("carga da memoria: %lu%%", (unsigned long)ms.dwMemoryLoad);
-        if (ms.ullTotalPhys <= ms.ullTotalPageFile)
-            say("  (sem arquivo de paginacao: o commit e igual a memoria fisica)");
+        if (ms.ullTotalPageFile <= ms.ullTotalPhys)
+            say("  ATENCAO: sem arquivo de paginacao (o commit fica limitado a memoria fisica)");
     }
     PROCESS_MEMORY_COUNTERS_EX pmc = {};
     if (GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof pmc)) {
@@ -507,7 +507,7 @@ int desenhar_no_oculos(const Funcoes &f, XrInstance inst, XrSession sess, ID3D11
     g_step = "esperar estado pronto";
     bool comecou = false;
     const DWORD t_inicio = GetTickCount();
-    while (!comecou && GetTickCount() - t_inicio < 15000) {
+    while (!comecou && GetTickCount() - t_inicio < 30000) {
         XrEventDataBuffer ev = {XR_TYPE_EVENT_DATA_BUFFER};
         while (XR_SUCCEEDED(p.poll(inst, &ev))) {
             if (ev.type == XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED) {
@@ -557,9 +557,18 @@ int desenhar_no_oculos(const Funcoes &f, XrInstance inst, XrSession sess, ID3D11
     }
     std::vector<int64_t> formats(fmt_count);
     p.enum_formats(sess, fmt_count, &fmt_count, formats.data());
+    const int64_t preferidos[] = {(int64_t)DXGI_FORMAT_R8G8B8A8_UNORM, (int64_t)DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
+                                  (int64_t)DXGI_FORMAT_B8G8R8A8_UNORM};
     int64_t escolhido = formats[0];
-    for (uint32_t i = 0; i < fmt_count; i++)
-        if (formats[i] == (int64_t)DXGI_FORMAT_R8G8B8A8_UNORM) escolhido = formats[i];
+    for (const int64_t pref : preferidos) {
+        bool tem = false;
+        for (uint32_t i = 0; i < fmt_count; i++)
+            if (formats[i] == pref) tem = true;
+        if (tem) {
+            escolhido = pref;
+            break;
+        }
+    }
     say("formato escolhido: %lld (de %u oferecidos)", (long long)escolhido, (unsigned)fmt_count);
 
     g_step = "troca de imagens";
@@ -613,6 +622,17 @@ int desenhar_no_oculos(const Funcoes &f, XrInstance inst, XrSession sess, ID3D11
     while (GetTickCount() - t_quadros < 20000) {
         XrFrameWaitInfo fwi = {XR_TYPE_FRAME_WAIT_INFO};
         XrFrameState fs = {XR_TYPE_FRAME_STATE};
+        {
+            XrEventDataBuffer ev = {XR_TYPE_EVENT_DATA_BUFFER};
+            while (XR_SUCCEEDED(p.poll(inst, &ev))) {
+                if (ev.type == XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED) {
+                    const XrEventDataSessionStateChanged *ch = (const XrEventDataSessionStateChanged *)&ev;
+                    say("estado da sessao: %d", (int)ch->state);
+                }
+                memset(&ev, 0, sizeof ev);
+                ev.type = XR_TYPE_EVENT_DATA_BUFFER;
+            }
+        }
         if (XR_FAILED(p.wait_frame(sess, &fwi, &fs))) {
             say("FALHOU: xrWaitFrame");
             break;
@@ -974,23 +994,19 @@ Opt opt_da_variante(int v)
         break;
     case 9: o.nome = "9 API 1.0.0 com debug_utils"; o.api_1_0 = true; break;
     case 10:
-        o.nome = "10 caminho inteiro + quadro colorido no oculos por 20 s";
-        o.api_1_0 = true;
-        o.debug_utils = false;
+        // a configuracao do modo 1 foi a que criou a sessao em 64 bits
+        o.nome = "10 desenhar no oculos (20 s) - igual ao modo 1";
         o.desenhar = true;
         break;
     case 11:
-        o.nome = "11 como 10, mas tenta a sessao 3 vezes";
-        o.api_1_0 = true;
-        o.debug_utils = false;
+        o.nome = "11 desenhar no oculos, tentando a sessao 3 vezes";
         o.desenhar = true;
         o.tentativas = 3;
         break;
     case 12:
-        o.nome = "12 como 10, com o mensageiro do runtime ligado (ele diz o motivo)";
-        o.api_1_0 = true;
-        o.debug_utils = true;
+        o.nome = "12 desenhar no oculos com janela e fila de mensagens";
         o.desenhar = true;
+        o.janela = true;
         break;
     default: o.nome = "1 (padrao)"; break;
     }

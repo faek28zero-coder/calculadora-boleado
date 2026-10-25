@@ -1,4 +1,4 @@
-BLACK VR - TESTE DE 64 BITS (versao 11)
+BLACK VR - TESTE DE 64 BITS (versao 12)
 ============================================================
 
 So tem 64 bits aqui. O lado de 32 bits foi descartado: ele estoura
@@ -28,10 +28,10 @@ COMO FAZER
 
 O QUE ELE TESTA
 ------------------------------------------------------------
-- modo  4: so liga no aplicativo do oculos (nao deveria falhar nunca)
-- modo 12: caminho inteiro, com as mensagens do aplicativo do oculos
-- modo 11: igual, tentando a sessao 3 vezes
-- modo 10: desenha um quadro colorido no oculos por 20 segundos
+- modo 10: desenha um quadro colorido no oculos por 20 segundos (o principal)
+- modo  4: so liga no aplicativo do oculos
+- modo 11: desenha, tentando a sessao 3 vezes
+- modo 12: desenha com janela e fila de mensagens
 
 Cada teste tem tempo limite: se travar, ele e encerrado e o relatorio
 continua. Pode deixar rodando.

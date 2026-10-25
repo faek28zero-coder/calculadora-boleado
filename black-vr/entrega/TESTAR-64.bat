@@ -10,31 +10,40 @@ if not exist "vr-sonda64.exe" goto :faltou
 if not exist "openxr_loader.dll" goto :faltou
 
 echo ============================================================
-echo   BLACK VR - TESTE DE 64 BITS (versao 11)
+echo   BLACK VR - TESTE DE 64 BITS (versao 12)
 echo ============================================================
 echo.
 echo   1. Abra o aplicativo do oculos (Meta Horizon Link).
 echo   2. Oculos ligado no cabo.
-echo   3. COLOQUE O OCULOS NA CABECA: vao aparecer imagens nele.
+echo   3. COLOQUE O OCULOS NA CABECA AGORA.
+echo.
+echo   Espere: na tela do oculos tem de aparecer um quadro colorido
+echo   mudando de cor (vermelho num olho, verde no outro).
 echo.
 echo   Nao precisa do jogo nesta pasta. E so o teste do oculos.
 echo.
 pause
 
-echo === BLACK VR - teste de 64 bits, versao 11 === > "%REL%"
+echo === BLACK VR - teste de 64 bits, versao 12 === > "%REL%"
 echo data: %DATE%  %TIME% >> "%REL%"
 echo pasta: %CD% >> "%REL%"
 echo. >> "%REL%"
 
 powershell -NoProfile -Command "Get-ChildItem -Path '%~dp0' -Include *.dll,*.exe -Recurse | Unblock-File -ErrorAction SilentlyContinue" >nul 2>&1
 
-echo [TESTES] >> "%REL%"
-for %%V in (4 12 11 10) do call :rodar %%V
+rem ---- imagem primeiro: e o que interessa
+echo [TESTE COM IMAGEM] >> "%REL%"
+for %%V in (10) do call :rodar %%V
 echo. >> "%REL%"
 
 set VIU=
-set /p VIU=Apareceu algum quadro colorido no oculos? (s = sim, n = nao): 
+set /p VIU=Apareceu o quadro colorido no oculos? (s = sim, n = nao): 
 echo resposta do usuario (apareceu imagem no oculos?): !VIU! >> "%REL%"
+echo. >> "%REL%"
+
+rem ---- depois os outros, para o relatorio ficar completo
+echo [OUTROS TESTES] >> "%REL%"
+for %%V in (4 11 12) do call :rodar %%V
 echo. >> "%REL%"
 echo === fim === >> "%REL%"
 
