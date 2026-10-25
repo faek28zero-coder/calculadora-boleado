@@ -1,0 +1,34 @@
+BLACK VR - port de 64 bits (primeira versao com VR)
+============================================================
+
+O que tem nesta pasta:
+
+  BLACK.exe            o jogo (64 bits) com a VR dentro
+  compiler\            o que o jogo usa para se compilar na primeira vez
+  openxr_loader.dll    o conector de 64 bits do oculos
+  assets\              os SEUS arquivos do jogo (voce coloca)
+  JOGAR-VR.bat         duplo clique para jogar em VR
+
+
+COMO FAZER
+------------------------------------------------------------
+1. Abra o aplicativo do oculos (Meta Horizon Link) e ligue o oculos no cabo.
+2. Coloque o default.xbe e as pastas do jogo dentro de "assets".
+   (Pode ser a ISO tambem, se o port aceitar.)
+3. Duplo clique em JOGAR-VR.bat.
+4. Na primeira vez ele compila o jogo: alguns minutos, parece travado.
+5. A imagem do jogo deve aparecer DENTRO do oculos.
+
+
+O QUE ESPERAR NESTA VERSAO
+------------------------------------------------------------
+- A imagem vai nos dois olhos (tela grande na sua frente), ainda nao e
+  estereo: e o primeiro passo, para provar o caminho inteiro.
+- Se o oculos nao aparecer, o jogo roda normal no monitor.
+- Se algo der errado, os detalhes aparecem na janela preta.
+
+
+O QUE VEM DEPOIS
+------------------------------------------------------------
+Estereo de verdade: desenhar duas vezes, uma por olho, com a camera
+deslocada. O ponto de encaixe ja esta feito.

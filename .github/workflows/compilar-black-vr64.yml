@@ -1,0 +1,150 @@
+name: compilar-black-vr64
+
+# Compila o port de 64 bits (BLACK-XBERecomp) COM a camada de VR (OpenXR + Direct3D 12).
+#
+# O port recompila o jogo na primeira execucao, mas o CMake dele precisa do
+# default.xbe JÁ na hora de compilar (add_xbe_image: DEPENDS + SHA1). Por isso o
+# XBE entra aqui como segredo, nunca no repositorio:
+#
+#   XBE_URL  - link direto do default.xbe (Google Drive "qualquer um com o link"
+#              ou qualquer URL que o curl alcance)
+#
+# Sem esse segredo o build para com uma mensagem clara.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["arena/**"]
+    paths:
+      - "black-vr64/**"
+
+concurrency:
+  group: compilar-black-vr64-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  # versoes fixas: o patch e escrito contra estes commits
+  SDK_COMMIT: main
+  RECOMP_COMMIT: main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Baixar o SDK (XboxXBE-Recomp) e o port (BLACK-XBERecomp)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          exec > >(tee -a dist-log.txt) 2>&1
+          mkdir -p _src
+          cd _src
+          git clone --depth 1 https://github.com/TGP482/XboxXBE-Recomp.git XboxXBE-Recomp
+          git clone --depth 1 https://github.com/TGP482/BLACK-XBERecomp.git BLACK-XBERecomp
+          cd ..
+          echo "OK: fontes baixadas"
+
+      - name: Pôr o codigo de VR dentro do port e aplicar a emenda
+        shell: bash
+        run: |
+          set -euxo pipefail
+          exec > >(tee -a dist-log.txt) 2>&1
+          P=_src/BLACK-XBERecomp
+          mkdir -p $P/src/vr/openxr
+          cp black-vr64/src/vr/*.h black-vr64/src/vr/*.cpp $P/src/vr/
+          cp black-vr/vendor/openxr/*.h $P/src/vr/openxr/
+          cd $P
+          git apply --whitespace=nowarn ../../black-vr64/patches/0001-vr-no-presente.patch
+          echo "OK: emenda aplicada"
+
+      - name: Pôr o default.xbe do jogador em assets (vem de segredo, nao do repo)
+        shell: bash
+        run: |
+          set +e
+          echo "=== XBE ===" >> dist-log.txt
+          P=_src/BLACK-XBERecomp
+          mkdir -p $P/assets
+          URL="${{ secrets.XBE_URL }}"
+          if [ -z "$URL" ]; then
+            echo "SEM XBE_URL: o build nao consegue recompilar o jogo." | tee -a dist-log.txt
+            echo "Crie o segredo XBE_URL com um link direto do default.xbe." | tee -a dist-log.txt
+            exit 0
+          fi
+          if ! curl -sL --fail -o /tmp/xbe "$URL"; then
+            echo "FALHOU: nao consegui baixar o XBE de XBE_URL" >> dist-log.txt
+            exit 0
+          fi
+          TAM=$(stat -c%s /tmp/xbe)
+          echo "xbe baixado: $TAM bytes" >> dist-log.txt
+          if [ "$TAM" -lt 4000000 ]; then
+            echo "AVISO: XBE pequeno demais ($TAM bytes) - provavelmente veio uma pagina do Drive, nao o arquivo" >> dist-log.txt
+          fi
+          cp /tmp/xbe $P/assets/default.xbe
+          sha1sum $P/assets/default.xbe >> dist-log.txt || true
+          exit 0
+
+      - name: Configurar (clang + Ninja, Release)
+        shell: bash
+        run: |
+          set +e
+          echo "=== CONFIGURAR ===" >> dist-log.txt
+          cd _src/BLACK-XBERecomp
+          cmake -S . -B out/build/release -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+                -DCMAKE_C_FLAGS="-march=x86-64-v2" -DCMAKE_CXX_FLAGS="-march=x86-64-v2" >> ../../dist-log.txt 2>&1
+          echo "config rc=$?" >> ../../dist-log.txt
+          tail -20 ../../dist-log.txt
+          exit 0
+
+      - name: Compilar
+        shell: bash
+        run: |
+          set +e
+          echo "=== COMPILAR ===" >> dist-log.txt
+          cd _src/BLACK-XBERecomp
+          cmake --build out/build/release --parallel >> ../../dist-log.txt 2>&1
+          echo "build rc=$?" >> ../../dist-log.txt
+          grep -nE "error:|error C|error LNK" ../../dist-log.txt | head -40
+          exit 0
+
+      - name: Empacotar
+        shell: bash
+        run: |
+          set +e
+          mkdir -p dist
+          cp dist-log.txt dist/build-log.txt 2>/dev/null
+          R=_src/BLACK-XBERecomp
+          EXE=$(find $R/out -name "BLACK.exe" | head -1)
+          echo "exe: $EXE" >> dist/build-log.txt
+          if [ -z "$EXE" ]; then
+            echo "FALHOU: BLACK.exe nao foi gerado (veja build-log.txt)" >> dist/build-log.txt
+            exit 0
+          fi
+          D=$(dirname "$EXE")
+          cp "$EXE" dist/ 2>/dev/null
+          # o port recompila o jogo na primeira execucao: a pasta do compilador vai junto
+          if [ -d "$D/compiler" ]; then cp -r "$D/compiler" dist/; fi
+          cp "$D"/*.dll dist/ 2>/dev/null
+          cp black-vr64/entrega/JOGAR-VR.bat dist/ 2>/dev/null
+          cp black-vr64/entrega/LEIA-ISTO.txt dist/ 2>/dev/null
+          cp _src/BLACK-XBERecomp/LICENSE dist/ 2>/dev/null || true
+          # conector OpenXR de 64 bits (o mesmo que ja funcionou no teste da sonda)
+          L=$(find . -name openxr_loader.dll -path "*x64*" | head -1)
+          if [ -n "$L" ]; then cp "$L" dist/openxr_loader.dll; fi
+          ls -la dist >> dist/build-log.txt
+          exit 0
+
+      - name: Guardar como artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-vr64
+          path: dist/
+          if-no-files-found: warn
