@@ -1,0 +1,44 @@
+BLACK VR - TESTE DE 64 BITS (versao 11)
+============================================================
+
+So tem 64 bits aqui. O lado de 32 bits foi descartado: ele estoura
+sempre no mesmo ponto, nao importa a configuracao.
+
+O que tem nesta pasta:
+
+  vr-sonda64.exe        o teste (programa de 64 bits)
+  openxr_loader.dll     o conector de 64 bits (tem de ficar junto)
+  TESTAR-64.bat         duplo clique neste
+
+Nao precisa do jogo, nao precisa de zip, nao precisa substituir nada:
+e uma pasta nova, so com estes tres arquivos e este texto.
+
+
+COMO FAZER
+------------------------------------------------------------
+1. Abra o aplicativo do oculos (Meta Horizon Link) no PC.
+2. Ligue o oculos no cabo USB-C.
+3. Duplo clique em TESTAR-64.bat.
+4. Coloque o oculos na cabeca quando ele pedir.
+   Vao aparecer imagens coloridas dentro do oculos por alguns minutos.
+5. No fim ele pergunta se apareceu imagem: responda s ou n.
+6. Me mande o arquivo RELATORIO-64.txt que ele deixa nesta pasta.
+
+
+O QUE ELE TESTA
+------------------------------------------------------------
+- modo  4: so liga no aplicativo do oculos (nao deveria falhar nunca)
+- modo 12: caminho inteiro, com as mensagens do aplicativo do oculos
+- modo 11: igual, tentando a sessao 3 vezes
+- modo 10: desenha um quadro colorido no oculos por 20 segundos
+
+Cada teste tem tempo limite: se travar, ele e encerrado e o relatorio
+continua. Pode deixar rodando.
+
+
+SE ALGO DER ERRO
+------------------------------------------------------------
+- "faltam arquivos": os tres arquivos tem de estar na MESMA pasta.
+- Se o Windows reclamar de arquivo bloqueado: botao direito no .bat ->
+  Propriedades -> marque "Desbloquear" -> OK.
+- Nada e instalado no PC: para desfazer, apague a pasta.
