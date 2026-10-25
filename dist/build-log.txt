@@ -94,8 +94,8 @@ OK: emendas aplicadas
 -- Performing Test HAVE_UNREACHABLE_CODE - Failed
 -- Performing Test HAVE_CPP20_EXTENSIONS
 -- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (24.0s)
--- Generating done (0.2s)
+-- Configuring done (23.6s)
+-- Generating done (0.1s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
 
@@ -154,7 +154,7 @@ build32/src/tests/loader_test/Release/openxr_loader.dll
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.3s)
+-- Configuring done (3.1s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -237,28 +237,14 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_tra
       D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(10,9):
       'WIN32_LEAN_AND_MEAN' previously declared on the command line
   
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(62,5): error C2065: 'MODULEENTRY32A': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(62,20): error C2146: syntax error: missing ';' before identifier 'me' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(62,20): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(62,23): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(63,5): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(63,24): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(64,31): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(64,9): error C3861: 'Module32FirstA': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(68,33): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(69,33): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(70,40): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,69): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45): warning C4473: 'snprintf' : not enough arguments passed for format string [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45):
-      placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(71,45):
-      the missing variadic argument 1 is required by format string '%s'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(72,39): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(72,18): error C3861: 'Module32NextA': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   Generating Code...
-build rc=1
+     Creating library D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.lib and object D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.exp
+  blackrt.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\blackrt.dll
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
+  stub.c
+  black.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\black.exe
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
+build rc=0
 === SONDA DO CONECTOR ===
 -- Building for: Visual Studio 18 2026
 -- The C compiler identification is MSVC 19.51.36260.0
@@ -267,7 +253,7 @@ build rc=1
 -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (1.9s)
+-- Configuring done (1.8s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/probe/build
 MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
@@ -287,7 +273,7 @@ FALHOU: sem xrCreateInstance
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.9s)
+-- Configuring done (1.8s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -301,27 +287,10 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
   1>Checking Build System
   Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
   sonda.cpp
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(78,5): error C2065: 'MODULEENTRY32A': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(78,20): error C2146: syntax error: missing ';' before identifier 'me' [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(78,20): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(78,23): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(79,5): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(79,24): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(80,31): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(80,9): error C3861: 'Module32FirstA': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(84,33): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(85,33): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(86,40): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(87,69): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(87,45): warning C4473: 'snprintf' : not enough arguments passed for format string [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(87,45):
-      placeholders and their parameters expect 1 variadic arguments, but 0 were provided
-      D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(87,45):
-      the missing variadic argument 1 is required by format string '%s'
-  
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(88,39): error C2065: 'me': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\black-vr\src\sonda\sonda.cpp(88,18): error C3861: 'Module32NextA': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\sonda-build\vr-sonda.vcxproj]
-sonda rc=1
-FALHOU: black.exe nao foi gerado
-_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdC/CompilerIdC.exe
-_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdCXX/CompilerIdCXX.exe
+  vr-sonda.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\sonda-build\Release\vr-sonda.exe
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
+sonda rc=0
+sonda-build/Release/vr-sonda.exe
+openxr_loader.dll: 612352 bytes
+vr-sonda.exe: 140288 bytes
+PRONTO: binarios gerados
