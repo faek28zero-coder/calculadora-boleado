@@ -75,7 +75,11 @@ jobs:
           echo "=== XBE ===" >> dist-log.txt
           P=_src/BLACK-XBERecomp
           mkdir -p $P/assets
+          # default.xbe do jogador: segredo XBE_URL; sem segredo, o link que ele ja compartilhou
           URL="${{ secrets.XBE_URL }}"
+          if [ -z "$URL" ]; then
+            URL="https://drive.google.com/uc?export=download&id=1Cu8BguikZvQ4CDNFG47forEfg7FvT_KQ"
+          fi
           if [ -z "$URL" ]; then
             echo "SEM XBE_URL: o build nao consegue recompilar o jogo." | tee -a dist-log.txt
             echo "Crie o segredo XBE_URL com um link direto do default.xbe." | tee -a dist-log.txt

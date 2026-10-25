@@ -14,10 +14,13 @@
 #include <dxgi1_6.h>
 #include <wrl/client.h>
 
+#include <cctype>
+#include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <string>
+#include <vector>
 
 #ifndef XR_USE_PLATFORM_WIN32
 #define XR_USE_PLATFORM_WIN32 1
