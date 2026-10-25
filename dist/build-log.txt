@@ -55,7 +55,7 @@ OK: emendas aplicadas
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (12.3s)
+-- Configuring done (12.6s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -72,8 +72,6 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
   Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
   main.cpp
   log.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\main.cpp(472,29): error C2653: 'host3d': is not a class or namespace name [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\main.cpp(472,37): error C3861: 'window': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   xbe.cpp
   image.cpp
   xthread.cpp
@@ -111,210 +109,20 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\main.cpp(
   k_misc.cpp
   dispatch.cpp
   device.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/device.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(837,52): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(838,37): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(838,52): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(839,38): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(839,54): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(903,5): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(905,9): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(906,46): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(907,41): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(908,26): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(909,26): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,24): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,38): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
-      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
-      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,5):
-      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(928,29): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(928,43): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
-      could be 'xd3d::Surface *xd3d::g_depthbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1152,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
-      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
-      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)' [found using argument-dependent lookup]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1152,5):
-      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1305,30): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,70): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,9): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
-      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
-      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,9):
-      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1311,9): error C2668: 'xd3d::apply_viewport': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,6):
-      could be 'void xd3d::apply_viewport(void)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(658,6):
-      or       'void xd3d::`anonymous-namespace'::apply_viewport(void)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1311,9):
-      while trying to match the argument list '()'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1360,13): error C2039: 'set_game_render_size': is not a member of 'vr' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr.h(26,11):
-      see declaration of 'vr'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1360,13): error C3861: 'set_game_render_size': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1384,31): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,66): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
-      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
-      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,5):
-      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1446,53): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
-      could be 'xd3d::Surface *xd3d::g_backbuffer'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
-      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1450,5): error C2668: 'xd3d::apply_viewport': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,6):
-      could be 'void xd3d::apply_viewport(void)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(658,6):
-      or       'void xd3d::`anonymous-namespace'::apply_viewport(void)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1450,5):
-      while trying to match the argument list '()'
-  
   host.cpp
   pushbuf.cpp
   draw.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/draw.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(726,5): error C3861: 'viewport_transform': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   Generating Code...
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(1381,13): error C3861: 'bind_render_target': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(1384,9): error C3861: 'apply_viewport': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   Compiling...
   formats.cpp
   resources.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/resources.cpp')
-  
   texture.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/texture.cpp')
-  
   vshader.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/vshader.cpp')
-  
   nv2a_vsh.cpp
   nv2a_psh.cpp
   pshader.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/d3d/pshader.cpp')
-  
   dsound.cpp
   output.cpp
   xinput.cpp
