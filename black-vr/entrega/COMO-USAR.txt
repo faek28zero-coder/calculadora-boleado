@@ -1,4 +1,4 @@
-BLACK em VR - pacote v8
+BLACK em VR - pacote v9
 ============================================================
 
 O que tem nesta pasta:
@@ -20,16 +20,18 @@ COMO JOGAR
 
 ESTA VERSAO AINDA NAO E A QUE JOGA - PRIMEIRO O TESTE
 ------------------------------------------------------------
-Na v6 o programa morria no exato momento em que pedia a sessao ao
-aplicativo do oculos. Para descobrir a causa sem ficar no escuro, a v7
-traz um teste separado (vr-sonda.exe) que faz a MESMA conversa em cinco
-modos diferentes, cada um num programa proprio. Se um modo cair, os
-outros continuam - e o relatorio mostra qual caminho funciona.
+O teste separado (vr-sonda.exe) mostrou que o aplicativo do oculos
+(versao de 32 bits) estoura no momento de criar a sessao, e nao o nosso
+programa: isso aconteceu igual em quatro configuracoes diferentes, sem
+o jogo junto. A v9 testa as ultimas alternativas que sobram (versao da
+API, mensageiro de depuracao, janela com fila de mensagens, thread
+propria) e verifica se a API antiga da Oculus esta instalada, que e o
+plano B.
 
 O que eu preciso de voce agora:
 
 1. Duplo clique em DIAGNOSTICO.bat.
-   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 8
+   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 9
    (se aparecer "diagnostico v6" no relatorio, o pacote novo nao foi extraido)
 2. Ele abre uma janela preta, roda os testes e no fim mostra um texto.
 3. Me mande esse texto (ou o arquivo RELATORIO-VR.txt que ele deixa

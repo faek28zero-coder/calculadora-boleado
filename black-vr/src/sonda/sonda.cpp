@@ -1,30 +1,33 @@
 // ============================================================
-//  BLACK VR — vr-sonda.exe
+//  BLACK VR — vr-sonda.exe (v9)
 //
-//  Um programa SEPARADO do jogo, de 32 bits, que faz só a conversa com o headset:
+//  Programa SEPARADO do jogo, de 32 bits, que faz só a conversa com o headset:
 //  carrega o conector, cria a instância, pega o sistema, cria o dispositivo D3D11 e
-//  tenta criar a sessão. Nada de jogo, nenhum gancho, nenhum D3D9.
+//  tenta criar a sessão. Sem jogo, sem gancho, sem D3D9.
 //
-//  Por que existe: o jogo quebra dentro do xrCreateSession e não há como saber, de lá
-//  de dentro, se a culpa é do runtime do headset, do driver de vídeo ou do processo do
-//  jogo (ganchos, threads, D3D9). Aqui não tem jogo: se ESTA sonda também cair, o
-//  problema é de fora do jogo. Se ela passar, o problema é do processo do jogo.
+//  O que já sabemos (25/10, relatório v8): o runtime do óculos é o "Oculus 1.208.0",
+//  a instância e o sistema funcionam, e xrCreateSession estoura num endereço solto
+//  na memória — igual em 4 configurações diferentes. Isso aponta para o runtime de
+//  32 bits, não para o nosso código. Os modos 6..9 abaixo testam as últimas
+//  hipóteses que sobram (versão da API, mensageiro de depuração, janela com fila de
+//  mensagens, thread própria) antes de trocar de caminho.
 //
-//  Uso:  vr-sonda.exe 1     (grava sonda-1.txt ao lado)
-//        1 = adaptador do headset + flag BGRA (o caminho novo do jogo)
-//        2 = adaptador padrão do Windows
-//        3 = adaptador do headset sem a flag BGRA (o caminho antigo do jogo)
-//        4 = só até "qual runtime respondeu" (não cria sessão: nunca deve cair)
-//        5 = como 1, mas com COM inicializado nesta thread
-//        0 = roda tudo que é seguro e tenta a sessão no fim
-//
-//  Código de saida: 0 = chegou ao fim, 1 = o runtime devolveu erro no passo indicado,
-//  2 = não achou o conector, 0xFFFFFFFF = caiu (o .bat mostra o código).
+//  Uso:  vr-sonda.exe N     (grava sonda-N.txt ao lado)
+//    1 = adaptador do óculos + BGRA + API atual + debug_utils   (caminho do jogo)
+//    2 = adaptador padrão do Windows
+//    3 = adaptador do óculos sem BGRA
+//    4 = para antes da sessão (só diz qual runtime respondeu)
+//    5 = como 1, com COM inicializado nesta thread
+//    6 = API 1.0.0 e SEM debug_utils
+//    7 = API 1.0.0, sem debug_utils e com janela + fila de mensagens
+//    8 = como 7, mas a sessão é criada numa thread própria (pilha de 8 MB)
+//    9 = API 1.0.0 com debug_utils (isola a versão da API do mensageiro)
+//    0 = roda 4 e depois 1
 // ============================================================
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h> // CoInitializeEx (o WIN32_LEAN_AND_MEAN não traz COM pelo windows.h)
-#include <winreg.h>  // leitura do registro (idem: WIN32_LEAN_AND_MEAN corta winreg.h)
+#include <winreg.h>  // ActiveRuntime do registro
 #include <tlhelp32.h>
 #include <d3d11.h>
 #include <dxgi1_2.h>
@@ -44,9 +47,9 @@
 #include "openxr.h"
 #include "openxr_platform.h"
 
-// ---------------------------------------------------------------- rastro
 namespace {
 
+// ---------------------------------------------------------------- rastro
 FILE *g_file;
 int g_variant;
 const char *g_step = "inicio";
@@ -62,8 +65,8 @@ void say(const char *fmt, ...)
     fflush(g_file);
 }
 
-// ---------------------------------------------------------------- módulos da falha
-const int kMaxMods = 320;
+// ---------------------------------------------------------------- módulos / memória
+const int kMaxMods = 400;
 struct ModInfo {
     uintptr_t base, size;
     char name[MAX_PATH];
@@ -71,10 +74,10 @@ struct ModInfo {
 ModInfo g_mods[kMaxMods];
 int g_mod_count;
 
-void load_modules()
+void load_modules(bool force = false)
 {
-    if (g_mod_count) return;
-    // Só existe a versão "W" no SDK moderno (e o port compila com UNICODE): pede W e converte.
+    if (g_mod_count && !force) return;
+    g_mod_count = 0;
     HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
     if (snap == INVALID_HANDLE_VALUE) return;
     MODULEENTRY32W me = {};
@@ -115,10 +118,26 @@ void describe(uintptr_t a, char *out, size_t n)
     snprintf(out, n, "fora de modulo (heap/pilha)");
 }
 
+bool readable(uintptr_t a, size_t n)
+{
+    const uintptr_t end = a + n;
+    while (a < end) {
+        MEMORY_BASIC_INFORMATION mbi = {};
+        if (!VirtualQuery((const void *)a, &mbi, sizeof mbi)) return false;
+        if (mbi.State != MEM_COMMIT) return false;
+        if (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD)) return false;
+        const uintptr_t next = (uintptr_t)mbi.BaseAddress + mbi.RegionSize;
+        if (next <= a) return false;
+        a = next;
+    }
+    return true;
+}
+
 LONG CALLBACK on_fault(EXCEPTION_POINTERS *info)
 {
     const DWORD code = info->ExceptionRecord->ExceptionCode;
     if (code != EXCEPTION_ACCESS_VIOLATION && code != EXCEPTION_ILLEGAL_INSTRUCTION) return EXCEPTION_CONTINUE_SEARCH;
+    load_modules(true);
     char mod[300];
     describe((uintptr_t)info->ExceptionRecord->ExceptionAddress, mod, sizeof mod);
     say("");
@@ -131,14 +150,29 @@ LONG CALLBACK on_fault(EXCEPTION_POINTERS *info)
     }
     CONTEXT *ctx = (CONTEXT *)info->ContextRecord;
     if (ctx) {
-        say("*** eip %p esp %p ebp %p", (void *)ctx->Eip, (void *)ctx->Esp, (void *)ctx->Ebp);
+        say("*** thread %lu, eip %p esp %p ebp %p", (unsigned long)GetCurrentThreadId(), (void *)ctx->Eip,
+            (void *)ctx->Esp, (void *)ctx->Ebp);
+        say("*** eax %08lx ebx %08lx ecx %08lx edx %08lx esi %08lx edi %08lx", (unsigned long)ctx->Eax,
+            (unsigned long)ctx->Ebx, (unsigned long)ctx->Ecx, (unsigned long)ctx->Edx, (unsigned long)ctx->Esi,
+            (unsigned long)ctx->Edi);
+        {
+            char raw[512] = {};
+            size_t used = 0;
+            for (int i = 0; i < 24; i++) {
+                const uintptr_t addr = (uintptr_t)ctx->Esp + (uintptr_t)i * 4;
+                if (!readable(addr, 4)) break;
+                int n = snprintf(raw + used, sizeof raw - used, "%08llx ",
+                                 (unsigned long long)*(const uintptr_t *)addr);
+                if (n <= 0) break;
+                used += (size_t)n;
+            }
+            say("*** pilha crua: %s", raw);
+        }
         const uintptr_t sp = (uintptr_t)ctx->Esp;
         int printed = 0;
-        for (int i = 0; i < 320 && printed < 14; i++) {
+        for (int i = 0; i < 320 && printed < 16; i++) {
             const uintptr_t addr = sp + (uintptr_t)i * 4;
-            MEMORY_BASIC_INFORMATION mbi = {};
-            if (!VirtualQuery((const void *)addr, &mbi, sizeof mbi) || mbi.State != MEM_COMMIT ||
-                (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD))) {
+            if (!readable(addr, 4)) {
                 say("*** pilha: parou em %p (memoria nao mapeada)", (void *)addr);
                 break;
             }
@@ -181,10 +215,38 @@ const char *xr_name(XrResult r)
     }
 }
 
-// ---------------------------------------------------------------- runtime ativo (registro + manifesto)
+XrBool32 XRAPI_CALL on_message(XrDebugUtilsMessageSeverityFlagsEXT sev, XrDebugUtilsMessageTypeFlagsEXT,
+                               const XrDebugUtilsMessengerCallbackDataEXT *d, void *)
+{
+    if (sev & XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+        say("  runtime[erro] %s: %s", d && d->functionName ? d->functionName : "", d && d->message ? d->message : "");
+    else if (sev & XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+        say("  runtime[aviso] %s: %s", d && d->functionName ? d->functionName : "", d && d->message ? d->message : "");
+    return XR_FALSE;
+}
+
+// ---------------------------------------------------------------- runtime ativo
+void dump_folder(const char *dir, const char *what)
+{
+    char mask[MAX_PATH * 2];
+    snprintf(mask, sizeof mask, "%s*.dll", dir);
+    WIN32_FIND_DATAA fd = {};
+    HANDLE h = FindFirstFileA(mask, &fd);
+    if (h == INVALID_HANDLE_VALUE) {
+        say("  %s: nao consegui listar (%s)", what, mask);
+        return;
+    }
+    say("  %s (%s):", what, dir);
+    do {
+        say("    %-40s %8lu bytes", fd.cFileName, (unsigned long)fd.nFileSizeLow);
+    } while (FindNextFileA(h, &fd));
+    FindClose(h);
+}
+
 void dump_active_runtime()
 {
     const char *keys[] = {"SOFTWARE\\WOW6432Node\\Khronos\\OpenXR\\1", "SOFTWARE\\Khronos\\OpenXR\\1"};
+    char folder[MAX_PATH] = {};
     for (const char *key : keys) {
         HKEY h = nullptr;
         if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, key, 0, KEY_READ, &h) != ERROR_SUCCESS) {
@@ -195,6 +257,11 @@ void dump_active_runtime()
         DWORD size = sizeof value, type = 0;
         if (RegQueryValueExA(h, "ActiveRuntime", nullptr, &type, (LPBYTE)value, &size) == ERROR_SUCCESS && size) {
             say("registro: %s -> %s", key, value);
+            if (!folder[0]) {
+                snprintf(folder, sizeof folder, "%s", value);
+                char *slash = strrchr(folder, '\\');
+                if (slash) slash[1] = 0;
+            }
             HANDLE f = CreateFileA(value, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
             if (f == INVALID_HANDLE_VALUE) {
                 say("  manifesto: NAO ABRIU (erro %lu) - o runtime apontado nao existe", GetLastError());
@@ -209,6 +276,7 @@ void dump_active_runtime()
                     if (*p == '\n' || *p == 0) {
                         bool end = (*p == 0);
                         *p = 0;
+                        while (*line == ' ' || *line == '\t') line++;
                         if (*line) say("    %s", line);
                         line = p + 1;
                         if (end) break;
@@ -220,12 +288,23 @@ void dump_active_runtime()
         }
         RegCloseKey(h);
     }
+    if (folder[0]) {
+        dump_folder(folder, "DLLs na pasta do runtime");
+        char sub[MAX_PATH * 2];
+        snprintf(sub, sizeof sub, "%sclient-plugins\\x86\\", folder);
+        dump_folder(sub, "DLLs de 32 bits do runtime (client-plugins\\x86)");
+        char legacy[MAX_PATH * 2];
+        snprintf(legacy, sizeof legacy, "%sLibOVRRT32_1.dll", folder);
+        HANDLE f = CreateFileA(legacy, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
+        say("API antiga da Oculus (LibOVRRT32_1.dll, 32 bits): %s", f != INVALID_HANDLE_VALUE ? "EXISTE" : "nao existe");
+        if (f != INVALID_HANDLE_VALUE) CloseHandle(f);
+    }
 }
 
 void dump_modules()
 {
-    load_modules();
-    const char *keys[] = {"openxr", "oculus", "libovr", "meta", "nvwgf", "nvogl", "d3d11", "dxgi"};
+    load_modules(true);
+    const char *keys[] = {"openxr", "oculus", "libovr", "meta", "nvwgf", "nvogl", "d3d11", "dxgi", "d3d12"};
     for (int i = 0; i < g_mod_count; i++) {
         char low[MAX_PATH];
         snprintf(low, sizeof low, "%s", g_mods[i].name);
@@ -239,79 +318,55 @@ void dump_modules()
     }
 }
 
-XrBool32 XRAPI_CALL on_message(XrDebugUtilsMessageSeverityFlagsEXT sev, XrDebugUtilsMessageTypeFlagsEXT,
-                               const XrDebugUtilsMessengerCallbackDataEXT *d, void *)
+// ---------------------------------------------------------------- uma rodada
+struct Opt {
+    const char *nome;
+    bool usar_luid = true;      // adaptador do óculos (senão o padrão do Windows)
+    bool bgra = true;           // flag D3D11_CREATE_DEVICE_BGRA_SUPPORT
+    bool api_1_0 = false;       // pedir API 1.0.0 em vez da atual (1.1)
+    bool debug_utils = true;    // ligar mensageiro do runtime
+    bool janela = false;        // criar janela + fila de mensagens antes
+    bool ate_instancia = false; // parar antes da sessão
+    bool com = false;           // CoInitializeEx nesta thread
+};
+
+struct Funcoes {
+    PFN_xrGetInstanceProcAddr gipa = nullptr;
+    PFN_xrEnumerateInstanceExtensionProperties enum_ext = nullptr;
+    PFN_xrCreateInstance create_instance = nullptr;
+};
+
+void make_window()
 {
-    if (sev & XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
-        say("  runtime[erro] %s: %s", d && d->functionName ? d->functionName : "", d && d->message ? d->message : "");
-    else if (sev & XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
-        say("  runtime[aviso] %s: %s", d && d->functionName ? d->functionName : "", d && d->message ? d->message : "");
-    return XR_FALSE;
+    WNDCLASSA wc = {};
+    wc.lpfnWndProc = DefWindowProcA;
+    wc.hInstance = GetModuleHandleA(nullptr);
+    wc.lpszClassName = "blackvr_sonda";
+    RegisterClassA(&wc);
+    HWND w = CreateWindowExA(0, wc.lpszClassName, "sonda", WS_OVERLAPPEDWINDOW, 0, 0, 320, 240, nullptr, nullptr,
+                             wc.hInstance, nullptr);
+    MSG msg;
+    while (PeekMessageA(&msg, nullptr, 0, 0, PM_REMOVE)) {
+        TranslateMessage(&msg);
+        DispatchMessageA(&msg);
+    }
+    say("janela criada (%p) e fila de mensagens drenada", (void *)w);
 }
 
-} // namespace
-
-// ---------------------------------------------------------------- main
-int main(int argc, char **argv)
+int rodada(const Opt &o, const Funcoes &f)
 {
-    g_variant = argc > 1 ? atoi(argv[1]) : 1;
+    say("");
+    say("======== modo: %s ========", o.nome);
 
-    char exe[MAX_PATH] = {};
-    GetModuleFileNameA(nullptr, exe, MAX_PATH);
-    char *slash = strrchr(exe, '\\');
-    if (slash) slash[1] = 0;
-    char path[MAX_PATH];
-    snprintf(path, sizeof path, "%ssonda-%d.txt", exe, g_variant);
-    g_file = fopen(path, "w");
-    if (!g_file) return 2;
-
-    load_modules();
-    AddVectoredExceptionHandler(1, on_fault);
-
-    say("=== BLACK VR - sonda %d (teste separado do jogo) ===", g_variant);
-    say("programa: %d bits", (int)(sizeof(void *) * 8));
-    OSVERSIONINFOA vi = {};
-    vi.dwOSVersionInfoSize = sizeof vi;
-#pragma warning(suppress : 4996)
-    GetVersionExA(&vi);
-    say("windows: %lu.%lu build %lu", (unsigned long)vi.dwMajorVersion, (unsigned long)vi.dwMinorVersion,
-        (unsigned long)vi.dwBuildNumber);
-
-    dump_active_runtime();
-
-    if (g_variant == 5) {
+    if (o.com) {
         HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
         say("COM nesta thread: 0x%08lx", (unsigned long)hr);
     }
-
-    g_step = "carregar openxr_loader.dll";
-    HMODULE loader = LoadLibraryA("openxr_loader.dll");
-    if (!loader) {
-        say("FALHOU: openxr_loader.dll nao carregou (erro %lu) - ele tem de estar na mesma pasta",
-            GetLastError());
-        say("sonda: FALHOU");
-        return 2;
-    }
-    say("conector carregado em %p", (void *)loader);
-    dump_modules();
-    auto gipa = (PFN_xrGetInstanceProcAddr)GetProcAddress(loader, "xrGetInstanceProcAddr");
-    if (!gipa) {
-        say("FALHOU: o conector nao expoe xrGetInstanceProcAddr (DLL de 64 bits?)");
-        return 2;
-    }
-
-    PFN_xrEnumerateInstanceExtensionProperties enum_ext = nullptr;
-    PFN_xrCreateInstance create_instance = nullptr;
-    gipa(XR_NULL_HANDLE, "xrEnumerateInstanceExtensionProperties", (PFN_xrVoidFunction *)&enum_ext);
-    gipa(XR_NULL_HANDLE, "xrCreateInstance", (PFN_xrVoidFunction *)&create_instance);
-    if (!enum_ext || !create_instance) {
-        say("FALHOU: conector incompleto");
-        return 2;
-    }
+    if (o.janela) make_window();
 
     g_step = "listar extensoes";
     uint32_t n = 0;
-    XrResult r = enum_ext(nullptr, 0, &n, nullptr);
+    XrResult r = f.enum_ext(nullptr, 0, &n, nullptr);
     if (XR_FAILED(r)) {
         say("FALHOU: extensoes: %s (%d)", xr_name(r), (int)r);
         return 1;
@@ -321,7 +376,7 @@ int main(int argc, char **argv)
         char exts[4096] = {};
         XrExtensionProperties *props = (XrExtensionProperties *)calloc(n ? n : 1, sizeof(XrExtensionProperties));
         for (uint32_t i = 0; i < n; i++) props[i].type = XR_TYPE_EXTENSION_PROPERTIES;
-        enum_ext(nullptr, n, &n, props);
+        f.enum_ext(nullptr, n, &n, props);
         for (uint32_t i = 0; i < n; i++) {
             if (!strcmp(props[i].extensionName, "XR_KHR_D3D11_enable")) have_d3d11 = true;
             if (!strcmp(props[i].extensionName, "XR_EXT_debug_utils")) have_debug = true;
@@ -337,32 +392,35 @@ int main(int argc, char **argv)
         say("FALHOU: o runtime nao oferece XR_KHR_D3D11_enable");
         return 1;
     }
-    say("D3D11: sim; debug_utils: %s", have_debug ? "sim" : "nao");
+    const bool dbg = o.debug_utils && have_debug;
+    say("D3D11: sim; debug_utils pedido: %s, disponivel: %s", o.debug_utils ? "sim" : "nao", have_debug ? "sim" : "nao");
 
     g_step = "criar instancia";
     const char *wanted[2];
     uint32_t wanted_n = 0;
     wanted[wanted_n++] = "XR_KHR_D3D11_enable";
-    if (have_debug) wanted[wanted_n++] = "XR_EXT_debug_utils";
+    if (dbg) wanted[wanted_n++] = "XR_EXT_debug_utils";
     XrInstance instance = XR_NULL_HANDLE;
     XrInstanceCreateInfo ci = {XR_TYPE_INSTANCE_CREATE_INFO};
     snprintf(ci.applicationInfo.applicationName, XR_MAX_APPLICATION_NAME_SIZE, "BLACK VR sonda");
     ci.applicationInfo.applicationVersion = 1;
     snprintf(ci.applicationInfo.engineName, XR_MAX_ENGINE_NAME_SIZE, "black-pc");
     ci.applicationInfo.engineVersion = 1;
-    ci.applicationInfo.apiVersion = XR_CURRENT_API_VERSION;
+    ci.applicationInfo.apiVersion = o.api_1_0 ? XR_MAKE_VERSION(1, 0, 0) : XR_CURRENT_API_VERSION;
     ci.enabledExtensionCount = wanted_n;
     ci.enabledExtensionNames = wanted;
-    r = create_instance(&ci, &instance);
+    say("API pedida: %u.%u.%u", (unsigned)XR_VERSION_MAJOR(ci.applicationInfo.apiVersion),
+        (unsigned)XR_VERSION_MINOR(ci.applicationInfo.apiVersion),
+        (unsigned)XR_VERSION_PATCH(ci.applicationInfo.apiVersion));
+    r = f.create_instance(&ci, &instance);
     if (XR_FAILED(r)) {
         say("FALHOU: xrCreateInstance: %s (%d)", xr_name(r), (int)r);
         return 1;
     }
     say("instancia criada (%p)", (void *)instance);
 
-    // Quem esta respondendo (meta/steamvr/...) e qual versao.
     PFN_xrGetInstanceProperties get_props = nullptr;
-    gipa(instance, "xrGetInstanceProperties", (PFN_xrVoidFunction *)&get_props);
+    f.gipa(instance, "xrGetInstanceProperties", (PFN_xrVoidFunction *)&get_props);
     if (get_props) {
         XrInstanceProperties ip = {XR_TYPE_INSTANCE_PROPERTIES};
         if (XR_SUCCEEDED(get_props(instance, &ip)))
@@ -370,9 +428,9 @@ int main(int argc, char **argv)
                 (unsigned)XR_VERSION_MINOR(ip.runtimeVersion), (unsigned)XR_VERSION_PATCH(ip.runtimeVersion));
     }
 
-    if (have_debug) {
+    if (dbg) {
         PFN_xrCreateDebugUtilsMessengerEXT mk = nullptr;
-        gipa(instance, "xrCreateDebugUtilsMessengerEXT", (PFN_xrVoidFunction *)&mk);
+        f.gipa(instance, "xrCreateDebugUtilsMessengerEXT", (PFN_xrVoidFunction *)&mk);
         if (mk) {
             XrDebugUtilsMessengerCreateInfoEXT dci = {XR_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT};
             dci.messageSeverities =
@@ -386,8 +444,8 @@ int main(int argc, char **argv)
         }
     }
 
-    if (g_variant == 4) {
-        say("modo 4: parando aqui de proposito (sem sessao).");
+    if (o.ate_instancia) {
+        say("parando aqui de proposito (sem sessao).");
         say("sonda: OK ate aqui");
         return 0;
     }
@@ -397,10 +455,10 @@ int main(int argc, char **argv)
     PFN_xrGetSystemProperties get_sys_props = nullptr;
     PFN_xrGetD3D11GraphicsRequirementsKHR get_req = nullptr;
     PFN_xrCreateSession create_session = nullptr;
-    gipa(instance, "xrGetSystem", (PFN_xrVoidFunction *)&get_system);
-    gipa(instance, "xrGetSystemProperties", (PFN_xrVoidFunction *)&get_sys_props);
-    gipa(instance, "xrGetD3D11GraphicsRequirementsKHR", (PFN_xrVoidFunction *)&get_req);
-    gipa(instance, "xrCreateSession", (PFN_xrVoidFunction *)&create_session);
+    f.gipa(instance, "xrGetSystem", (PFN_xrVoidFunction *)&get_system);
+    f.gipa(instance, "xrGetSystemProperties", (PFN_xrVoidFunction *)&get_sys_props);
+    f.gipa(instance, "xrGetD3D11GraphicsRequirementsKHR", (PFN_xrVoidFunction *)&get_req);
+    f.gipa(instance, "xrCreateSession", (PFN_xrVoidFunction *)&create_session);
     if (!get_system || !get_sys_props || !get_req || !create_session) {
         say("FALHOU: o runtime nao entregou as funcoes basicas de sessao");
         return 1;
@@ -443,7 +501,7 @@ int main(int argc, char **argv)
 
     IDXGIAdapter1 *adapter = nullptr;
     IDXGIFactory1 *factory = nullptr;
-    if (g_variant != 2 && SUCCEEDED(CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void **)&factory))) {
+    if (o.usar_luid && SUCCEEDED(CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void **)&factory))) {
         for (UINT i = 0;; i++) {
             IDXGIAdapter1 *cand = nullptr;
             if (factory->EnumAdapters1(i, &cand) == DXGI_ERROR_NOT_FOUND) break;
@@ -460,27 +518,26 @@ int main(int argc, char **argv)
         }
         factory->Release();
         if (!adapter) say("adaptador do luid NAO encontrado; caindo para o padrao");
-    } else if (g_variant == 2) {
-        say("modo 2: usando o adaptador padrao do Windows");
     }
 
     D3D_FEATURE_LEVEL want = req.minFeatureLevel ? req.minFeatureLevel : D3D_FEATURE_LEVEL_11_0;
     D3D_FEATURE_LEVEL got = D3D_FEATURE_LEVEL_9_1;
     ID3D11Device *device = nullptr;
     ID3D11DeviceContext *ctx = nullptr;
-    UINT flags = g_variant == 3 ? 0u : (UINT)D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+    UINT flags = o.bgra ? (UINT)D3D11_CREATE_DEVICE_BGRA_SUPPORT : 0u;
     HRESULT hr = create_dev(adapter, adapter ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, &want,
                             1, D3D11_SDK_VERSION, &device, &got, &ctx);
     if (adapter) adapter->Release();
-    say("D3D11CreateDevice: hr 0x%08lx, feature level 0x%x (pedido 0x%x, flags %u)", (unsigned long)hr,
-        (unsigned)got, (unsigned)want, flags);
+    say("D3D11CreateDevice: hr 0x%08lx, feature level 0x%x (pedido 0x%x, flags %u)", (unsigned long)hr, (unsigned)got,
+        (unsigned)want, flags);
     if (FAILED(hr)) {
         say("FALHOU: sem dispositivo D3D11");
         return 1;
     }
 
+    dump_modules();
     say("");
-    say("--- agora o passo que quebra o jogo: xrCreateSession ---");
+    say("--- agora o passo que quebra: xrCreateSession (thread %lu) ---", (unsigned long)GetCurrentThreadId());
     g_step = "xrCreateSession";
     XrGraphicsBindingD3D11KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D11_KHR};
     binding.device = device;
@@ -499,11 +556,131 @@ int main(int argc, char **argv)
 
     PFN_xrDestroySession destroy_session = nullptr;
     PFN_xrDestroyInstance destroy_instance = nullptr;
-    gipa(instance, "xrDestroySession", (PFN_xrVoidFunction *)&destroy_session);
-    gipa(instance, "xrDestroyInstance", (PFN_xrVoidFunction *)&destroy_instance);
+    f.gipa(instance, "xrDestroySession", (PFN_xrVoidFunction *)&destroy_session);
+    f.gipa(instance, "xrDestroyInstance", (PFN_xrVoidFunction *)&destroy_instance);
     if (destroy_session) destroy_session(session);
     if (destroy_instance) destroy_instance(instance);
     if (ctx) ctx->Release();
     if (device) device->Release();
     return 0;
+}
+
+// O modo 8 roda a rodada inteira numa thread própria (pilha de 8 MB), como um app de verdade.
+struct ThreadArgs {
+    Opt opt;
+    Funcoes fun;
+    int rc = 99;
+};
+
+DWORD WINAPI thread_body(LPVOID p)
+{
+    ThreadArgs *a = (ThreadArgs *)p;
+    a->rc = rodada(a->opt, a->fun);
+    return 0;
+}
+
+int rodada_em_thread(const Opt &o, const Funcoes &f)
+{
+    ThreadArgs a;
+    a.opt = o;
+    a.fun = f;
+    HANDLE t = CreateThread(nullptr, 8u * 1024u * 1024u, thread_body, &a, 0, nullptr);
+    if (!t) {
+        say("FALHOU: nao consegui criar a thread do modo 8");
+        return 1;
+    }
+    WaitForSingleObject(t, INFINITE);
+    CloseHandle(t);
+    return a.rc;
+}
+
+Opt opt_da_variante(int v)
+{
+    Opt o;
+    switch (v) {
+    case 1: o.nome = "1 adaptador do oculos + BGRA + API atual + debug_utils"; break;
+    case 2: o.nome = "2 adaptador padrao do Windows"; o.usar_luid = false; break;
+    case 3: o.nome = "3 adaptador do oculos sem BGRA"; o.bgra = false; break;
+    case 4: o.nome = "4 so ate a instancia (nunca deve cair)"; o.ate_instancia = true; break;
+    case 5: o.nome = "5 como 1, com COM inicializado"; o.com = true; break;
+    case 6: o.nome = "6 API 1.0.0 e SEM debug_utils"; o.api_1_0 = true; o.debug_utils = false; break;
+    case 7:
+        o.nome = "7 API 1.0.0, sem debug_utils, com janela e fila de mensagens";
+        o.api_1_0 = true;
+        o.debug_utils = false;
+        o.janela = true;
+        break;
+    case 8:
+        o.nome = "8 como 7, em thread propria com pilha de 8 MB";
+        o.api_1_0 = true;
+        o.debug_utils = false;
+        o.janela = true;
+        break;
+    case 9: o.nome = "9 API 1.0.0 com debug_utils"; o.api_1_0 = true; break;
+    default: o.nome = "1 (padrao)"; break;
+    }
+    return o;
+}
+
+} // namespace
+
+int main(int argc, char **argv)
+{
+    g_variant = argc > 1 ? atoi(argv[1]) : 1;
+
+    char exe[MAX_PATH] = {};
+    GetModuleFileNameA(nullptr, exe, MAX_PATH);
+    char *slash = strrchr(exe, '\\');
+    if (slash) slash[1] = 0;
+    char path[MAX_PATH];
+    snprintf(path, sizeof path, "%ssonda-%d.txt", exe, g_variant);
+    g_file = fopen(path, "w");
+    if (!g_file) return 2;
+
+    load_modules(true);
+    AddVectoredExceptionHandler(1, on_fault);
+
+    say("=== BLACK VR - sonda %d (teste separado do jogo) ===", g_variant);
+    say("programa: %d bits, thread %lu", (int)(sizeof(void *) * 8), (unsigned long)GetCurrentThreadId());
+    OSVERSIONINFOA vi = {};
+    vi.dwOSVersionInfoSize = sizeof vi;
+#pragma warning(suppress : 4996)
+    GetVersionExA(&vi);
+    say("windows: %lu.%lu build %lu", (unsigned long)vi.dwMajorVersion, (unsigned long)vi.dwMinorVersion,
+        (unsigned long)vi.dwBuildNumber);
+    dump_active_runtime();
+
+    g_step = "carregar openxr_loader.dll";
+    HMODULE loader = LoadLibraryA("openxr_loader.dll");
+    if (!loader) {
+        say("FALHOU: openxr_loader.dll nao carregou (erro %lu) - ele tem de estar na mesma pasta", GetLastError());
+        say("sonda: FALHOU");
+        return 2;
+    }
+    say("conector carregado em %p", (void *)loader);
+
+    Funcoes f;
+    f.gipa = (PFN_xrGetInstanceProcAddr)GetProcAddress(loader, "xrGetInstanceProcAddr");
+    if (!f.gipa) {
+        say("FALHOU: o conector nao expoe xrGetInstanceProcAddr (DLL de 64 bits?)");
+        return 2;
+    }
+    f.gipa(XR_NULL_HANDLE, "xrEnumerateInstanceExtensionProperties", (PFN_xrVoidFunction *)&f.enum_ext);
+    f.gipa(XR_NULL_HANDLE, "xrCreateInstance", (PFN_xrVoidFunction *)&f.create_instance);
+    if (!f.enum_ext || !f.create_instance) {
+        say("FALHOU: conector incompleto");
+        return 2;
+    }
+
+    if (g_variant == 0) {
+        Opt o4 = opt_da_variante(4);
+        int rc = rodada(o4, f);
+        if (rc != 0) return rc;
+        Opt o1 = opt_da_variante(1);
+        return rodada(o1, f);
+    }
+
+    Opt o = opt_da_variante(g_variant);
+    if (g_variant == 8) return rodada_em_thread(o, f);
+    return rodada(o, f);
 }

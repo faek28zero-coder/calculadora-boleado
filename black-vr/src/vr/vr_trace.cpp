@@ -150,6 +150,22 @@ void dump_stack(EXCEPTION_POINTERS *info)
          (void *)ctx->Eip, (void *)ctx->Esp, (void *)ctx->Ebp, (void *)ctx->Eax, (void *)ctx->Ebx,
          (void *)ctx->Ecx, (void *)ctx->Edx, (void *)ctx->Esi, (void *)ctx->Edi);
 
+    // Pilha crua primeiro: mesmo valores que não caem em módulo nenhum aparecem (é o que
+    // mostra se o estouro foi numa thread nova ou no meio de uma chamada nossa).
+    {
+        char raw[512] = {};
+        size_t used = 0;
+        for (int i = 0; i < 24; i++) {
+            const uintptr_t addr = (uintptr_t)ctx->Esp + (uintptr_t)i * 4;
+            if (!readable(addr, 4)) break;
+            const uintptr_t v = *(const uintptr_t *)addr;
+            int n = snprintf(raw + used, sizeof raw - used, "%08llx ", (unsigned long long)v);
+            if (n <= 0) break;
+            used += (size_t)n;
+        }
+        line("*** pilha crua: %s", raw);
+    }
+
     // Endereços na pilha que caem em código: os primeiros são as chamadas mais recentes.
     //
     // CUIDADO (25/10, v7): este laço já matou o próprio rastro. Ele lia 512 palavras a partir
@@ -232,7 +248,12 @@ void line(const char *fmt, ...)
     unlock();
 }
 
-void modules() { dump_relevant_modules(); }
+void modules()
+{
+    g_mod_count = 0; // lista fresca: no init só existiam 4 módulos, e essa lista velha escondeu
+    load_modules();  // justamente as DLLs do runtime na hora do estouro
+    dump_relevant_modules();
+}
 
 } // namespace trace
 } // namespace vr

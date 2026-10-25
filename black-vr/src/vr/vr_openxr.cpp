@@ -422,6 +422,7 @@ bool create_session()
     trace::line("  3g-1: painel %ux%u por olho, blend %d", g_view_cfg[0].recommendedImageRectWidth,
                 g_view_cfg[0].recommendedImageRectHeight, (int)g_rt.blend);
 
+    trace::modules(); // lista de módulos fresca: o runtime já está carregado aqui
     trace::line("  3h: xrCreateSession (%p)", (void *)p_xrCreateSession);
     XrGraphicsBindingD3D11KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D11_KHR};
     binding.device = g_rt.dev11;
