@@ -59,9 +59,9 @@ void load_modules()
     if (g_mod_count) return;
     HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
     if (snap == INVALID_HANDLE_VALUE) return;
-    MODULEENTRY32 me = {};
+    MODULEENTRY32A me = {};
     me.dwSize = sizeof me;
-    if (Module32First(snap, &me)) {
+    if (Module32FirstA(snap, &me)) {
         do {
             if (g_mod_count >= kMaxMods) break;
             ModInfo &m = g_mods[g_mod_count++];
@@ -69,7 +69,7 @@ void load_modules()
             m.size = (uintptr_t)me.modBaseSize;
             const char *base = strrchr(me.szExePath, '\\');
             snprintf(m.name, sizeof m.name, "%s", base ? base + 1 : me.szExePath);
-        } while (Module32Next(snap, &me));
+        } while (Module32NextA(snap, &me));
     }
     CloseHandle(snap);
 }
