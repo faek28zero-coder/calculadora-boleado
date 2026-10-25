@@ -55,7 +55,7 @@ OK: emendas aplicadas
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (12.6s)
+-- Configuring done (19.4s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -113,8 +113,6 @@ MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
   pushbuf.cpp
   draw.cpp
   Generating Code...
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(1381,13): error C3861: 'bind_render_target': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(1384,9): error C3861: 'apply_viewport': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   Compiling...
   formats.cpp
   resources.cpp
@@ -136,7 +134,11 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_ope
   vr_input.cpp
   vr_selftest.cpp
   Generating Code...
-build rc=1
-FALHOU: black.exe nao foi gerado
-_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdC/CompilerIdC.exe
-_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdCXX/CompilerIdCXX.exe
+     Creating library D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.lib and object D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.exp
+  blackrt.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\blackrt.dll
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
+  stub.c
+  black.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\black.exe
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
+build rc=0
+PRONTO: binarios gerados
