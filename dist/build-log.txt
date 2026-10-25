@@ -1,0 +1,470 @@
++ mkdir -p _fork/black-pc
++ cd _fork/black-pc
++ git init -q .
++ git remote add origin https://github.com/Spark198rus/black-pc.git
++ git fetch -q --depth 1 origin b826153997907272dd555b8ec63b6a54fcde0600
++ git checkout -q FETCH_HEAD
++ cd ../..
++ mkdir -p _fork/black-pc/loader/src/vr _fork/black-pc/vendor/openxr
++ cp black-vr/src/vr/vr.h black-vr/src/vr/vr_frame.h black-vr/src/vr/vr_internal.h black-vr/src/vr/vr_math.h black-vr/src/vr/vr.cpp black-vr/src/vr/vr_input.cpp black-vr/src/vr/vr_openxr.cpp black-vr/src/vr/vr_pose.cpp black-vr/src/vr/vr_selftest.cpp _fork/black-pc/loader/src/vr/
++ cp black-vr/vendor/openxr/openxr.h black-vr/vendor/openxr/openxr_platform.h black-vr/vendor/openxr/openxr_platform_defines.h _fork/black-pc/vendor/openxr/
++ cd _fork/black-pc
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0001-draw-capture-e-replay.patch
++ echo 'aplicando 0001-draw-capture-e-replay.patch'
+aplicando 0001-draw-capture-e-replay.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0001-draw-capture-e-replay.patch
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0002-vertex-shader-c201.patch
++ echo 'aplicando 0002-vertex-shader-c201.patch'
+aplicando 0002-vertex-shader-c201.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0002-vertex-shader-c201.patch
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0003-swap-entrega-os-dois-olhos.patch
++ echo 'aplicando 0003-swap-entrega-os-dois-olhos.patch'
+aplicando 0003-swap-entrega-os-dois-olhos.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0003-swap-entrega-os-dois-olhos.patch
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0004-entrada-pad-merge.patch
++ echo 'aplicando 0004-entrada-pad-merge.patch'
+aplicando 0004-entrada-pad-merge.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0004-entrada-pad-merge.patch
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0005-opcoes-vr.patch
++ echo 'aplicando 0005-opcoes-vr.patch'
+aplicando 0005-opcoes-vr.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0005-opcoes-vr.patch
++ for p in ../../black-vr/patches/*.patch
+++ basename ../../black-vr/patches/0006-build-vr.patch
++ echo 'aplicando 0006-build-vr.patch'
+aplicando 0006-build-vr.patch
++ git apply --whitespace=nowarn ../../black-vr/patches/0006-build-vr.patch
++ echo 'OK: emendas aplicadas'
+OK: emendas aplicadas
+=== CONFIGURAR ===
+-- Building for: Visual Studio 18 2026
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (13.7s)
+-- Generating done (0.1s)
+CMake Warning (unused-cli):
+  Manually-specified variables were not used by the project:
+
+    CMAKE_BUILD_TYPE
+
+
+-- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build
+config rc=0
+=== COMPILAR ===
+MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
+  main.cpp
+  log.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\main.cpp(472,29): error C2653: 'host3d': is not a class or namespace name [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\main.cpp(472,37): error C3861: 'window': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  xbe.cpp
+  image.cpp
+  xthread.cpp
+  hooks.cpp
+  timing.cpp
+  fov.cpp
+  reload_blur.cpp
+  bigbuf.cpp
+  calls.cpp
+  vars.cpp
+  pc_settings.cpp
+  apt.cpp
+  pages.cpp
+  bind_list.cpp
+  pause_ui.cpp
+  mouselook.cpp
+  autoaim.cpp
+  lean.cpp
+  Generating Code...
+  Compiling...
+  bindings.cpp
+  movies.cpp
+  reverb.cpp
+  settings.cpp
+  language.cpp
+  perf.cpp
+  sha1.cpp
+  ktable.cpp
+  k_memory.cpp
+  k_thread.cpp
+  k_sync.cpp
+  k_dpc.cpp
+  k_file.cpp
+  k_rtl.cpp
+  k_misc.cpp
+  dispatch.cpp
+  device.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/device.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(837,52): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(838,37): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(838,52): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(839,38): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(839,54): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(903,5): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(905,9): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(906,46): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(907,41): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(908,26): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(909,26): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,24): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,38): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
+      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
+      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(910,5):
+      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(928,29): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(928,43): error C2872: 'g_depthbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,32):
+      could be 'xd3d::Surface *xd3d::g_depthbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,25):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_depthbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1152,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
+      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
+      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)' [found using argument-dependent lookup]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1152,5):
+      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1305,30): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,70): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,9): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
+      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
+      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1310,9):
+      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1311,9): error C2668: 'xd3d::apply_viewport': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,6):
+      could be 'void xd3d::apply_viewport(void)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(658,6):
+      or       'void xd3d::`anonymous-namespace'::apply_viewport(void)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1311,9):
+      while trying to match the argument list '()'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1360,13): error C2039: 'set_game_render_size': is not a member of 'vr' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr.h(26,11):
+      see declaration of 'vr'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1360,13): error C3861: 'set_game_render_size': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1384,31): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,66): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,5): error C2668: 'xd3d::`anonymous-namespace'::bind_render_target': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(580,6):
+      could be 'void xd3d::`anonymous-namespace'::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(85,6):
+      or       'void xd3d::bind_render_target(xd3d::Surface *,xd3d::Surface *)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1393,5):
+      while trying to match the argument list '(xd3d::Surface *, xd3d::Surface *)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1446,53): error C2872: 'g_backbuffer': ambiguous symbol [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(84,17):
+      could be 'xd3d::Surface *xd3d::g_backbuffer'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(49,10):
+      or       'xd3d::Surface *xd3d::`anonymous-namespace'::g_backbuffer'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1450,5): error C2668: 'xd3d::apply_viewport': ambiguous call to overloaded function [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,6):
+      could be 'void xd3d::apply_viewport(void)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(658,6):
+      or       'void xd3d::`anonymous-namespace'::apply_viewport(void)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\device.cpp(1450,5):
+      while trying to match the argument list '()'
+  
+  host.cpp
+  pushbuf.cpp
+  draw.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/draw.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\draw.cpp(726,5): error C3861: 'viewport_transform': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  Generating Code...
+  Compiling...
+  formats.cpp
+  resources.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/resources.cpp')
+  
+  texture.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/texture.cpp')
+  
+  vshader.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/vshader.cpp')
+  
+  nv2a_vsh.cpp
+  nv2a_psh.cpp
+  pshader.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state.h(86,24): error C2059: syntax error: '--' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/d3d/pshader.cpp')
+  
+  dsound.cpp
+  output.cpp
+  xinput.cpp
+  vr.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr.cpp')
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
+      see declaration of 'XrSwapchainImageD3D11KHR'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+  vr_openxr.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9):
+      'WIN32_LEAN_AND_MEAN' previously declared on the command line
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_openxr.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_openxr.cpp')
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
+      see declaration of 'XrSwapchainImageD3D11KHR'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_openxr.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_openxr.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(27,1): error C2512: 'std::vector': no appropriate default constructor available [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_openxr.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(27,1):
+      This diagnostic occurred in the compiler generated function 'vr::internal::EyeImage::EyeImage(void)'
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(64,1):
+      see reference to function 'vr::internal::EyeImage::EyeImage(void)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(90,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(90,1): error C2146: syntax error: missing ';' before identifier 'p_xrGetD3D11GraphicsRequirementsKHR' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(275,17): error C2065: 'p_xrGetD3D11GraphicsRequirementsKHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,5): error C2065: 'XrGraphicsRequirementsD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,36): error C2146: syntax error: missing ';' before identifier 'req' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,36): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,40): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(285,81): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(285,16): error C3861: 'p_xrGetD3D11GraphicsRequirementsKHR': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(288,23): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,5): error C2065: 'XrGraphicsBindingD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,31): error C2146: syntax error: missing ';' before identifier 'binding' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,31): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,39): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(319,5): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(321,17): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(364,20): error C2198: 'PFN_xrEnumerateSwapchainImages': too few arguments for call [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  vr_pose.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60): error C2678: binary '[': no operator found which takes a left-hand operand of type 'std::vector' (or there is no acceptable conversion) [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(1945,40):
+      could be 'const _Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept const'
+          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+          'const _Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept const': cannot convert 'this' pointer from 'std::vector' to 'const std::vector<_Ty,_Alloc> &'
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+              Reason: cannot convert from 'std::vector' to 'const std::vector<_Ty,_Alloc>'
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+              Conversion requires a second user-defined-conversion operator or constructor
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(1935,34):
+      or       '_Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept'
+          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+          '_Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept': cannot convert 'this' pointer from 'std::vector' to 'std::vector<_Ty,_Alloc> &'
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+              Reason: cannot convert from 'std::vector' to 'std::vector<_Ty,_Alloc>'
+              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+              Conversion requires a second user-defined-conversion operator or constructor
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
+      while trying to match the argument list '(std::vector, uint32_t)'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_pose.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_pose.cpp')
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
+      see declaration of 'XrSwapchainImageD3D11KHR'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_pose.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_pose.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+  vr_input.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_input.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_input.cpp')
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
+      see declaration of 'XrSwapchainImageD3D11KHR'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_input.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_input.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+  vr_selftest.cpp
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_selftest.cpp')
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_selftest.cpp')
+      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
+      see declaration of 'XrSwapchainImageD3D11KHR'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_selftest.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
+  (compiling source file '../src/vr/vr_selftest.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
+      see declaration of 'std::vector'
+  
+  Generating Code...
+build rc=1
+FALHOU: black.exe nao foi gerado
+_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdC/CompilerIdC.exe
+_fork/black-pc/loader/build/CMakeFiles/4.4.4/CompilerIdCXX/CompilerIdCXX.exe
