@@ -57,19 +57,22 @@ int g_mod_count;
 void load_modules()
 {
     if (g_mod_count) return;
+    // Só existe a versão "W" no SDK moderno (e o port compila com UNICODE): pede W e converte.
     HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
     if (snap == INVALID_HANDLE_VALUE) return;
-    MODULEENTRY32A me = {};
+    MODULEENTRY32W me = {};
     me.dwSize = sizeof me;
-    if (Module32FirstA(snap, &me)) {
+    if (Module32FirstW(snap, &me)) {
         do {
             if (g_mod_count >= kMaxMods) break;
             ModInfo &m = g_mods[g_mod_count++];
             m.base = (uintptr_t)me.modBaseAddr;
             m.size = (uintptr_t)me.modBaseSize;
-            const char *base = strrchr(me.szExePath, '\\');
-            snprintf(m.name, sizeof m.name, "%s", base ? base + 1 : me.szExePath);
-        } while (Module32NextA(snap, &me));
+            char path[MAX_PATH] = {};
+            WideCharToMultiByte(CP_ACP, 0, me.szExePath, -1, path, (int)sizeof path - 1, nullptr, nullptr);
+            const char *base = strrchr(path, '\\');
+            snprintf(m.name, sizeof m.name, "%s", base ? base + 1 : path);
+        } while (Module32NextW(snap, &me));
     }
     CloseHandle(snap);
 }

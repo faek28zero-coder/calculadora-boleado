@@ -67,6 +67,8 @@ struct NT_TIB { void *ExceptionList, *StackBase, *StackLimit; };
 #define GetCurrentProcess() ((void*)0)
 #define GetCurrentProcessId() 0ul
 inline int CloseHandle(void *) { return 1; }
+#define CP_ACP 0
+inline int WideCharToMultiByte(int, unsigned long, const wchar_t *, int, char *, int, const char *, int *) { return 0; }
 #ifndef INVALID_HANDLE_VALUE
 #define INVALID_HANDLE_VALUE ((void*)-1)
 #endif

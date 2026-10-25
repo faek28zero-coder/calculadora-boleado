@@ -24,6 +24,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h> // CoInitializeEx (o WIN32_LEAN_AND_MEAN não traz COM pelo windows.h)
+#include <winreg.h>  // leitura do registro (idem: WIN32_LEAN_AND_MEAN corta winreg.h)
 #include <tlhelp32.h>
 #include <d3d11.h>
 #include <dxgi1_2.h>
@@ -73,19 +74,22 @@ int g_mod_count;
 void load_modules()
 {
     if (g_mod_count) return;
+    // Só existe a versão "W" no SDK moderno (e o port compila com UNICODE): pede W e converte.
     HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, GetCurrentProcessId());
     if (snap == INVALID_HANDLE_VALUE) return;
-    MODULEENTRY32A me = {};
+    MODULEENTRY32W me = {};
     me.dwSize = sizeof me;
-    if (Module32FirstA(snap, &me)) {
+    if (Module32FirstW(snap, &me)) {
         do {
             if (g_mod_count >= kMaxMods) break;
             ModInfo &m = g_mods[g_mod_count++];
             m.base = (uintptr_t)me.modBaseAddr;
             m.size = (uintptr_t)me.modBaseSize;
-            const char *base = strrchr(me.szExePath, '\\');
-            snprintf(m.name, sizeof m.name, "%s", base ? base + 1 : me.szExePath);
-        } while (Module32NextA(snap, &me));
+            char path[MAX_PATH] = {};
+            WideCharToMultiByte(CP_ACP, 0, me.szExePath, -1, path, (int)sizeof path - 1, nullptr, nullptr);
+            const char *base = strrchr(path, '\\');
+            snprintf(m.name, sizeof m.name, "%s", base ? base + 1 : path);
+        } while (Module32NextW(snap, &me));
     }
     CloseHandle(snap);
 }
@@ -190,7 +194,7 @@ void dump_active_runtime()
             } else {
                 char buf[4096] = {};
                 DWORD read = 0;
-                ReadFile(f, buf, sizeof buf - 1, &read, nullptr);
+                ReadFile(f, buf, (DWORD)sizeof buf - 1, &read, nullptr);
                 CloseHandle(f);
                 say("  manifesto (%lu bytes):", (unsigned long)read);
                 char *line = buf;
@@ -282,6 +286,7 @@ int main(int argc, char **argv)
         return 2;
     }
     say("conector carregado em %p", (void *)loader);
+    dump_modules();
     auto gipa = (PFN_xrGetInstanceProcAddr)GetProcAddress(loader, "xrGetInstanceProcAddr");
     if (!gipa) {
         say("FALHOU: o conector nao expoe xrGetInstanceProcAddr (DLL de 64 bits?)");
