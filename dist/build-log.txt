@@ -94,7 +94,7 @@ OK: emendas aplicadas
 -- Performing Test HAVE_UNREACHABLE_CODE - Failed
 -- Performing Test HAVE_CPP20_EXTENSIONS
 -- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (26.4s)
+-- Configuring done (24.0s)
 -- Generating done (0.1s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -154,7 +154,7 @@ build32/src/tests/loader_test/Release/openxr_loader.dll
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.3s)
+-- Configuring done (3.2s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -253,7 +253,7 @@ build rc=0
 -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (1.9s)
+-- Configuring done (1.8s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/probe/build
 MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
