@@ -14,12 +14,14 @@ import sys
 fonte = "src/vr/vr_openxr.cpp"
 texto = open(fonte, encoding="utf-8").read()
 
-chamadas = set(re.findall(r"\b(p_xr[A-Za-z]+)\s*\(", texto))
-ligadas = set(re.findall(r'bind\(\s*(p_xr[A-Za-z]+)\s*,', texto))
+chamadas = set(re.findall(r"\b(p_xr[A-Za-z0-9_]+)\s*\(", texto))
+ligadas = set(re.findall(r'bind\(\s*(p_xr[A-Za-z0-9_]+)\s*,', texto))
 # bloco Early: pares {(PFN_... *)&p_xrNome, "xrNome"}
-ligadas |= set(re.findall(r"&(p_xr[A-Za-z]+)\s*,\s*\"", texto))
+ligadas |= set(re.findall(r"&(p_xr[A-Za-z0-9_]+)\s*,\s*\"", texto))
 # funções que o conector entrega direto por GetProcAddress (xrGetInstanceProcAddr é a raiz de tudo)
 ligadas.add("p_xrGetInstanceProcAddr")
+# ponteiros de DLL carregados por GetProcAddress (fora do OpenXR)
+ligadas |= set(re.findall(r"(p_[A-Za-z0-9_]+)\s*=\s*\(?PFN_", texto))
 
 faltando = sorted(chamadas - ligadas)
 if faltando:

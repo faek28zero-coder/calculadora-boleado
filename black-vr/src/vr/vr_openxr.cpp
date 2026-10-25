@@ -305,20 +305,26 @@ bool create_instance()
 
 bool create_session()
 {
+    trace::line("  3a: xrGetSystem");
     XrSystemGetInfo sgi = {XR_TYPE_SYSTEM_GET_INFO};
     sgi.formFactor = XR_FORM_FACTOR_HEAD_MOUNTED_DISPLAY;
     if (!check(p_xrGetSystem(g_rt.instance, &sgi, &g_rt.system), "xrGetSystem (headset conectado?)")) return false;
 
+    trace::line("  3b: xrGetD3D11GraphicsRequirementsKHR (%p)", (void *)p_xrGetD3D11GraphicsRequirementsKHR);
     XrGraphicsRequirementsD3D11KHR req = {XR_TYPE_GRAPHICS_REQUIREMENTS_D3D11_KHR};
     if (!check(p_xrGetD3D11GraphicsRequirementsKHR(g_rt.instance, g_rt.system, &req),
                "xrGetD3D11GraphicsRequirementsKHR"))
         return false;
+    trace::line("  3c: D3D11CreateDevice (%p)", (void *)p_D3D11CreateDevice);
     if (!create_d3d11(req.adapterLuid)) return false;
+    trace::line("  3d: dispositivo D3D11 ok (%p)", (void *)g_rt.dev11);
 
+    trace::line("  3e: xrGetSystemProperties (%p)", (void *)p_xrGetSystemProperties);
     XrSystemProperties props = {XR_TYPE_SYSTEM_PROPERTIES};
     p_xrGetSystemProperties(g_rt.instance, g_rt.system, &props);
     logf("[vr] sistema: %s (vendor 0x%04x)", props.systemName, props.vendorId);
 
+    trace::line("  3f: xrEnumerateViewConfigurationViews (%p)", (void *)p_xrEnumerateViewConfigurationViews);
     uint32_t n = internal::kEyes;
     if (!check(p_xrEnumerateViewConfigurationViews(g_rt.instance, g_rt.system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, 0,
                                                    &n, nullptr),
@@ -331,6 +337,7 @@ bool create_session()
                "xrEnumerateViewConfigurationViews"))
         return false;
 
+    trace::line("  3g: xrEnumerateEnvironmentBlendModes (%p)", (void *)p_xrEnumerateEnvironmentBlendModes);
     uint32_t blends = 0;
     p_xrEnumerateEnvironmentBlendModes(g_rt.instance, g_rt.system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, 0, &blends,
                                        nullptr);
@@ -343,12 +350,14 @@ bool create_session()
             if (m == XR_ENVIRONMENT_BLEND_MODE_OPAQUE) g_rt.blend = m;
     }
 
+    trace::line("  3h: xrCreateSession (%p)", (void *)p_xrCreateSession);
     XrGraphicsBindingD3D11KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D11_KHR};
     binding.device = g_rt.dev11;
     XrSessionCreateInfo sci = {XR_TYPE_SESSION_CREATE_INFO};
     sci.next = &binding;
     sci.systemId = g_rt.system;
     if (!check(p_xrCreateSession(g_rt.instance, &sci, &g_rt.session), "xrCreateSession")) return false;
+    trace::line("  3i: sessao criada");
 
     // Espaço: prefere LOCAL_FLOOR (chão); cai para LOCAL se o runtime não der.
     bool floor = props.trackingProperties.orientationTracking && false;
