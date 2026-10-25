@@ -8,6 +8,10 @@ name: compilar-black-vr
 on:
   push:
     branches: ["arena/**"]
+    paths:
+      - "black-vr/src/**"
+      - "black-vr/vendor/**"
+      - "black-vr/patches/**"
   workflow_dispatch:
 
 # um build por vez; um push novo cancela o anterior

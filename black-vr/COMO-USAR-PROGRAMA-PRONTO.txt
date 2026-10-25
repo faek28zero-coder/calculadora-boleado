@@ -1,0 +1,54 @@
+BLACK EM VR — O PROGRAMA PRONTO
+===============================
+
+Isto e o programa JA COMPILADO. Voce nao precisa instalar Visual Studio,
+Git, CMake, nem compilar nada. E so copiar.
+
+O QUE TEM AQUI
+--------------
+  port\black.exe ....... o programa
+  port\blackrt.dll ..... a parte que faz o jogo rodar e falar com o oculos
+  JOGAR-VR.bat ......... abre o jogo no oculos
+  TESTAR-OCULOS.bat .... testa o oculos sem o jogo (30 segundos)
+
+ONDE COLOCAR
+------------
+Estes arquivos tem que ficar DENTRO da pasta do seu BLACK — a pasta que
+tem uma pasta chamada "game" dentro dela. A estrutura final fica assim:
+
+  BLACK NATIVO PC PT-BR\
+      game\                 <- o seu jogo (nao mexa)
+      port\                 <- vem daqui
+          black.exe
+          blackrt.dll
+      JOGAR-VR.bat          <- vem daqui
+      TESTAR-OCULOS.bat     <- vem daqui
+
+Ou seja: extraia este zip dentro da pasta do BLACK, aceitando juntar
+com o que ja existe. Nada do seu jogo e substituido.
+
+SEUS SAVES
+----------
+A versao antiga (0.2.0) guardava os saves em game\savedata.
+Esta (0.3.0) guarda em port\savedata.
+Para nao perder o progresso: copie a pasta
+    game\savedata
+para dentro de
+    port\savedata
+(se port\savedata ainda nao existir, crie e cole dentro).
+
+COMO TESTAR
+-----------
+1. TESTAR-OCULOS.bat primeiro. 30 segundos, sem o jogo.
+   Voce deve ver um chao quadriculado, uma regua de 10 cm e um alvo a
+   2 metros. Se parecer do tamanho certo, esta funcionando.
+2. Depois JOGAR-VR.bat.
+
+Se algo der errado, o motivo fica em port\black.log — me mande esse
+arquivo no chat.
+
+O QUE ESPERAR
+-------------
+O jogo e o original de 2006: visual de 2006, nao e remake.
+Voce olha em volta mexendo a cabeca de verdade.
+Numa GTX 1650, se ficar pesado, me avise que eu ajusto a qualidade.

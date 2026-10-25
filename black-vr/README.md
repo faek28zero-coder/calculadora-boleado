@@ -16,7 +16,26 @@ PC pelo port, este módulo não tem o que mostrar — e é assim de propósito.
 
 ---
 
-## Estado atual (24/10)
+## Estado atual (24/10) — **compila e gera binário**
+
+O build roda de verdade: GitHub Actions, `windows-latest`, MSVC x86. Saída em `dist/` na branch
+(`black.exe` 2 KB + `blackrt.dll` 1,4 MB, PE 0x14c, versão 0.3.0, com OpenXR e `--vr`).
+O caminho de VR compila; o que falta agora é rodar num headset de verdade.
+
+Erros que só o MSVC mostrou (todos corrigidos, e o 4º virou teste automático):
+
+1. `XrSwapchainImageD3D11KHR` indefinido — as macros `XR_USE_*` só existiam na linha de comando
+   dos testes g++; agora estão na fonte.
+2. `vr::set_game_render_size()` chamado pelo patch e ausente do `vr.h`.
+3. `state.h` com lixo de edição (`----`) e símbolos redeclarados contra o namespace anônimo do
+   `device.cpp` (60 linhas de "ambiguous symbol").
+4. `host3d::window()` sem o include em `main.cpp`.
+5. `bind_render_target`/`apply_viewport` movidos para o escopo `xd3d` para o `draw.cpp` usar.
+
+`tests/run.sh` agora tem 5 grupos: o 4º **liga** todos os `src/vr/*.cpp` e pega o endereço das 27
+funções públicas — sintaxe não vê símbolo faltando, link vê.
+
+## Estado anterior (24/10)
 
 - **A cópia do jogo está verificada**: o `default.xbe` do usuário é o **NTSC-U original**
   (`df2739c3…b68f6`), a build que o port reconhece. Nada a corrigir no lado do jogo.
