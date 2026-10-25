@@ -19,5 +19,11 @@ void init();
 /** Escreve uma linha e descarrega no disco na hora. */
 void line(const char *fmt, ...);
 
+/**
+ * Anota no rastro as DLLs de VR/carga gráfica já carregadas no processo.
+ * Serve para saber, sem depender do crash, qual runtime e qual driver entraram.
+ */
+void modules();
+
 } // namespace trace
 } // namespace vr

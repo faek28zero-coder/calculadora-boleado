@@ -1,6 +1,7 @@
 // stub de d3d11.h: só os tipos que o envio do olho usa (checagem de sintaxe fora do Windows).
 #pragma once
 #define D3D11_SDK_VERSION 7
+#define D3D11_CREATE_DEVICE_BGRA_SUPPORT 0x20
 #include <windows.h>
 
 struct D3D11_BOX { UINT left, top, front, right, bottom, back; };

@@ -65,6 +65,12 @@ inline long InterlockedExchange(volatile long *, long) { return 0; }
 struct NT_TIB { void *ExceptionList, *StackBase, *StackLimit; };
 #define GetCurrentThread() ((void*)0)
 #define GetCurrentProcess() ((void*)0)
+#define GetCurrentProcessId() 0ul
+inline int CloseHandle(void *) { return 1; }
+#ifndef INVALID_HANDLE_VALUE
+#define INVALID_HANDLE_VALUE ((void*)-1)
+#endif
+struct CONTEXT { unsigned long Eip, Esp, Ebp, Eax, Ebx, Ecx, Edx, Esi, Edi; };
 inline int SetThreadPriority(void*, int) { return 1; }
 typedef void *FARPROC;
 #define LOAD_LIBRARY_SEARCH_DEFAULT_DIRS 0
@@ -76,7 +82,10 @@ inline BOOL FreeLibrary(HMODULE) { return 1; }
 inline DWORD GetLastError() { return 0; }
 struct MODULEINFO;
 inline unsigned int GetModuleFileNameA(HMODULE, char *, unsigned int) { return 0; }
-struct MEMORY_BASIC_INFORMATION { void *BaseAddress; void *AllocationBase; };
+struct MEMORY_BASIC_INFORMATION { void *BaseAddress; void *AllocationBase; unsigned long State; };
+#define MEM_COMMIT 0x1000
+#define MEM_RESERVE 0x2000
+#define MEM_FREE 0x10000
 inline unsigned long VirtualQuery(const void *, MEMORY_BASIC_INFORMATION *, unsigned long) { return 0; }
 using PVECTORED_EXCEPTION_HANDLER = long (*)(struct _EXCEPTION_POINTERS *);
 inline void *AddVectoredExceptionHandler(unsigned long, PVECTORED_EXCEPTION_HANDLER) { return nullptr; }

@@ -1,0 +1,45 @@
+BLACK em VR - pacote v7
+============================================================
+
+O que tem nesta pasta:
+
+  game\                 o seu jogo (default.xbe)  <- NAO apague
+  port\                 o programa (black.exe, blackrt.dll, openxr_loader.dll,
+                        vr-sonda.exe)
+  JOGAR-VR.bat          para jogar
+  TESTAR-OCULOS.bat     testa o oculos sozinho, sem o jogo
+  DIAGNOSTICO.bat       faz o teste completo e grava o RELATORIO-VR.txt
+
+
+COMO JOGAR
+------------------------------------------------------------
+1. Abra o aplicativo do oculos no PC (Meta Horizon Link).
+2. Ligue o oculos no cabo USB-C.
+3. Duplo clique em JOGAR-VR.bat.
+
+
+ESTA VERSAO AINDA NAO E A QUE JOGA - PRIMEIRO O TESTE
+------------------------------------------------------------
+Na v6 o programa morria no exato momento em que pedia a sessao ao
+aplicativo do oculos. Para descobrir a causa sem ficar no escuro, a v7
+traz um teste separado (vr-sonda.exe) que faz a MESMA conversa em cinco
+modos diferentes, cada um num programa proprio. Se um modo cair, os
+outros continuam - e o relatorio mostra qual caminho funciona.
+
+O que eu preciso de voce agora:
+
+1. Duplo clique em DIAGNOSTICO.bat.
+2. Ele abre uma janela preta, roda os testes e no fim mostra um texto.
+3. Me mande esse texto (ou o arquivo RELATORIO-VR.txt que ele deixa
+   nesta mesma pasta).
+
+Leva alguns minutos porque ele roda o jogo no fim. Nao feche a janela
+que abre no meio do caminho: ela e o proprio teste do oculos.
+
+
+SE O JOGO NAO ABRIR
+------------------------------------------------------------
+- Confira se o aplicativo do oculos esta aberto ANTES do duplo clique.
+- Se o Windows reclamar de arquivo bloqueado: botao direito no .bat ->
+  Propriedades -> marque "Desbloquear" -> OK.
+- Nada aqui e instalado no PC: e so esta pasta. Para desfazer, apague-a.

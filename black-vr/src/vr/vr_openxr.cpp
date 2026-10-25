@@ -95,6 +95,7 @@ XR_FN(xrAcquireSwapchainImage);
 XR_FN(xrWaitSwapchainImage);
 XR_FN(xrReleaseSwapchainImage);
 XR_FN(xrGetD3D11GraphicsRequirementsKHR);
+XR_FN(xrGetInstanceProperties);
 XR_FN(xrGetActionStateFloat);
 XR_FN(xrGetActionStateBoolean);
 XR_FN(xrGetActionStateVector2f);
@@ -130,6 +131,24 @@ bool bind(T &fn, const char *name)
 
 char g_error[512];
 XrSessionState g_state = XR_SESSION_STATE_UNKNOWN;
+
+// Mensageiro do próprio runtime (XR_EXT_debug_utils). Quando o runtime reclama de algo,
+// a frase dele vai para o rastro — é a diferença entre "0xc0000005" e "device inválido".
+PFN_xrCreateDebugUtilsMessengerEXT p_xrCreateDebugUtilsMessengerEXT;
+PFN_xrDestroyDebugUtilsMessengerEXT p_xrDestroyDebugUtilsMessengerEXT;
+XrDebugUtilsMessengerEXT g_messenger = XR_NULL_HANDLE;
+
+XrBool32 XRAPI_CALL on_runtime_message(XrDebugUtilsMessageSeverityFlagsEXT severity,
+                                       XrDebugUtilsMessageTypeFlagsEXT /*types*/,
+                                       const XrDebugUtilsMessengerCallbackDataEXT *data, void * /*user*/)
+{
+    const char *level = (severity & XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)      ? "erro"
+                        : (severity & XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)  ? "aviso"
+                                                                                        : "info";
+    trace::line("  runtime[%s] %s: %s", level, data && data->functionName ? data->functionName : "",
+                data && data->message ? data->message : "");
+    return XR_FALSE;
+}
 
 XrViewConfigurationView g_view_cfg[internal::kEyes];
 XrViewLocateInfo g_view_locate;
@@ -203,7 +222,7 @@ bool load_loader()
     return true;
 }
 
-bool create_d3d11(const LUID &adapter)
+bool create_d3d11(const XrGraphicsRequirementsD3D11KHR &req)
 {
     if (g_rt.dev11) return true;
     if (!g_d3d11_dll) g_d3d11_dll = LoadLibraryA("d3d11.dll");
@@ -218,6 +237,7 @@ bool create_d3d11(const LUID &adapter)
     }
 
     // O runtime exige um adaptador com o mesmo LUID (o headset está pendurado nele).
+    const LUID &adapter = req.adapterLuid;
     IDXGIFactory1 *factory = nullptr;
     IDXGIAdapter1 *use = nullptr;
     if (SUCCEEDED(CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void **)&factory))) {
@@ -228,18 +248,35 @@ bool create_d3d11(const LUID &adapter)
             cand->GetDesc1(&d);
             if (d.AdapterLuid.LowPart == adapter.LowPart && d.AdapterLuid.HighPart == adapter.HighPart) {
                 use = cand;
+                char name[128] = {};
+                for (int k = 0; k < 64 && d.Description[k]; k++) name[k] = (char)d.Description[k];
+                trace::line("  3c-1: adaptador do headset: %s (luid %08lx:%08lx)", name,
+                            (unsigned long)adapter.HighPart, (unsigned long)adapter.LowPart);
                 break;
             }
             cand->Release();
         }
         factory->Release();
     }
+    if (!use) trace::line("  3c-1: AVISO - nenhum adaptador com o luid do headset; tentando o padrao");
 
-    D3D_FEATURE_LEVEL levels[] = {D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_1, D3D_FEATURE_LEVEL_10_0};
+    // O QUE A REFERÊNCIA FAZ E NÓS NÃO FAZÍAMOS: o runtime manda o feature level mínimo em
+    // req.minFeatureLevel e o dispositivo TEM de nascer exatamente nesse nível. Antes pedíamos
+    // uma lista fixa (11_0/10_1/10_0) e podíamos entregar ao runtime um dispositivo mais fraco
+    // do que ele pediu — o runtime então quebrava lá dentro, na criação da sessão.
+    D3D_FEATURE_LEVEL want = req.minFeatureLevel ? req.minFeatureLevel : D3D_FEATURE_LEVEL_11_0;
+    trace::line("  3c-2: feature level exigido 0x%x, flags BGRA", (unsigned)want);
+
     D3D_FEATURE_LEVEL got = D3D_FEATURE_LEVEL_9_1;
-    HRESULT hr = p_D3D11CreateDevice(use, use ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, levels,
-                                     (UINT)(sizeof levels / sizeof levels[0]), D3D11_SDK_VERSION, &g_rt.dev11, &got,
-                                     &g_rt.ctx11);
+    HRESULT hr = p_D3D11CreateDevice(use, use ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE, nullptr,
+                                     D3D11_CREATE_DEVICE_BGRA_SUPPORT, &want, 1, D3D11_SDK_VERSION, &g_rt.dev11,
+                                     &got, &g_rt.ctx11);
+    if (FAILED(hr) && (want == D3D_FEATURE_LEVEL_11_0)) {
+        // segunda tentativa: alguns drivers recusam BGRA_SUPPORT em placas antigas
+        trace::line("  3c-3: falhou com BGRA (0x%08lx); tentando sem a flag", (unsigned long)hr);
+        hr = p_D3D11CreateDevice(use, use ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, &want,
+                                 1, D3D11_SDK_VERSION, &g_rt.dev11, &got, &g_rt.ctx11);
+    }
     if (use) use->Release();
     if (FAILED(hr)) {
         set_error("D3D11CreateDevice falhou (0x%08lx) no adaptador do headset", (unsigned long)hr);
@@ -259,28 +296,57 @@ bool create_instance()
     }
     std::vector<XrExtensionProperties> ext(n ? n : 1, {XR_TYPE_EXTENSION_PROPERTIES});
     if (n) p_xrEnumerateInstanceExtensionProperties(nullptr, n, &n, ext.data());
-    bool d3d11 = false;
-    for (uint32_t i = 0; i < n; i++)
+    bool d3d11 = false, debug_utils = false;
+    for (uint32_t i = 0; i < n; i++) {
         if (!strcmp(ext[i].extensionName, "XR_KHR_D3D11_enable")) d3d11 = true;
+        if (!strcmp(ext[i].extensionName, "XR_EXT_debug_utils")) debug_utils = true;
+    }
     if (!d3d11) {
         set_error("o runtime não oferece XR_KHR_D3D11_enable");
         return false;
     }
 
-    trace::line("  2b: %u extensoes, D3D11 presente", n);
-    static const char *wanted[] = {"XR_KHR_D3D11_enable"};
+    trace::line("  2b: %u extensoes, D3D11 presente, debug_utils %s", n, debug_utils ? "presente" : "ausente");
+    // XR_EXT_debug_utils é opcional: com ela o runtime escreve as reclamações dele no rastro.
+    const char *wanted[2];
+    uint32_t wanted_n = 0;
+    wanted[wanted_n++] = "XR_KHR_D3D11_enable";
+    if (debug_utils) wanted[wanted_n++] = "XR_EXT_debug_utils";
     XrInstanceCreateInfo ci = {XR_TYPE_INSTANCE_CREATE_INFO};
     copy_name(ci.applicationInfo.applicationName, sizeof ci.applicationInfo.applicationName, "BLACK VR (black-vr)");
     ci.applicationInfo.applicationVersion = 1;
     copy_name(ci.applicationInfo.engineName, sizeof ci.applicationInfo.engineName, "black-pc");
     ci.applicationInfo.engineVersion = 1;
     ci.applicationInfo.apiVersion = XR_CURRENT_API_VERSION;
-    ci.enabledExtensionCount = 1;
+    ci.enabledExtensionCount = wanted_n;
     ci.enabledExtensionNames = wanted;
     if (!check(p_xrCreateInstance(&ci, &g_rt.instance), "xrCreateInstance")) return false;
 
     // xrDestroyInstance fica no instante da instância (o shutdown a chama).
     if (g_rt.instance && !p_xrDestroyInstance) bind(p_xrDestroyInstance, "xrDestroyInstance");
+
+    // Quem respondeu? Sem isso, "runtime do headset" é um nome vago: pode ser o Meta, o SteamVR
+    // ou um runtime fantasma de uma instalação antiga. O nome e a versão vão para o rastro.
+    if (bind(p_xrGetInstanceProperties, "xrGetInstanceProperties")) {
+        XrInstanceProperties ip = {XR_TYPE_INSTANCE_PROPERTIES};
+        if (XR_SUCCEEDED(p_xrGetInstanceProperties(g_rt.instance, &ip)))
+            trace::line("  2c: runtime = %s %u.%u.%u", ip.runtimeName,
+                        (unsigned)XR_VERSION_MAJOR(ip.runtimeVersion), (unsigned)XR_VERSION_MINOR(ip.runtimeVersion),
+                        (unsigned)XR_VERSION_PATCH(ip.runtimeVersion));
+    }
+
+    if (debug_utils && bind(p_xrCreateDebugUtilsMessengerEXT, "xrCreateDebugUtilsMessengerEXT")) {
+        XrDebugUtilsMessengerCreateInfoEXT dci = {XR_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT};
+        dci.messageSeverities = XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
+                                XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                                XR_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT;
+        dci.messageTypes = XR_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+                           XR_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+                           XR_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+        dci.userCallback = on_runtime_message;
+        if (XR_SUCCEEDED(p_xrCreateDebugUtilsMessengerEXT(g_rt.instance, &dci, &g_messenger)))
+            bind(p_xrDestroyDebugUtilsMessengerEXT, "xrDestroyDebugUtilsMessengerEXT");
+    }
     return bind(p_xrGetSystem, "xrGetSystem") && bind(p_xrGetSystemProperties, "xrGetSystemProperties") &&
            bind(p_xrEnumerateViewConfigurationViews, "xrEnumerateViewConfigurationViews") &&
            bind(p_xrEnumerateEnvironmentBlendModes, "xrEnumerateEnvironmentBlendModes") &&
@@ -316,13 +382,15 @@ bool create_session()
                "xrGetD3D11GraphicsRequirementsKHR"))
         return false;
     trace::line("  3c: D3D11CreateDevice (%p)", (void *)p_D3D11CreateDevice);
-    if (!create_d3d11(req.adapterLuid)) return false;
+    if (!create_d3d11(req)) return false;
     trace::line("  3d: dispositivo D3D11 ok (%p)", (void *)g_rt.dev11);
 
     trace::line("  3e: xrGetSystemProperties (%p)", (void *)p_xrGetSystemProperties);
     XrSystemProperties props = {XR_TYPE_SYSTEM_PROPERTIES};
-    p_xrGetSystemProperties(g_rt.instance, g_rt.system, &props);
+    if (!check(p_xrGetSystemProperties(g_rt.instance, g_rt.system, &props), "xrGetSystemProperties")) return false;
     logf("[vr] sistema: %s (vendor 0x%04x)", props.systemName, props.vendorId);
+    trace::line("  3e-1: %s, vendor 0x%x, orientacao %s", props.systemName, props.vendorId,
+                props.trackingProperties.orientationTracking ? "ok" : "nao");
 
     trace::line("  3f: xrEnumerateViewConfigurationViews (%p)", (void *)p_xrEnumerateViewConfigurationViews);
     uint32_t n = internal::kEyes;
@@ -339,8 +407,10 @@ bool create_session()
 
     trace::line("  3g: xrEnumerateEnvironmentBlendModes (%p)", (void *)p_xrEnumerateEnvironmentBlendModes);
     uint32_t blends = 0;
-    p_xrEnumerateEnvironmentBlendModes(g_rt.instance, g_rt.system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, 0, &blends,
-                                       nullptr);
+    if (!check(p_xrEnumerateEnvironmentBlendModes(g_rt.instance, g_rt.system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO,
+                                                  0, &blends, nullptr),
+               "xrEnumerateEnvironmentBlendModes"))
+        return false;
     if (blends) {
         std::vector<XrEnvironmentBlendMode> modes(blends);
         p_xrEnumerateEnvironmentBlendModes(g_rt.instance, g_rt.system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, blends,
@@ -349,6 +419,8 @@ bool create_session()
         for (auto m : modes)
             if (m == XR_ENVIRONMENT_BLEND_MODE_OPAQUE) g_rt.blend = m;
     }
+    trace::line("  3g-1: painel %ux%u por olho, blend %d", g_view_cfg[0].recommendedImageRectWidth,
+                g_view_cfg[0].recommendedImageRectHeight, (int)g_rt.blend);
 
     trace::line("  3h: xrCreateSession (%p)", (void *)p_xrCreateSession);
     XrGraphicsBindingD3D11KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D11_KHR};
@@ -768,7 +840,8 @@ bool start(const void *hwnd)
         shutdown();
         return false;
     }
-    trace::line("[2] ok: instance %p system %p", (void *)g_rt.instance, (void *)g_rt.system);
+    trace::line("[2] ok: instance %p", (void *)g_rt.instance);
+    trace::modules(); // com a instância de pé, as DLLs do runtime já estão carregadas: ficam no rastro
     trace::line("[3] sessao D3D11 (xrCreateSession)");
     if (!create_session()) {
         shutdown();
@@ -810,6 +883,10 @@ void shutdown()
         g_readback = nullptr;
     }
     if (g_rt.session && p_xrDestroySession) p_xrDestroySession(g_rt.session);
+    if (g_messenger && p_xrDestroyDebugUtilsMessengerEXT) {
+        p_xrDestroyDebugUtilsMessengerEXT(g_messenger);
+        g_messenger = XR_NULL_HANDLE;
+    }
     if (g_rt.instance && p_xrDestroyInstance) p_xrDestroyInstance(g_rt.instance);
     g_rt = internal::Runtime{};
 }

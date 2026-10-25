@@ -12,6 +12,7 @@ on:
       - "black-vr/src/**"
       - "black-vr/vendor/**"
       - "black-vr/patches/**"
+      - "black-vr/entrega/**"
   workflow_dispatch:
 
 # um build por vez; um push novo cancela o anterior
@@ -143,6 +144,21 @@ jobs:
           fi
           exit 0
 
+      - name: Compilar a sonda de VR (vr-sonda.exe, 32 bits, programa separado do jogo)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        run: |
+          set +e
+          echo "=== SONDA DE VR ===" >> dist-log.txt
+          cmake -S black-vr/src/sonda -B sonda-build -A Win32 -DCMAKE_BUILD_TYPE=Release >> dist-log.txt 2>&1
+          cmake --build sonda-build --config Release --parallel >> dist-log.txt 2>&1
+          rc=$?
+          echo "sonda rc=$rc" >> dist-log.txt
+          grep -nE "error C|error LNK" dist-log.txt | head -20
+          find sonda-build -name "vr-sonda.exe" >> dist-log.txt 2>&1
+          exit 0
+
       - name: Empacotar
         if: always()
         shell: bash
@@ -159,6 +175,13 @@ jobs:
               echo "openxr_loader.dll: $(stat -c%s "$L") bytes" >> dist/build-log.txt
             else
               echo "FALHOU: openxr_loader.dll de 32 bits nao foi gerado" >> dist/build-log.txt
+            fi
+            S=$(find sonda-build -name "vr-sonda.exe" | head -1)
+            if [ -n "$S" ]; then
+              cp "$S" dist/vr-sonda.exe
+              echo "vr-sonda.exe: $(stat -c%s "$S") bytes" >> dist/build-log.txt
+            else
+              echo "FALHOU: vr-sonda.exe nao foi gerado" >> dist/build-log.txt
             fi
             cp OpenXR-SDK-release-1.1.65/LICENSE dist/OPENXR-LICENSE.txt 2>/dev/null || true
             echo "PRONTO: binarios gerados" >> dist/build-log.txt
