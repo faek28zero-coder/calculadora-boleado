@@ -125,6 +125,13 @@ unsigned pose_serial();
 /** Largura/altura atuais do render target do jogo em pixels. */
 void game_render_size(int *w, int *h);
 
+/**
+ * O port informa a resolução em que está desenhando (render scale aplicado). O módulo usa
+ * isso para dimensionar a cópia do frame quando o headset pede outra resolução; chamar no
+ * Swap, antes de `pose_frame_update()`.
+ */
+void set_game_render_size(int w, int h);
+
 // ---------------------------------------------------------------- configuração
 
 /** Valores da seção `[vr]` do black.ini (preenchidos pelo port em settings.cpp). */

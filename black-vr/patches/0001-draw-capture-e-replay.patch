@@ -301,16 +301,16 @@ index ec13310..a87572f 100644
 +
 +} // namespace vr_draw
 diff --git a/loader/src/d3d/state.h b/loader/src/d3d/state.h
-index a63563e..2f04864 100644
+index a63563e..41ac2cd 100644
 --- a/loader/src/d3d/state.h
 +++ b/loader/src/d3d/state.h
 @@ -81,6 +81,9 @@ void init_default_states(); // what the original CreateDevice puts in the state
  bool debug_frame_active();  // --debug-frame N: true while frame N is being built
  
  // ---- device (device.cpp) ----
++// g_backbuffer/g_depthbuffer sao definidos em device.cpp no namespace xd3d (nao no anonimo),
++// porque o codigo de gravacao em draw.cpp tambem precisa deles.
 +extern Surface *g_backbuffer, *g_depthbuffer;
-+void bind_render_target(Surface *rt, Surface *z); // the host color/depth the Xbox target maps to
-+void apply_viewport(); ----
  void viewport_transform(float *scale, float *offset); // NV2A screen = clip / w * scale + offset
  void host_viewport_transform(float *scale, float *offset); // the same for the host viewport (undoing screen space)
  void update_viewport_constants();                     // c-38 / c-37 = viewport scale / offset
