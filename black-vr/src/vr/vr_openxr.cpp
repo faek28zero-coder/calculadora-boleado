@@ -31,6 +31,12 @@
 #include <string>
 #include <vector>
 
+#ifndef XR_USE_PLATFORM_WIN32
+#define XR_USE_PLATFORM_WIN32 1
+#endif
+#ifndef XR_USE_GRAPHICS_API_D3D11
+#define XR_USE_GRAPHICS_API_D3D11 1
+#endif
 #include "openxr.h"
 #include "openxr_platform.h"
 #include "vr/vr_internal.h"

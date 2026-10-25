@@ -9,6 +9,15 @@
 #include <cstdint>
 #include <vector>
 
+// Sem estas duas macros o openxr_platform.h nao declara nada de D3D11/Win32
+// (XrSwapchainImageD3D11KHR, PFN_xrGetD3D11GraphicsRequirementsKHR, XrGraphicsBindingD3D11KHR).
+// O <d3d11.h> acima tem de vir primeiro: e dele que os tipos do header dependem.
+#ifndef XR_USE_PLATFORM_WIN32
+#define XR_USE_PLATFORM_WIN32 1
+#endif
+#ifndef XR_USE_GRAPHICS_API_D3D11
+#define XR_USE_GRAPHICS_API_D3D11 1
+#endif
 #include "openxr.h"
 #include "openxr_platform.h"
 

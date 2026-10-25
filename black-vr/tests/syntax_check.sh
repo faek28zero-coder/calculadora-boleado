@@ -9,7 +9,7 @@ fails=0
 for f in "$here"/src/vr/*.cpp; do
     printf "  %-20s " "$(basename "$f")"
     out=$(g++ -std=c++20 -fsyntax-only -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers \
-        -DXR_USE_PLATFORM_WIN32 -DXR_USE_GRAPHICS_API_D3D11 \
+        \
         -I "$here/tests/stubs" -I "$here/src" -I "$here/vendor/openxr" "$f" 2>&1)
     if [ -z "$out" ]; then
         echo "ok"
