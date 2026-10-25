@@ -10,19 +10,20 @@ O que tem nesta pasta:
   openxr_loader.dll     o conector de 64 bits (tem de ficar junto)
   TESTAR-64.bat         duplo clique neste
 
-Nao precisa do jogo, nao precisa de zip, nao precisa substituir nada:
-e uma pasta nova, so com estes tres arquivos e este texto.
+Nao precisa do jogo nesta pasta: aqui e so o teste do oculos.
 
 
 COMO FAZER
 ------------------------------------------------------------
-1. Abra o aplicativo do oculos (Meta Horizon Link) no PC.
-2. Ligue o oculos no cabo USB-C.
-3. Duplo clique em TESTAR-64.bat.
-4. Coloque o oculos na cabeca quando ele pedir.
+1. Baixe o arquivo VR-64BITS.zip da pasta do Drive.
+2. Botao direito no zip -> "Extrair tudo" -> escolha uma pasta nova.
+3. Abra a pasta VR-64BITS que ele criar.
+4. Abra o aplicativo do oculos (Meta Horizon Link) e ligue o oculos no cabo.
+5. Duplo clique em TESTAR-64.bat.
+6. Coloque o oculos na cabeca quando ele pedir.
    Vao aparecer imagens coloridas dentro do oculos por alguns minutos.
-5. No fim ele pergunta se apareceu imagem: responda s ou n.
-6. Me mande o arquivo RELATORIO-64.txt que ele deixa nesta pasta.
+7. No fim ele pergunta se apareceu imagem: responda s ou n.
+8. Me mande o arquivo RELATORIO-64.txt que ele deixa nesta pasta.
 
 
 O QUE ELE TESTA
