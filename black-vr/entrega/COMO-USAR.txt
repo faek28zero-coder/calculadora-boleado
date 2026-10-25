@@ -29,6 +29,8 @@ outros continuam - e o relatorio mostra qual caminho funciona.
 O que eu preciso de voce agora:
 
 1. Duplo clique em DIAGNOSTICO.bat.
+   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 7
+   (se aparecer "diagnostico v6" no relatorio, o pacote novo nao foi extraido)
 2. Ele abre uma janela preta, roda os testes e no fim mostra um texto.
 3. Me mande esse texto (ou o arquivo RELATORIO-VR.txt que ele deixa
    nesta mesma pasta).
