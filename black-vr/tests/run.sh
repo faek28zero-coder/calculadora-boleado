@@ -24,6 +24,10 @@ echo "=== 3/5 sintaxe do módulo (stubs) ==="
 "$here/tests/syntax_check.sh"
 
 echo
+echo "=== 3b/5 funções OpenXR ligadas antes do uso ==="
+python3 "$here/tests/vr_bindings_test.py"
+
+echo
 echo "=== 4/5 ligação do módulo (todas as funções públicas de vr.h) ==="
 g++ -std=c++20 -Wno-unused-parameter -I "$here/tests/stubs" -I "$here/src" -I "$here/vendor/openxr" \
     -o "$out/vr_link_test" "$here/tests/vr_link_test.cpp" "$here/tests/vr_link_stubs.cpp" "$here"/src/vr/*.cpp

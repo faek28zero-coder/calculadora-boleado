@@ -184,6 +184,22 @@ bool load_loader()
         set_error("openxr_loader.dll sem xrGetInstanceProcAddr — provavelmente é a DLL de 64 bits; o port é 32 bits");
         return false;
     }
+    // Estas duas existem ANTES da instância: pede-se com instância nula, direto ao conector.
+    // (Sem isto, eram ponteiros nulos e a primeira chamada estourava em 0x0 — foi o que o
+    // vr-trace.txt mostrou em 25/10.)
+    struct Early { PFN_xrVoidFunction *slot; const char *name; };
+    const Early early[] = {
+        {(PFN_xrVoidFunction *)&p_xrEnumerateInstanceExtensionProperties, "xrEnumerateInstanceExtensionProperties"},
+        {(PFN_xrVoidFunction *)&p_xrCreateInstance, "xrCreateInstance"},
+    };
+    for (const Early &e : early) {
+        PFN_xrVoidFunction p = nullptr;
+        if (XR_FAILED(p_xrGetInstanceProcAddr(XR_NULL_HANDLE, e.name, &p)) || !p) {
+            set_error("o conector não expõe %s", e.name);
+            return false;
+        }
+        *e.slot = p;
+    }
     return true;
 }
 
@@ -263,6 +279,8 @@ bool create_instance()
     ci.enabledExtensionNames = wanted;
     if (!check(p_xrCreateInstance(&ci, &g_rt.instance), "xrCreateInstance")) return false;
 
+    // xrDestroyInstance fica no instante da instância (o shutdown a chama).
+    if (g_rt.instance && !p_xrDestroyInstance) bind(p_xrDestroyInstance, "xrDestroyInstance");
     return bind(p_xrGetSystem, "xrGetSystem") && bind(p_xrGetSystemProperties, "xrGetSystemProperties") &&
            bind(p_xrEnumerateViewConfigurationViews, "xrEnumerateViewConfigurationViews") &&
            bind(p_xrEnumerateEnvironmentBlendModes, "xrEnumerateEnvironmentBlendModes") &&
