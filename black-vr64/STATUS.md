@@ -11,3 +11,14 @@
 - Sem `XBE_URL` o build para depois da emenda, com mensagem clara no log.
 
 - 25/10: build de 64 bits passa a devolver os binarios para o branch (o artifact do GitHub nao e alcancavel daqui); o zip vai pro Drive.
+
+## 25/10 - primeiro build de 64 bits COM a camada de VR (sucesso)
+- Erros reais do compilador corrigidos: nomes `XR_TYPE_*_D3D12_KHR` e o LUID
+  (agora por `IDXGIAdapter::GetDesc`, sem `GetDesc1`).
+- `BLACK.exe` (5,8 MB) saiu com a VR dentro: `grep -a "xrCreateSession"` acha o
+  codigo no exe. `Black.dll` (9,1 MB) e o jogo recompilado do XBE do jogador.
+- Entrega: `VR-64BITS.zip` (71 MB) na pasta BLACK VR do Drive
+  (id 1vNQcdFJlc2mrnZnaUlsnkNG9lB5wFhR8) com BLACK.exe, Black.dll, compiler/,
+  openxr_loader.dll, JOGAR-VR.bat, LEIA-ISTO.txt e assets/ vazia.
+- O artifact do GitHub Actions NAO e alcancavel daqui (host bloqueado); por isso
+  o CI devolve o `dist/` num commit [skip ci] no proprio branch.
