@@ -72,6 +72,25 @@ jobs:
           find build32 -name "openxr_loader.dll" >> ../dist-log.txt 2>&1
           exit $rc
 
+      - name: Compilar o conector OpenXR de 64 bits (openxr_loader.dll x64)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        run: |
+          set +e
+          echo "=== OPENXR LOADER 64 BITS ===" >> dist-log.txt
+          if [ ! -d OpenXR-SDK-release-1.1.65 ]; then
+            curl -sL -o sdk.tgz "https://codeload.github.com/KhronosGroup/OpenXR-SDK/tar.gz/refs/tags/release-1.1.65"
+            tar xzf sdk.tgz
+          fi
+          cd OpenXR-SDK-release-1.1.65
+          cmake -S . -B build64 -A x64 -DDYNAMIC_LOADER=ON -DBUILD_API_LAYERS=OFF -DBUILD_TESTS=OFF \
+                -DBUILD_CONFORMANCE_TESTS=OFF -DBUILD_SAMPLES=OFF -DBUILD_LOADER=ON >> ../dist-log.txt 2>&1
+          cmake --build build64 --config Release --target openxr_loader >> ../dist-log.txt 2>&1
+          echo "loader64 rc=$?" >> ../dist-log.txt
+          find build64 -name "openxr_loader.dll" >> ../dist-log.txt 2>&1
+          exit 0
+
       - name: Configurar (MSVC x86)
         id: config
         shell: bash
@@ -159,6 +178,20 @@ jobs:
           find sonda-build -name "vr-sonda.exe" >> dist-log.txt 2>&1
           exit 0
 
+      - name: Compilar a sonda de VR de 64 bits (vr-sonda64.exe, mesmo codigo)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        run: |
+          set +e
+          echo "=== SONDA DE VR 64 BITS ===" >> dist-log.txt
+          cmake -S black-vr/src/sonda -B sonda64-build -A x64 -DVR_SONDA_NAME=vr-sonda64 -DCMAKE_BUILD_TYPE=Release >> dist-log.txt 2>&1
+          cmake --build sonda64-build --config Release --parallel >> dist-log.txt 2>&1
+          echo "sonda64 rc=$?" >> dist-log.txt
+          grep -nE "error C|error LNK" dist-log.txt | head -20
+          find sonda64-build -name "vr-sonda64.exe" >> dist-log.txt 2>&1
+          exit 0
+
       - name: Empacotar
         if: always()
         shell: bash
@@ -182,6 +215,16 @@ jobs:
               echo "vr-sonda.exe: $(stat -c%s "$S") bytes" >> dist/build-log.txt
             else
               echo "FALHOU: vr-sonda.exe nao foi gerado" >> dist/build-log.txt
+            fi
+            mkdir -p dist/x64
+            S64=$(find sonda64-build -name "vr-sonda64.exe" | head -1)
+            L64=$(find OpenXR-SDK-release-1.1.65/build64 -name "openxr_loader.dll" -path "*Release*" | head -1)
+            if [ -n "$S64" ] && [ -n "$L64" ]; then
+              cp "$S64" dist/x64/vr-sonda64.exe
+              cp "$L64" dist/x64/openxr_loader.dll
+              echo "x64: vr-sonda64.exe $(stat -c%s "$S64") bytes, openxr_loader.dll $(stat -c%s "$L64") bytes" >> dist/build-log.txt
+            else
+              echo "FALHOU: a versao de 64 bits nao foi gerada (S64=$S64 L64=$L64)" >> dist/build-log.txt
             fi
             cp OpenXR-SDK-release-1.1.65/LICENSE dist/OPENXR-LICENSE.txt 2>/dev/null || true
             echo "PRONTO: binarios gerados" >> dist/build-log.txt

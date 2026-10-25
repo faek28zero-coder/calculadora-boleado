@@ -3,16 +3,17 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0"
 set REL=RELATORIO-VR.txt
 
-rem ---- trava de versao: se o vr-sonda.exe nao esta aqui, este .bat e o ANTIGO.
+rem ---- trava de versao: sem os dois testes, este .bat e o ANTIGO.
 if not exist "port\vr-sonda.exe" goto :antigo
+if not exist "port\x64\vr-sonda64.exe" goto :antigo
 
 echo ============================================================
-echo   BLACK VR - DIAGNOSTICO DA VERSAO 9
-echo   (se este titulo nao aparecer, o arquivo e o antigo)
+echo   BLACK VR - DIAGNOSTICO DA VERSAO 10
+echo   32 bits + 64 bits  (se este titulo nao aparecer, e o antigo)
 echo ============================================================
 echo.
 
-echo === BLACK VR - diagnostico v9 === > "%REL%"
+echo === BLACK VR - diagnostico v10 (32 e 64 bits) === > "%REL%"
 echo data: %DATE%  %TIME% >> "%REL%"
 echo pasta: %CD% >> "%REL%"
 echo. >> "%REL%"
@@ -22,15 +23,15 @@ if exist "port\black.exe" (echo port\black.exe: SIM >> "%REL%") else (echo port\
 if exist "port\blackrt.dll" (echo port\blackrt.dll: SIM >> "%REL%") else (echo port\blackrt.dll: NAO >> "%REL%")
 if exist "port\openxr_loader.dll" (echo port\openxr_loader.dll: SIM >> "%REL%") else (echo port\openxr_loader.dll: NAO >> "%REL%")
 if exist "port\vr-sonda.exe" (echo port\vr-sonda.exe: SIM >> "%REL%") else (echo port\vr-sonda.exe: NAO >> "%REL%")
+if exist "port\x64\vr-sonda64.exe" (echo port\x64\vr-sonda64.exe: SIM >> "%REL%") else (echo port\x64\vr-sonda64.exe: NAO >> "%REL%")
+if exist "port\x64\openxr_loader.dll" (echo port\x64\openxr_loader.dll: SIM >> "%REL%") else (echo port\x64\openxr_loader.dll: NAO >> "%REL%")
 echo. >> "%REL%"
 
-rem ---- 1. teste separado do jogo: 9 modos, cada um num programa proprio.
-rem     Se um modo cair, os outros continuam: e assim que se descobre qual caminho funciona.
-echo [TESTE SEPARADO DO JOGO] >> "%REL%"
+rem ---- 1. teste separado do jogo, versao de 32 bits (a que o jogo usa hoje)
+rem      Se um modo cair, os outros continuam: e assim que se descobre qual caminho funciona.
+echo [TESTE 32 BITS - o caminho de hoje] >> "%REL%"
 for %%V in (4 3 6 9 1 7 8 2 5) do call :rodar %%V
 echo. >> "%REL%"
-
-rem ---- 2. junta as saidas dos modos
 for %%V in (4 3 6 9 1 7 8 2 5) do (
   if exist "port\sonda-%%V.txt" (
     echo. >> "%REL%"
@@ -40,7 +41,43 @@ for %%V in (4 3 6 9 1 7 8 2 5) do (
 )
 echo. >> "%REL%"
 
-rem ---- 3. o jogo (apaga os rastros velhos antes)
+rem ---- 2. teste separado do jogo, versao de 64 bits (o caminho novo)
+echo [TESTE 64 BITS - o caminho novo] >> "%REL%"
+for %%V in (4 1) do call :rodar64 %%V
+echo. >> "%REL%"
+for %%V in (4 1) do (
+  if exist "port\x64\sonda64-%%V.txt" (
+    echo. >> "%REL%"
+    type "port\x64\sonda64-%%V.txt" >> "%REL%"
+    del "port\x64\sonda64-%%V.txt" >nul 2>&1
+  )
+)
+echo. >> "%REL%"
+
+rem ---- 3. o teste com imagem: 20 segundos desenhando dentro do oculos
+echo.
+echo  ============================================================
+echo    AGORA VAO APARECER IMAGENS NO OCULOS (20 segundos)
+echo.
+echo    Coloque o oculos na cabeca e olhe para a tela.
+echo    Tem de aparecer um quadro colorido mudando de cor:
+echo    vermelho de um lado, verde do outro.
+echo  ============================================================
+echo.
+pause
+echo [TESTE 64 BITS COM IMAGEM - modo 10] >> "%REL%"
+call :rodar64img 10
+echo. >> "%REL%"
+if exist "port\x64\sonda64-10.txt" (
+  type "port\x64\sonda64-10.txt" >> "%REL%"
+  del "port\x64\sonda64-10.txt" >nul 2>&1
+)
+set VIU=
+set /p VIU=Apareceu a imagem colorida no oculos? (s = sim, n = nao): 
+echo resposta do usuario (apareceu imagem no oculos?): !VIU! >> "%REL%"
+echo. >> "%REL%"
+
+rem ---- 4. o jogo (apaga os rastros velhos antes)
 if exist "port\vr-trace.txt" del "port\vr-trace.txt" >nul 2>&1
 if exist "port\black.log" del "port\black.log" >nul 2>&1
 set XR_LOADER_DEBUG=
@@ -84,7 +121,7 @@ exit /b
 
 :rodar
 set V=%1
-echo   - modo %V% ... >> "%REL%"
+echo   - modo 32 bits %V% ... >> "%REL%"
 if not exist "port\vr-sonda.exe" exit /b
 del "port\xr-loader.log" >nul 2>&1
 pushd port
@@ -107,13 +144,55 @@ if exist "port\xr-loader.log" (
 )
 exit /b
 
+:rodar64
+set V=%1
+echo   - modo 64 bits %V% ... >> "%REL%"
+if not exist "port\x64\vr-sonda64.exe" exit /b
+del "port\x64\xr-loader64.log" >nul 2>&1
+pushd port\x64
+set XR_LOADER_DEBUG=all
+set XR_DEBUG_FILE=%CD%\xr-loader64.log
+vr-sonda64.exe %V% > sonda-console64-%V%.txt 2>&1
+set RC=!ERRORLEVEL!
+set XR_LOADER_DEBUG=
+set XR_DEBUG_FILE=
+popd
+echo     codigo !RC! >> "%REL%"
+if exist "port\x64\sonda-console64-%V%.txt" (
+  type "port\x64\sonda-console64-%V%.txt" >> "%REL%"
+  del "port\x64\sonda-console64-%V%.txt" >nul 2>&1
+)
+if exist "port\x64\xr-loader64.log" (
+  echo     --- log do conector de 64 bits (inicio) --- >> "%REL%"
+  powershell -NoProfile -Command "Get-Content '%~dp0port\x64\xr-loader64.log' -TotalCount 40" >> "%REL%" 2>nul
+  del "port\x64\xr-loader64.log" >nul 2>&1
+)
+exit /b
+
+:rodar64img
+set V=%1
+echo   - modo 64 bits %V% (com imagem) ... >> "%REL%"
+if not exist "port\x64\vr-sonda64.exe" exit /b
+pushd port\x64
+vr-sonda64.exe %V% > sonda-console64-%V%.txt 2>&1
+set RC=!ERRORLEVEL!
+popd
+echo     codigo !RC! >> "%REL%"
+if exist "port\x64\sonda-console64-%V%.txt" (
+  type "port\x64\sonda-console64-%V%.txt" >> "%REL%"
+  del "port\x64\sonda-console64-%V%.txt" >nul 2>&1
+)
+exit /b
+
 :antigo
 echo.
 echo ************************************************************
 echo   ESTE DIAGNOSTICO E O ANTIGO - NAO SERVE MAIS.
 echo.
-echo   Falta o arquivo:  port\vr-sonda.exe
-echo   Ele vem no pacote NOVO (BLACK-VR-pronto-v9.zip).
+echo   Faltam os arquivos:
+echo      port\vr-sonda.exe         (teste de 32 bits)
+echo      port\x64\vr-sonda64.exe   (teste de 64 bits)
+echo   Eles vem no pacote NOVO (BLACK-VR-pronto-v10.zip).
 echo.
 echo   O que fazer:
 echo     1. Baixe o pacote novo pelo link que eu mandei.

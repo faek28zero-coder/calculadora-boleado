@@ -1,11 +1,13 @@
-BLACK em VR - pacote v9
+BLACK em VR - pacote v10 (32 e 64 bits)
 ============================================================
 
 O que tem nesta pasta:
 
   game\                 o seu jogo (default.xbe)  <- NAO apague
   port\                 o programa (black.exe, blackrt.dll, openxr_loader.dll,
-                        vr-sonda.exe)
+                        vr-sonda.exe)  <- tudo de 32 bits, e o jogo de hoje
+  port\x64\             o teste novo de 64 bits (vr-sonda64.exe e o
+                        openxr_loader.dll de 64 bits)
   JOGAR-VR.bat          para jogar
   TESTAR-OCULOS.bat     testa o oculos sozinho, sem o jogo
   DIAGNOSTICO.bat       faz o teste completo e grava o RELATORIO-VR.txt
@@ -18,27 +20,33 @@ COMO JOGAR
 3. Duplo clique em JOGAR-VR.bat.
 
 
-ESTA VERSAO AINDA NAO E A QUE JOGA - PRIMEIRO O TESTE
+ESTA VERSAO TESTA O CAMINHO DE 64 BITS
 ------------------------------------------------------------
-O teste separado (vr-sonda.exe) mostrou que o aplicativo do oculos
-(versao de 32 bits) estoura no momento de criar a sessao, e nao o nosso
-programa: isso aconteceu igual em quatro configuracoes diferentes, sem
-o jogo junto. A v9 testa as ultimas alternativas que sobram (versao da
-API, mensageiro de depuracao, janela com fila de mensagens, thread
-propria) e verifica se a API antiga da Oculus esta instalada, que e o
-plano B.
+O jogo em si nao pode virar 64 bits: o BLACK e codigo de 2006, de 32
+bits, e o programa que roda ele (blackrt.dll) tem de ser 32 bits tambem.
+Mas a parte do oculos pode virar um programa separado de 64 bits, e o
+aplicativo do oculos de 64 bits e o caminho "normal" dele.
+
+A v10 traz as duas versoes do mesmo teste (32 e 64 bits). A de 64 bits
+tem um teste novo: ela monta o caminho inteiro e DESENHA no oculos.
 
 O que eu preciso de voce agora:
 
 1. Duplo clique em DIAGNOSTICO.bat.
-   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 9
-   (se aparecer "diagnostico v6" no relatorio, o pacote novo nao foi extraido)
-2. Ele abre uma janela preta, roda os testes e no fim mostra um texto.
-3. Me mande esse texto (ou o arquivo RELATORIO-VR.txt que ele deixa
-   nesta mesma pasta).
+   A janela tem de comecar com: BLACK VR - DIAGNOSTICO DA VERSAO 10
+2. Ele roda os testes de 32 bits, depois os de 64 bits.
+3. No meio do caminho ele avisa e pede uma tecla: e a hora de colocar o
+   oculos na cabeca, porque vao aparecer imagens nele por 20 segundos.
+4. Ele pergunta se apareceu a imagem. Responda s ou n.
+5. Me mande o RELATORIO-VR.txt que ele deixa nesta pasta.
 
 Leva alguns minutos porque ele roda o jogo no fim. Nao feche a janela
 que abre no meio do caminho: ela e o proprio teste do oculos.
+
+
+TESTE RAPIDO SO DA IMAGEM
+------------------------------------------------------------
+TESTAR-OCULOS.bat faz so o teste da imagem de 64 bits (20 segundos).
 
 
 SE O JOGO NAO ABRIR

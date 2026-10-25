@@ -1,26 +1,35 @@
 @echo off
 cd /d "%~dp0"
-echo Testando o oculos SEM abrir o jogo (cena de calibracao, 30 segundos).
+echo ============================================================
+echo   TESTE DO OCULOS - versao 10 (programa de 64 bits)
+echo ============================================================
+echo.
+echo Vai aparecer um quadro colorido DENTRO do oculos por 20 segundos.
 echo O aplicativo do oculos tem de estar aberto e o oculos ligado no cabo.
 echo.
+pause
 
 powershell -NoProfile -Command "Get-ChildItem -Path '%~dp0port' -Include *.dll,*.exe -Recurse | Unblock-File -ErrorAction SilentlyContinue" >nul 2>&1
 
-if not exist "port\black.exe" (
-  echo ERRO: nao achei port\black.exe ao lado deste arquivo.
+if not exist "port\x64\vr-sonda64.exe" (
+  echo ERRO: nao achei port\x64\vr-sonda64.exe.
+  echo Esse arquivo vem no pacote NOVO ^(BLACK-VR-pronto-v10.zip^).
+  echo Extraia o pacote novo POR CIMA desta pasta, escolhendo "Substituir".
   pause
   exit /b
 )
 
-pushd port
-black.exe --vr-selftest 30
+pushd port\x64
+vr-sonda64.exe 10
 set CODE=%ERRORLEVEL%
 popd
 echo.
-echo Terminou com codigo %CODE%   (0 = o oculos respondeu)
-if exist "port\vr-trace.txt" (
-  echo.
-  echo --- rastro completo (o que interessa pode estar bem no alto) ---
-  type "port\vr-trace.txt"
+echo Terminou com codigo %CODE%   (0 = a imagem chegou no oculos)
+echo.
+if exist "port\x64\sonda64-10.txt" (
+  echo --- detalhes do teste ---
+  type "port\x64\sonda64-10.txt"
 )
+echo.
+echo Conta pra mim: apareceu o quadro colorido no oculos? (sim / nao)
 pause

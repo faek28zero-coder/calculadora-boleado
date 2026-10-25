@@ -1,18 +1,20 @@
 // ============================================================
-//  BLACK VR — vr-sonda.exe (v9)
+//  BLACK VR — sonda (v10) — MESMO CÓDIGO, DUAS VERSÕES
 //
-//  Programa SEPARADO do jogo, de 32 bits, que faz só a conversa com o headset:
-//  carrega o conector, cria a instância, pega o sistema, cria o dispositivo D3D11 e
-//  tenta criar a sessão. Sem jogo, sem gancho, sem D3D9.
+//  Programa SEPARADO do jogo que faz só a conversa com o headset: carrega o
+//  conector, cria a instância, pega o sistema, cria o dispositivo D3D11 e tenta
+//  criar a sessão. Sem jogo, sem gancho, sem D3D9.
 //
-//  O que já sabemos (25/10, relatório v8): o runtime do óculos é o "Oculus 1.208.0",
-//  a instância e o sistema funcionam, e xrCreateSession estoura num endereço solto
-//  na memória — igual em 4 configurações diferentes. Isso aponta para o runtime de
-//  32 bits, não para o nosso código. Os modos 6..9 abaixo testam as últimas
-//  hipóteses que sobram (versão da API, mensageiro de depuração, janela com fila de
-//  mensagens, thread própria) antes de trocar de caminho.
+//  v9 (32 bits) provou que o estouro em xrCreateSession acontece sem o jogo junto.
+//  Agora o mesmo código compila em 64 bits (vr-sonda64.exe): o jogo em si é de
+//  32 bits (é código de 2006, não dá pra virar 64), mas a parte do óculos pode
+//  virar um programa de 64 bits separado — se ele funcionar, esse é o caminho.
 //
-//  Uso:  vr-sonda.exe N     (grava sonda-N.txt ao lado)
+//  O modo 10 é o teste que decide: monta o caminho inteiro (sessão, espaço,
+//  troca de imagens) e desenha um quadro colorido no óculos. Se aparecer imagem
+//  no óculos da versão 64, o caminho está aberto.
+//
+//  Uso:  vr-sonda.exe N     (grava sonda-N.txt ao lado; a de 64 bits grava sonda64-N.txt)
 //    1 = adaptador do óculos + BGRA + API atual + debug_utils   (caminho do jogo)
 //    2 = adaptador padrão do Windows
 //    3 = adaptador do óculos sem BGRA
@@ -22,6 +24,7 @@
 //    7 = API 1.0.0, sem debug_utils e com janela + fila de mensagens
 //    8 = como 7, mas a sessão é criada numa thread própria (pilha de 8 MB)
 //    9 = API 1.0.0 com debug_utils (isola a versão da API do mensageiro)
+//   10 = caminho inteiro + quadro colorido no óculos por 20 s (use a de 64 bits)
 //    0 = roda 4 e depois 1
 // ============================================================
 #define WIN32_LEAN_AND_MEAN
@@ -34,9 +37,11 @@
 
 #include <cstdarg>
 #include <cstdint>
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
 
 #ifndef XR_USE_PLATFORM_WIN32
 #define XR_USE_PLATFORM_WIN32 1
@@ -150,29 +155,41 @@ LONG CALLBACK on_fault(EXCEPTION_POINTERS *info)
     }
     CONTEXT *ctx = (CONTEXT *)info->ContextRecord;
     if (ctx) {
+        // 32 e 64 bits guardam os registradores com nomes diferentes.
+        const size_t w = sizeof(uintptr_t);
+#if defined(_M_X64)
+        say("*** thread %lu, rip %p rsp %p rbp %p", (unsigned long)GetCurrentThreadId(), (void *)ctx->Rip,
+            (void *)ctx->Rsp, (void *)ctx->Rbp);
+        say("*** rax %llx rbx %llx rcx %llx rdx %llx", (unsigned long long)ctx->Rax,
+            (unsigned long long)ctx->Rbx, (unsigned long long)ctx->Rcx, (unsigned long long)ctx->Rdx);
+        say("*** rsi %llx rdi %llx r8 %llx r9 %llx", (unsigned long long)ctx->Rsi,
+            (unsigned long long)ctx->Rdi, (unsigned long long)ctx->R8, (unsigned long long)ctx->R9);
+        const uintptr_t sp = (uintptr_t)ctx->Rsp;
+#else
         say("*** thread %lu, eip %p esp %p ebp %p", (unsigned long)GetCurrentThreadId(), (void *)ctx->Eip,
             (void *)ctx->Esp, (void *)ctx->Ebp);
         say("*** eax %08lx ebx %08lx ecx %08lx edx %08lx esi %08lx edi %08lx", (unsigned long)ctx->Eax,
             (unsigned long)ctx->Ebx, (unsigned long)ctx->Ecx, (unsigned long)ctx->Edx, (unsigned long)ctx->Esi,
             (unsigned long)ctx->Edi);
+        const uintptr_t sp = (uintptr_t)ctx->Esp;
+#endif
         {
             char raw[512] = {};
             size_t used = 0;
             for (int i = 0; i < 24; i++) {
-                const uintptr_t addr = (uintptr_t)ctx->Esp + (uintptr_t)i * 4;
-                if (!readable(addr, 4)) break;
-                int n = snprintf(raw + used, sizeof raw - used, "%08llx ",
+                const uintptr_t addr = sp + (uintptr_t)i * w;
+                if (!readable(addr, w)) break;
+                int n = snprintf(raw + used, sizeof raw - used, "%llx ",
                                  (unsigned long long)*(const uintptr_t *)addr);
                 if (n <= 0) break;
                 used += (size_t)n;
             }
             say("*** pilha crua: %s", raw);
         }
-        const uintptr_t sp = (uintptr_t)ctx->Esp;
         int printed = 0;
         for (int i = 0; i < 320 && printed < 16; i++) {
-            const uintptr_t addr = sp + (uintptr_t)i * 4;
-            if (!readable(addr, 4)) {
+            const uintptr_t addr = sp + (uintptr_t)i * w;
+            if (!readable(addr, w)) {
                 say("*** pilha: parou em %p (memoria nao mapeada)", (void *)addr);
                 break;
             }
@@ -180,7 +197,7 @@ LONG CALLBACK on_fault(EXCEPTION_POINTERS *info)
             if (v < 0x10000) continue;
             const ModInfo *m = find_mod(v);
             if (!m) continue;
-            say("*** pilha[%d]: %s + 0x%llx", i * 4, m->name, (unsigned long long)(v - m->base));
+            say("*** pilha[%d]: %s + 0x%llx", (int)(i * (int)w), m->name, (unsigned long long)(v - m->base));
             printed++;
         }
     }
@@ -245,7 +262,14 @@ void dump_folder(const char *dir, const char *what)
 
 void dump_active_runtime()
 {
+    // Um programa de 32 bits le a chave redirecionada (WOW6432Node); um de 64 bits
+    // le a principal. A ordem muda conforme a versao, mas as duas sao mostradas.
+#if defined(_M_X64)
+    const char *keys[] = {"SOFTWARE\\Khronos\\OpenXR\\1", "SOFTWARE\\WOW6432Node\\Khronos\\OpenXR\\1"};
+#else
     const char *keys[] = {"SOFTWARE\\WOW6432Node\\Khronos\\OpenXR\\1", "SOFTWARE\\Khronos\\OpenXR\\1"};
+#endif
+    say("registro procurado primeiro: %s (%d bits)", keys[0], (int)(sizeof(void *) * 8));
     char folder[MAX_PATH] = {};
     for (const char *key : keys) {
         HKEY h = nullptr;
@@ -292,12 +316,23 @@ void dump_active_runtime()
         dump_folder(folder, "DLLs na pasta do runtime");
         char sub[MAX_PATH * 2];
         snprintf(sub, sizeof sub, "%sclient-plugins\\x86\\", folder);
-        dump_folder(sub, "DLLs de 32 bits do runtime (client-plugins\\x86)");
-        char legacy[MAX_PATH * 2];
-        snprintf(legacy, sizeof legacy, "%sLibOVRRT32_1.dll", folder);
-        HANDLE f = CreateFileA(legacy, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
-        say("API antiga da Oculus (LibOVRRT32_1.dll, 32 bits): %s", f != INVALID_HANDLE_VALUE ? "EXISTE" : "nao existe");
-        if (f != INVALID_HANDLE_VALUE) CloseHandle(f);
+        if (GetFileAttributesA(sub) != INVALID_FILE_ATTRIBUTES)
+            dump_folder(sub, "DLLs de 32 bits do runtime (client-plugins\\x86)");
+        else
+            say("  client-plugins\\x86: nao existe nesta instalacao");
+        snprintf(sub, sizeof sub, "%sclient-plugins\\amd64\\", folder);
+        if (GetFileAttributesA(sub) != INVALID_FILE_ATTRIBUTES)
+            dump_folder(sub, "DLLs de 64 bits do runtime (client-plugins\\amd64)");
+        // API antiga da Oculus: a de 32 bits seria o plano B do jogo; a de 64 bits
+        // mostraria que existe caminho de 64 bits sem OpenXR.
+        const char *legacy[] = {"LibOVRRT32_1.dll", "LibOVRRT64_1.dll"};
+        for (const char *name : legacy) {
+            char path[MAX_PATH * 2];
+            snprintf(path, sizeof path, "%s%s", folder, name);
+            HANDLE f = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
+            say("API antiga da Oculus (%s): %s", name, f != INVALID_HANDLE_VALUE ? "EXISTE" : "nao existe");
+            if (f != INVALID_HANDLE_VALUE) CloseHandle(f);
+        }
     }
 }
 
@@ -328,6 +363,7 @@ struct Opt {
     bool janela = false;        // criar janela + fila de mensagens antes
     bool ate_instancia = false; // parar antes da sessão
     bool com = false;           // CoInitializeEx nesta thread
+    bool desenhar = false;      // modo 10: montar o caminho inteiro e desenhar no óculos
 };
 
 struct Funcoes {
@@ -351,6 +387,263 @@ void make_window()
         DispatchMessageA(&msg);
     }
     say("janela criada (%p) e fila de mensagens drenada", (void *)w);
+}
+
+
+// ---------------------------------------------------------------- modo 10: quadro no óculos
+// O caminho completo de um app de VR de verdade: esperar o estado "pronto", criar o
+// espaco de referencia, criar a troca de imagens (uma por olho) e entregar quadros.
+// Se aparecer imagem no oculos, o caminho esta aberto para o jogo usar.
+struct FuncoesDesenho {
+    PFN_xrPollEvent poll = nullptr;
+    PFN_xrEnumerateViewConfigurationViews enum_views = nullptr;
+    PFN_xrCreateReferenceSpace create_space = nullptr;
+    PFN_xrEnumerateSwapchainFormats enum_formats = nullptr;
+    PFN_xrCreateSwapchain create_chain = nullptr;
+    PFN_xrEnumerateSwapchainImages enum_images = nullptr;
+    PFN_xrAcquireSwapchainImage acquire = nullptr;
+    PFN_xrWaitSwapchainImage wait_img = nullptr;
+    PFN_xrReleaseSwapchainImage release = nullptr;
+    PFN_xrWaitFrame wait_frame = nullptr;
+    PFN_xrBeginFrame begin_frame = nullptr;
+    PFN_xrEndFrame end_frame = nullptr;
+    PFN_xrLocateViews locate = nullptr;
+    PFN_xrBeginSession begin = nullptr;
+    PFN_xrEndSession end = nullptr;
+};
+
+const int kMaxImagens = 8;
+const int kMaxOlhos = 2;
+
+int desenhar_no_oculos(const Funcoes &f, XrInstance inst, XrSession sess, ID3D11Device *dev,
+                       ID3D11DeviceContext *ctx, XrSystemId system)
+{
+    FuncoesDesenho p;
+    bool ok = true;
+    auto bind = [&](auto &fn, const char *name) {
+        fn = nullptr;
+        if (XR_FAILED(f.gipa(inst, name, (PFN_xrVoidFunction *)&fn)) || !fn) {
+            say("FALHOU: o runtime nao entregou %s", name);
+            ok = false;
+        }
+    };
+    bind(p.poll, "xrPollEvent");
+    bind(p.enum_views, "xrEnumerateViewConfigurationViews");
+    bind(p.create_space, "xrCreateReferenceSpace");
+    bind(p.enum_formats, "xrEnumerateSwapchainFormats");
+    bind(p.create_chain, "xrCreateSwapchain");
+    bind(p.enum_images, "xrEnumerateSwapchainImages");
+    bind(p.acquire, "xrAcquireSwapchainImage");
+    bind(p.wait_img, "xrWaitSwapchainImage");
+    bind(p.release, "xrReleaseSwapchainImage");
+    bind(p.wait_frame, "xrWaitFrame");
+    bind(p.begin_frame, "xrBeginFrame");
+    bind(p.end_frame, "xrEndFrame");
+    bind(p.locate, "xrLocateViews");
+    bind(p.begin, "xrBeginSession");
+    bind(p.end, "xrEndSession");
+    if (!ok) return 1;
+
+    g_step = "tamanho dos olhos";
+    uint32_t vcount = 0;
+    XrViewConfigurationView vcv[kMaxOlhos] = {{XR_TYPE_VIEW_CONFIGURATION_VIEW}, {XR_TYPE_VIEW_CONFIGURATION_VIEW}};
+    XrResult r = p.enum_views(inst, system, XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, kMaxOlhos, &vcount, vcv);
+    if (XR_FAILED(r) || vcount < 1 || vcount > kMaxOlhos) {
+        say("FALHOU: xrEnumerateViewConfigurationViews: %s (%d)", xr_name(r), (int)r);
+        return 1;
+    }
+    say("olhos: %u, painel recomendado %ux%u por olho", vcount, (unsigned)vcv[0].recommendedImageRectWidth,
+        (unsigned)vcv[0].recommendedImageRectHeight);
+
+    g_step = "esperar estado pronto";
+    bool comecou = false;
+    const DWORD t_inicio = GetTickCount();
+    while (!comecou && GetTickCount() - t_inicio < 15000) {
+        XrEventDataBuffer ev = {XR_TYPE_EVENT_DATA_BUFFER};
+        while (XR_SUCCEEDED(p.poll(inst, &ev))) {
+            if (ev.type == XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED) {
+                const XrEventDataSessionStateChanged *ch = (const XrEventDataSessionStateChanged *)&ev;
+                say("estado da sessao: %d", (int)ch->state);
+                if (ch->state == XR_SESSION_STATE_READY) {
+                    XrSessionBeginInfo bi = {XR_TYPE_SESSION_BEGIN_INFO};
+                    bi.primaryViewConfigurationType = XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO;
+                    r = p.begin(sess, &bi);
+                    if (XR_FAILED(r)) {
+                        say("FALHOU: xrBeginSession: %s (%d)", xr_name(r), (int)r);
+                        return 1;
+                    }
+                    comecou = true;
+                } else if (ch->state == XR_SESSION_STATE_EXITING || ch->state == XR_SESSION_STATE_LOSS_PENDING) {
+                    say("FALHOU: o runtime pediu para sair antes de comecar");
+                    return 1;
+                }
+            }
+            memset(&ev, 0, sizeof ev);
+            ev.type = XR_TYPE_EVENT_DATA_BUFFER;
+        }
+        Sleep(10);
+    }
+    if (!comecou) {
+        say("FALHOU: a sessao nunca ficou pronta (o oculos esta na cabeca e o Link aberto?)");
+        return 1;
+    }
+    say("sessao comecou (o oculos esta recebendo)");
+
+    g_step = "espaco de referencia";
+    XrReferenceSpaceCreateInfo rsci = {XR_TYPE_REFERENCE_SPACE_CREATE_INFO};
+    rsci.referenceSpaceType = XR_REFERENCE_SPACE_TYPE_LOCAL;
+    rsci.poseInReferenceSpace.orientation.w = 1.f;
+    XrSpace espaco = XR_NULL_HANDLE;
+    r = p.create_space(sess, &rsci, &espaco);
+    if (XR_FAILED(r)) {
+        say("FALHOU: xrCreateReferenceSpace: %s (%d)", xr_name(r), (int)r);
+        return 1;
+    }
+
+    g_step = "formato das imagens";
+    uint32_t fmt_count = 0;
+    if (XR_FAILED(p.enum_formats(sess, 0, &fmt_count, nullptr)) || !fmt_count) {
+        say("FALHOU: xrEnumerateSwapchainFormats");
+        return 1;
+    }
+    std::vector<int64_t> formats(fmt_count);
+    p.enum_formats(sess, fmt_count, &fmt_count, formats.data());
+    int64_t escolhido = formats[0];
+    for (uint32_t i = 0; i < fmt_count; i++)
+        if (formats[i] == (int64_t)DXGI_FORMAT_R8G8B8A8_UNORM) escolhido = formats[i];
+    say("formato escolhido: %lld (de %u oferecidos)", (long long)escolhido, (unsigned)fmt_count);
+
+    g_step = "troca de imagens";
+    struct Olho {
+        XrSwapchain chain = XR_NULL_HANDLE;
+        uint32_t w = 0, h = 0;
+        ID3D11RenderTargetView *rtv[kMaxImagens] = {};
+    };
+    Olho olho[kMaxOlhos];
+    for (uint32_t e = 0; e < vcount; e++) {
+        XrSwapchainCreateInfo ci = {XR_TYPE_SWAPCHAIN_CREATE_INFO};
+        ci.usageFlags = XR_SWAPCHAIN_USAGE_COLOR_ATTACHMENT_BIT;
+        ci.format = escolhido;
+        ci.sampleCount = 1;
+        ci.width = vcv[e].recommendedImageRectWidth;
+        ci.height = vcv[e].recommendedImageRectHeight;
+        ci.faceCount = 1;
+        ci.arraySize = 1;
+        ci.mipCount = 1;
+        olho[e].w = ci.width;
+        olho[e].h = ci.height;
+        r = p.create_chain(sess, &ci, &olho[e].chain);
+        if (XR_FAILED(r)) {
+            say("FALHOU: xrCreateSwapchain (olho %u): %s (%d)", e, xr_name(r), (int)r);
+            return 1;
+        }
+        uint32_t n_img = 0;
+        if (XR_FAILED(p.enum_images(olho[e].chain, 0, &n_img, nullptr)) || !n_img) {
+            say("FALHOU: xrEnumerateSwapchainImages (olho %u)", e);
+            return 1;
+        }
+        if (n_img > (uint32_t)kMaxImagens) n_img = kMaxImagens;
+        XrSwapchainImageD3D11KHR imgs[kMaxImagens] = {};
+        for (uint32_t i = 0; i < n_img; i++) imgs[i].type = XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR;
+        r = p.enum_images(olho[e].chain, n_img, &n_img, (XrSwapchainImageBaseHeader *)imgs);
+        if (XR_FAILED(r)) {
+            say("FALHOU: xrEnumerateSwapchainImages (olho %u): %s (%d)", e, xr_name(r), (int)r);
+            return 1;
+        }
+        for (uint32_t i = 0; i < n_img; i++)
+            if (imgs[i].texture) dev->CreateRenderTargetView(imgs[i].texture, nullptr, &olho[e].rtv[i]);
+        say("olho %u: %ux%u, %u imagens", e, (unsigned)olho[e].w, (unsigned)olho[e].h, (unsigned)n_img);
+    }
+
+    g_step = "desenhar quadros";
+    say("");
+    say("--- 20 segundos desenhando. OLHE PARA O OCULOS: deve aparecer um quadro");
+    say("    colorido mudando de cor (vermelho num olho, verde no outro). ---");
+    const DWORD t_quadros = GetTickCount();
+    int quadros = 0;
+    while (GetTickCount() - t_quadros < 20000) {
+        XrFrameWaitInfo fwi = {XR_TYPE_FRAME_WAIT_INFO};
+        XrFrameState fs = {XR_TYPE_FRAME_STATE};
+        if (XR_FAILED(p.wait_frame(sess, &fwi, &fs))) {
+            say("FALHOU: xrWaitFrame");
+            break;
+        }
+        XrFrameBeginInfo fbi = {XR_TYPE_FRAME_BEGIN_INFO};
+        if (XR_FAILED(p.begin_frame(sess, &fbi))) {
+            say("FALHOU: xrBeginFrame");
+            break;
+        }
+        XrViewLocateInfo vli = {XR_TYPE_VIEW_LOCATE_INFO};
+        vli.viewConfigurationType = XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO;
+        vli.displayTime = fs.predictedDisplayTime;
+        vli.space = espaco;
+        XrViewState vs = {XR_TYPE_VIEW_STATE};
+        XrView views[kMaxOlhos] = {{XR_TYPE_VIEW}, {XR_TYPE_VIEW}};
+        uint32_t vistas = 0;
+        p.locate(sess, &vli, &vs, vcount, &vistas, views);
+        if (vistas < vcount) vistas = vcount;
+
+        const float t = (float)(GetTickCount() - t_quadros) / 1000.f;
+        const float pulso = 0.5f + 0.5f * sinf(t * 2.f);
+        XrCompositionLayerProjectionView lpv[kMaxOlhos] = {{XR_TYPE_COMPOSITION_LAYER_PROJECTION_VIEW},
+                                                           {XR_TYPE_COMPOSITION_LAYER_PROJECTION_VIEW}};
+        bool desenhou = true;
+        for (uint32_t e = 0; e < vistas; e++) {
+            uint32_t idx = 0;
+            XrSwapchainImageAcquireInfo ai = {XR_TYPE_SWAPCHAIN_IMAGE_ACQUIRE_INFO};
+            if (XR_FAILED(p.acquire(olho[e].chain, &ai, &idx))) {
+                desenhou = false;
+                break;
+            }
+            XrSwapchainImageWaitInfo wi = {XR_TYPE_SWAPCHAIN_IMAGE_WAIT_INFO};
+            wi.timeout = XR_INFINITE_DURATION;
+            if (XR_FAILED(p.wait_img(olho[e].chain, &wi))) {
+                desenhou = false;
+                break;
+            }
+            float cor[4] = {0.05f, 0.05f, 0.05f, 1.f};
+            if (e == 0) {
+                cor[0] = pulso;
+                cor[1] = 0.10f;
+            } else {
+                cor[1] = pulso;
+                cor[2] = 0.10f;
+            }
+            if (idx < (uint32_t)kMaxImagens && olho[e].rtv[idx]) ctx->ClearRenderTargetView(olho[e].rtv[idx], cor);
+            XrSwapchainImageReleaseInfo ri = {XR_TYPE_SWAPCHAIN_IMAGE_RELEASE_INFO};
+            p.release(olho[e].chain, &ri);
+            lpv[e].pose = views[e].pose;
+            lpv[e].fov = views[e].fov;
+            lpv[e].subImage.swapchain = olho[e].chain;
+            lpv[e].subImage.imageRect.offset.x = 0;
+            lpv[e].subImage.imageRect.offset.y = 0;
+            lpv[e].subImage.imageRect.extent.width = (int32_t)olho[e].w;
+            lpv[e].subImage.imageRect.extent.height = (int32_t)olho[e].h;
+        }
+        if (desenhou) {
+            XrCompositionLayerProjection camada = {XR_TYPE_COMPOSITION_LAYER_PROJECTION};
+            camada.space = espaco;
+            camada.viewCount = vistas;
+            camada.views = lpv;
+            const XrCompositionLayerBaseHeader *camadas[1] = {(const XrCompositionLayerBaseHeader *)&camada};
+            XrFrameEndInfo fei = {XR_TYPE_FRAME_END_INFO};
+            fei.displayTime = fs.predictedDisplayTime;
+            fei.environmentBlendMode = XR_ENVIRONMENT_BLEND_MODE_OPAQUE;
+            fei.layerCount = 1;
+            fei.layers = camadas;
+            p.end_frame(sess, &fei);
+            quadros++;
+        }
+        Sleep(1);
+    }
+    say("quadros entregues ao oculos: %d", quadros);
+    if (p.end) p.end(sess);
+    if (quadros < 30) {
+        say("FALHOU: poucos quadros (%d) - a imagem nao chegou no oculos", quadros);
+        return 1;
+    }
+    say("sonda: OK (deu para desenhar no oculos)");
+    return 0;
 }
 
 int rodada(const Opt &o, const Funcoes &f)
@@ -552,7 +845,13 @@ int rodada(const Opt &o, const Funcoes &f)
         return 1;
     }
     say("SESSAO CRIADA (%p)", (void *)session);
-    say("sonda: OK");
+    int rc = 0;
+    if (o.desenhar) {
+        g_step = "desenhar no oculos";
+        rc = desenhar_no_oculos(f, instance, session, device, ctx, system);
+    } else {
+        say("sonda: OK");
+    }
 
     PFN_xrDestroySession destroy_session = nullptr;
     PFN_xrDestroyInstance destroy_instance = nullptr;
@@ -562,7 +861,7 @@ int rodada(const Opt &o, const Funcoes &f)
     if (destroy_instance) destroy_instance(instance);
     if (ctx) ctx->Release();
     if (device) device->Release();
-    return 0;
+    return rc;
 }
 
 // O modo 8 roda a rodada inteira numa thread própria (pilha de 8 MB), como um app de verdade.
@@ -617,6 +916,12 @@ Opt opt_da_variante(int v)
         o.janela = true;
         break;
     case 9: o.nome = "9 API 1.0.0 com debug_utils"; o.api_1_0 = true; break;
+    case 10:
+        o.nome = "10 caminho inteiro + quadro colorido no oculos por 20 s";
+        o.api_1_0 = true;
+        o.debug_utils = false;
+        o.desenhar = true;
+        break;
     default: o.nome = "1 (padrao)"; break;
     }
     return o;
@@ -633,14 +938,17 @@ int main(int argc, char **argv)
     char *slash = strrchr(exe, '\\');
     if (slash) slash[1] = 0;
     char path[MAX_PATH];
-    snprintf(path, sizeof path, "%ssonda-%d.txt", exe, g_variant);
+    // 32 e 64 bits gravam arquivos diferentes para os dois relatorios conviverem
+    const char *tag = sizeof(void *) == 8 ? "sonda64-" : "sonda-";
+    snprintf(path, sizeof path, "%s%s%d.txt", exe, tag, g_variant);
     g_file = fopen(path, "w");
     if (!g_file) return 2;
 
     load_modules(true);
     AddVectoredExceptionHandler(1, on_fault);
 
-    say("=== BLACK VR - sonda %d (teste separado do jogo) ===", g_variant);
+    say("=== BLACK VR - sonda %d - programa de %d bits (teste separado do jogo) ===", g_variant,
+        (int)(sizeof(void *) * 8));
     say("programa: %d bits, thread %lu", (int)(sizeof(void *) * 8), (unsigned long)GetCurrentThreadId());
     OSVERSIONINFOA vi = {};
     vi.dwOSVersionInfoSize = sizeof vi;
