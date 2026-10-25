@@ -25,19 +25,19 @@ emenda aplicada em src/d3d/d3d12.cpp
 + head -20
 _src/BLACK-XBERecomp/src/vr:
 total 28
-drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 .
-drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 ..
-drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 openxr
--rw-r--r-- 1 runneradmin 197121 21386 Oct 25 14:58 vr_openxr.cpp
--rw-r--r-- 1 runneradmin 197121  1397 Oct 25 14:58 vr_openxr.h
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 15:02 .
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 15:02 ..
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 15:02 openxr
+-rw-r--r-- 1 runneradmin 197121 21767 Oct 25 15:02 vr_openxr.cpp
+-rw-r--r-- 1 runneradmin 197121  1397 Oct 25 15:02 vr_openxr.h
 
 _src/BLACK-XBERecomp/src/vr/openxr:
 total 752
-drwxr-xr-x 1 runneradmin 197121      0 Oct 25 14:58 .
-drwxr-xr-x 1 runneradmin 197121      0 Oct 25 14:58 ..
--rw-r--r-- 1 runneradmin 197121 727740 Oct 25 14:58 openxr.h
--rw-r--r-- 1 runneradmin 197121  36022 Oct 25 14:58 openxr_platform.h
--rw-r--r-- 1 runneradmin 197121   4026 Oct 25 14:58 openxr_platform_defines.h
+drwxr-xr-x 1 runneradmin 197121      0 Oct 25 15:02 .
+drwxr-xr-x 1 runneradmin 197121      0 Oct 25 15:02 ..
+-rw-r--r-- 1 runneradmin 197121 727740 Oct 25 15:02 openxr.h
+-rw-r--r-- 1 runneradmin 197121  36022 Oct 25 15:02 openxr_platform.h
+-rw-r--r-- 1 runneradmin 197121   4026 Oct 25 15:02 openxr_platform_defines.h
 + echo 'OK: emenda aplicada'
 OK: emenda aplicada
 === XBE ===
@@ -565,7 +565,7 @@ to suppress it.
 --   Joystick drivers: dinput gameinput hidapi rawinput virtual wgi xinput
 --   Camera drivers: dummy
 -- 
--- Configuring done (127.2s)
+-- Configuring done (132.1s)
 -- Generating done (0.2s)
 -- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release
 config rc=0
@@ -573,20 +573,20 @@ config rc=0
 [0/2] Re-checking globbed directories...
 [1/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Allocator.c.obj
 [2/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/ArgParse.c.obj
-[3/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Process.c.obj
-[4/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Synchronization.c.obj
-[5/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Thread.c.obj
-[6/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Memory.c.obj
+[3/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Thread.c.obj
+[4/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Memory.c.obj
+[5/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Process.c.obj
+[6/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Synchronization.c.obj
 [7/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Terminal.c.obj
 [8/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Bitset.c.obj
-[9/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Zycore.c.obj
-[10/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/List.c.obj
-[11/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Format.c.obj
+[9/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Format.c.obj
+[10/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Zycore.c.obj
+[11/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/List.c.obj
 [12/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/MetaInfo.c.obj
 [13/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Vector.c.obj
-[14/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Mnemonic.c.obj
-[15/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Register.c.obj
-[16/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/String.c.obj
+[14/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Register.c.obj
+[15/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/String.c.obj
+[16/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Mnemonic.c.obj
 [17/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Segment.c.obj
 [18/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Zydis.c.obj
 [19/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Utils.c.obj
@@ -599,8 +599,8 @@ config rc=0
 [26/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/EncoderData.c.obj
 [27/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterATT.c.obj
 [28/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Encoder.c.obj
-[29/446] Linking C static library _deps\zydis-build\zycore\Zycore.lib
-[30/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterIntel.c.obj
+[29/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterIntel.c.obj
+[30/446] Linking C static library _deps\zydis-build\zycore\Zycore.lib
 [31/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterBase.c.obj
 [32/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/SharedData.c.obj
 [33/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen.cpp.obj
@@ -608,118 +608,117 @@ config rc=0
 [35/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_int.cpp.obj
 [36/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/analysis.cpp.obj
 [37/446] Linking C static library _deps\zydis-build\Zydis.lib
-[38/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -DSRC=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp -DOUT=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/build_info.h "-DGIT=C:/Program Files/Git/ucrt64/bin/git.exe" -P D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/tools/build_info.cmake"
-[39/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_emit.cpp.obj
+[38/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_emit.cpp.obj
+[39/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -DSRC=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp -DOUT=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/build_info.h "-DGIT=C:/Program Files/Git/ucrt64/bin/git.exe" -P D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/tools/build_info.cmake"
 [40/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/cmake_pch.h.pch
 [41/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/cmake_pch.hxx.pch
 [42/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL.c.obj
 [43/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_error.c.obj
-[44/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different "C:/Program Files/LLVM/bin/clang.exe" "C:/Program Files/LLVM/bin/lld-link.exe" D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/LLVM-LICENSE.txt D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/config/game.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_ops.h D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_context.h D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cmath D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstdint D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstring D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/limits D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/type_traits D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/4831/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/5849/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849"
+[44/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_assert.c.obj
 [45/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_guid.c.obj
-[46/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_assert.c.obj
-[47/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_list.c.obj
-[48/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hints.c.obj
-[49/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hashtable.c.obj
-[50/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_properties.c.obj
+[46/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hints.c.obj
+[47/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hashtable.c.obj
+[48/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_list.c.obj
+[49/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_properties.c.obj
+[50/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_log.c.obj
 [51/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_utils.c.obj
-[52/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/atomic/SDL_atomic.c.obj
-[53/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_log.c.obj
+[52/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different "C:/Program Files/LLVM/bin/clang.exe" "C:/Program Files/LLVM/bin/lld-link.exe" D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/LLVM-LICENSE.txt D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/config/game.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_ops.h D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_context.h D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cmath D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstdint D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstring D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/limits D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/type_traits D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/4831/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/5849/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849"
+[53/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/atomic/SDL_atomic.c.obj
 [54/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/atomic/SDL_spinlock.c.obj
 [55/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiodev.c.obj
-[56/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audio.c.obj
-[57/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioqueue.c.obj
-[58/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioresample.c.obj
-[59/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiocvt.c.obj
+[56/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioqueue.c.obj
+[57/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audio.c.obj
+[58/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiocvt.c.obj
+[59/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioresample.c.obj
 [60/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiotypecvt.c.obj
 [61/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_mixer.c.obj
 [62/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/SDL_core_unsupported.c.obj
 [63/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_wave.c.obj
 [64/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_categories.c.obj
-[65/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/SDL_camera.c.obj
-[66/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_clipboardevents.c.obj
-[67/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/cpuinfo/SDL_cpuinfo.c.obj
-[68/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_displayevents.c.obj
-[69/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_dropevents.c.obj
-[70/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_eventwatch.c.obj
-[71/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keyboard.c.obj
-[72/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keymap.c.obj
-[73/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_keycode.c.obj
-[74/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dynapi/SDL_dynapi.c.obj
-[75/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_scancode.c.obj
-[76/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/main.cpp.obj
-[77/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_events.c.obj
+[65/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/main.cpp.obj
+[66/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/SDL_camera.c.obj
+[67/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_clipboardevents.c.obj
+[68/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/cpuinfo/SDL_cpuinfo.c.obj
+[69/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_displayevents.c.obj
+[70/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dynapi/SDL_dynapi.c.obj
+[71/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_dropevents.c.obj
+[72/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_eventwatch.c.obj
+[73/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keymap.c.obj
+[74/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keyboard.c.obj
+[75/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_keycode.c.obj
+[76/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_scancode.c.obj
+[77/446] Linking CXX executable compiler\xbe_recomp.exe
 [78/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_quit.c.obj
-[79/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_scancode_tables.c.obj
-[80/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_pen.c.obj
-[81/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_touch.c.obj
-[82/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/imKStoUCS.c.obj
-[83/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_windowevents.c.obj
-[84/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/SDL_filesystem.c.obj
-[85/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/SDL_haptic.c.obj
+[79/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_pen.c.obj
+[80/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_scancode_tables.c.obj
+[81/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_windowevents.c.obj
+[82/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_touch.c.obj
+[83/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_events.c.obj
+[84/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/imKStoUCS.c.obj
+[85/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/SDL_filesystem.c.obj
 [86/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_mouse.c.obj
-[87/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/SDL_asyncio.c.obj
-[88/446] Linking CXX executable compiler\xbe_recomp.exe
+[87/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/SDL_haptic.c.obj
+[88/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/SDL_asyncio.c.obj
 [89/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/generic/SDL_asyncio_generic.c.obj
 [90/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/gpu/SDL_gpu.c.obj
 [91/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/SDL_iostream.c.obj
 [92/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.obj
 [93/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/hidapi/SDL_hidapi.c.obj
 [94/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/controller_type.c.obj
-[95/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_gamepad.c.obj
-[96/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/SDL_locale.c.obj
-[97/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_runapp.c.obj
-[98/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_main_callbacks.c.obj
+[95/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/SDL_locale.c.obj
+[96/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_gamepad.c.obj
+[97/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_main_callbacks.c.obj
+[98/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_runapp.c.obj
 [99/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/SDL_libusb.c.obj
 [100/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_joystick.c.obj
-[101/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/SDL_url.c.obj
-[102/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/power/SDL_power.c.obj
-[103/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render_unsupported.c.obj
+[101/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render_unsupported.c.obj
+[102/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/SDL_url.c.obj
+[103/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/power/SDL_power.c.obj
 [104/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d/SDL_render_d3d.c.obj
-[105/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_yuv_sw.c.obj
-[106/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d/SDL_shaders_d3d.c.obj
-[107/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d11/SDL_render_d3d11.c.obj
+[105/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d/SDL_shaders_d3d.c.obj
+[106/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d11/SDL_render_d3d11.c.obj
+[107/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_yuv_sw.c.obj
 [108/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.obj
-[109/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_render_d3d12.c.obj
-[110/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.obj
-[111/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_pipeline_gpu.c.obj
-[112/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_render_gpu.c.obj
+[109/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.obj
+[110/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_render_d3d12.c.obj
+[111/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_render_gpu.c.obj
+[112/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_pipeline_gpu.c.obj
 [113/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_shaders_gpu.c.obj
 [114/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/ngage/SDL_render_ngage.c.obj
 [115/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengl/SDL_render_gl.c.obj
-[116/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengl/SDL_shaders_gl.c.obj
-[117/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_shaders_gles2.c.obj
-[118/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/ps2/SDL_render_ps2.c.obj
-[119/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_render_gles2.c.obj
-[120/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/psp/SDL_render_psp.c.obj
-[121/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendfillrect.c.obj
-[122/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendline.c.obj
+[116/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_render_gles2.c.obj
+[117/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengl/SDL_shaders_gl.c.obj
+[118/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_shaders_gles2.c.obj
+[119/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/psp/SDL_render_psp.c.obj
+[120/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/ps2/SDL_render_ps2.c.obj
+[121/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendline.c.obj
+[122/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendfillrect.c.obj
 [123/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendpoint.c.obj
-[124/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_drawpoint.c.obj
+[124/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_render_sw.c.obj
 [125/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_drawline.c.obj
-[126/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_render_sw.c.obj
+[126/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_drawpoint.c.obj
 [127/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_triangle.c.obj
 [128/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.obj
-[129/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vulkan/SDL_render_vulkan.c.obj
-[130/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.obj
+[129/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.obj
+[130/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vulkan/SDL_render_vulkan.c.obj
 [131/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.obj
 [132/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vulkan/SDL_shaders_vulkan.c.obj
-[133/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render.c.obj
-[134/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_crc16.c.obj
+[133/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_crc16.c.obj
+[134/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render.c.obj
 [135/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_crc32.c.obj
 [136/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/sensor/SDL_sensor.c.obj
-[137/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_iconv.c.obj
-[138/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_malloc.c.obj
-[139/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memcpy.c.obj
+[137/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_malloc.c.obj
+[138/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memcpy.c.obj
+[139/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_iconv.c.obj
 [140/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memmove.c.obj
-[141/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_mslibc.c.obj
-[142/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memset.c.obj
+[141/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memset.c.obj
+[142/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_mslibc.c.obj
 [143/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_murmur3.c.obj
-[144/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_random.c.obj
-[145/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_getenv.c.obj
-[146/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_strtokr.c.obj
-[147/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_stdlib.c.obj
-[148/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/SDL_storage.c.obj
-[149/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_string.c.obj
+[144/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_getenv.c.obj
+[145/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_random.c.obj
+[146/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_stdlib.c.obj
+[147/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_strtokr.c.obj
+[148/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_string.c.obj
 D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1164:12: warning: 'itoa' is deprecated: The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details. [-Wdeprecated-declarations]
  1164 |     return itoa(value, string, radix);
       |            ^
@@ -793,8 +792,9 @@ C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231
   348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
       |                                               ^
 5 warnings generated.
-[150/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/SDL_time.c.obj
-[151/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_qsort.c.obj
+[149/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/SDL_storage.c.obj
+[150/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_qsort.c.obj
+[151/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/SDL_time.c.obj
 [152/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit.c.obj
 [153/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/SDL_thread.c.obj
 [154/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/timer/SDL_timer.c.obj
@@ -809,16 +809,12 @@ C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231
 [163/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_slow.c.obj
 [164/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_fillrect.c.obj
 [165/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_pixels.c.obj
-[166/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_rect.c.obj
-[167/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_egl.c.obj
+[166/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_egl.c.obj
+[167/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_rect.c.obj
 [168/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_rotate.c.obj
 [169/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_stretch.c.obj
 [170/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_surface.c.obj
-[171/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video_unsupported.c.obj
-[172/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_vulkan_utils.c.obj
-[173/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video.c.obj
-[174/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.obj
-[175/446] Recompiling default.xbe
+[171/446] Recompiling default.xbe
 default.xbe: title 45410083 entry 00025A3F kernel thunk 00282FE0
 direct: 789 functions, 40659 instructions
 pointer seeds: 3070 accepted, 1227 rejected
@@ -857,56 +853,60 @@ unimplemented salc 6
 unimplemented sldt 2
 unimplemented str 1
 unimplemented verr 1
+[172/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video_unsupported.c.obj
+[173/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_vulkan_utils.c.obj
+[174/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.obj
+[175/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video.c.obj
 [176/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_yuv.c.obj
 [177/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_atan2.c.obj
 [178/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_exp.c.obj
-[179/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_stb.c.obj
-[180/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.obj
-[181/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_fmod.c.obj
-[182/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log.c.obj
-[183/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log10.c.obj
-[184/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_pow.c.obj
-[185/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.obj
-[186/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_rem_pio2.c.obj
-[187/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_sqrt.c.obj
-[188/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_cos.c.obj
-[189/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_tan.c.obj
-[190/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_sin.c.obj
+[179/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_fmod.c.obj
+[180/446] Building CXX object CMakeFiles/xbe_symbols.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/symbols/main.cpp.obj
+[181/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.obj
+[182/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.obj
+[183/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log.c.obj
+[184/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log10.c.obj
+[185/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_rem_pio2.c.obj
+[186/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_pow.c.obj
+[187/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_cos.c.obj
+[188/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_sqrt.c.obj
+[189/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_sin.c.obj
+[190/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_tan.c.obj
 [191/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_atan.c.obj
-[192/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_copysign.c.obj
-[193/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_cos.c.obj
-[194/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_rem_pio2.c.obj
-[195/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinf.c.obj
+[192/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_rem_pio2.c.obj
+[193/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_stb.c.obj
+[194/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_copysign.c.obj
+[195/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_cos.c.obj
 [196/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_fabs.c.obj
-[197/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinff.c.obj
+[197/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinf.c.obj
 [198/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_floor.c.obj
-[199/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnan.c.obj
-[200/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnanf.c.obj
-[201/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_scalbn.c.obj
+[199/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnanf.c.obj
+[200/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnan.c.obj
+[201/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinff.c.obj
 [202/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_modf.c.obj
-[203/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_sin.c.obj
+[203/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_scalbn.c.obj
 [204/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_tan.c.obj
-[205/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_auto.c.obj
-[206/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/disk/SDL_diskaudio.c.obj
-[207/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/dummy/SDL_dummyaudio.c.obj
-[208/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullevents.c.obj
-[209/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullframebuffer.c.obj
+[205/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_sin.c.obj
+[206/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/dummy/SDL_dummyaudio.c.obj
+[207/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/disk/SDL_diskaudio.c.obj
+[208/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullframebuffer.c.obj
+[209/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullevents.c.obj
 [210/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullvideo.c.obj
 [211/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.obj
 [212/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_hid.c.obj
-[213/446] Building CXX object CMakeFiles/xbe_symbols.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/symbols/main.cpp.obj
+[213/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_auto.c.obj
 [214/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/pch.c.obj
-[215/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_xinput.c.obj
-[216/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/pch_cpp.cpp.obj
-[217/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_immdevice.c.obj
-[218/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_windows.c.obj
-[219/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_gameinput.cpp.obj
-[220/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/windows/SDL_asyncio_windows_ioring.c.obj
+[215/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/pch_cpp.cpp.obj
+[216/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_xinput.c.obj
+[217/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/windows/SDL_asyncio_windows_ioring.c.obj
+[218/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_gameinput.cpp.obj
+[219/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_immdevice.c.obj
+[220/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_windows.c.obj
 [221/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/windows/SDL_sysmain_runapp.c.obj
 [222/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/windows/SDL_sysurl.c.obj
 [223/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/directsound/SDL_directsound.c.obj
-[224/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsclipboard.c.obj
-[225/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/wasapi/SDL_wasapi.c.obj
+[224/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/wasapi/SDL_wasapi.c.obj
+[225/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsclipboard.c.obj
 [226/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsframebuffer.c.obj
 [227/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsgameinput.cpp.obj
 [228/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsevents.c.obj
@@ -920,8 +920,8 @@ unimplemented verr 1
 [236/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsrawinput.c.obj
 [237/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/generic/SDL_syscond.c.obj
 [238/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/generic/SDL_sysrwlock.c.obj
-[239/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvideo.c.obj
-[240/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvulkan.c.obj
+[239/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvulkan.c.obj
+[240/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvideo.c.obj
 [241/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_syscond_cv.c.obj
 [242/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_sysmutex.c.obj
 [243/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_sysrwlock_srw.c.obj
@@ -931,41 +931,41 @@ unimplemented verr 1
 [247/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/power/windows/SDL_syspower.c.obj
 [248/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowswindow.c.obj
 [249/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/generic/SDL_genericstorage.c.obj
-[250/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/steam/SDL_steamstorage.c.obj
-[251/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/sensor/windows/SDL_windowssensor.c.obj
-[252/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/windows/SDL_syslocale.c.obj
+[250/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/windows/SDL_syslocale.c.obj
+[251/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/steam/SDL_steamstorage.c.obj
+[252/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/sensor/windows/SDL_windowssensor.c.obj
 [253/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/windows/SDL_sysfsops.c.obj
-[254/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/windows/SDL_systime.c.obj
-[255/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/timer/windows/SDL_systimer.c.obj
+[254/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/timer/windows/SDL_systimer.c.obj
+[255/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/loadso/windows/SDL_sysloadso.c.obj
 [256/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_8bitdo.c.obj
-[257/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/loadso/windows/SDL_sysloadso.c.obj
+[257/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/windows/SDL_systime.c.obj
 [258/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.obj
 [259/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/tray/windows/SDL_tray.c.obj
-[260/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_flydigi.c.obj
-[261/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/windows/SDL_sysfilesystem.c.obj
-[262/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.obj
-[263/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_lg4ff.c.obj
-[264/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.obj
+[260/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.obj
+[261/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_flydigi.c.obj
+[262/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/windows/SDL_sysfilesystem.c.obj
+[263/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.obj
+[264/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_lg4ff.c.obj
 [265/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.obj
 [266/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.obj
 [267/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.obj
 [268/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.obj
 [269/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_gip.c.obj
 [270/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.obj
-[271/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.obj
+[271/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_sinput.c.obj
 [272/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam_hori.c.obj
-[273/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam_triton.c.obj
-[274/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_sinput.c.obj
-[275/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_switch2.c.obj
-[276/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.obj
-[277/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.obj
-[278/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.obj
+[273/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.obj
+[274/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.obj
+[275/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam_triton.c.obj
+[276/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_switch2.c.obj
+[277/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.obj
+[278/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.obj
 [279/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.obj
-[280/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.obj
+[280/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.obj
 [281/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_zuiki.c.obj
-[282/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.obj
-[283/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/hidapi/SDL_hidapihaptic.c.obj
-[284/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_report_descriptor.c.obj
+[282/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.obj
+[283/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_report_descriptor.c.obj
+[284/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/hidapi/SDL_hidapihaptic.c.obj
 [285/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.obj
 [286/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/hidapi/SDL_hidapihaptic_lg4ff.c.obj
 [287/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.obj
@@ -973,27 +973,27 @@ unimplemented verr 1
 [289/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_windowsjoystick.c.obj
 [290/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_xinputjoystick.c.obj
 [291/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/SDL_dialog.c.obj
-[292/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/SDL_dialog_utils.c.obj
-[293/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_dinputhaptic.c.obj
-[294/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/gdk/SDL_gameinputjoystick.cpp.obj
-[295/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_windowshaptic.c.obj
-[296/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/process/SDL_process.c.obj
+[292/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/gdk/SDL_gameinputjoystick.cpp.obj
+[293/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/SDL_dialog_utils.c.obj
+[294/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/process/SDL_process.c.obj
+[295/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_dinputhaptic.c.obj
+[296/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_windowshaptic.c.obj
 [297/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenevents.c.obj
 [298/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.obj
 [299/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/process/windows/SDL_windowsprocess.c.obj
 [300/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenopengles.c.obj
 [301/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/windows/SDL_windowsdialog.c.obj
-[302/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvideo.c.obj
-[303/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/dummy/SDL_camera_dummy.c.obj
+[302/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_windows_gaming_input.c.obj
+[303/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvideo.c.obj
 [304/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/tray/SDL_tray_utils.c.obj
-[305/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/generic/SDL_sysmain_callbacks.c.obj
-[306/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_windows_gaming_input.c.obj
-[307/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvulkan.c.obj
-[308/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenwindow.c.obj
-[309/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_rawinputjoystick.c.obj
+[305/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/dummy/SDL_camera_dummy.c.obj
+[306/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_rawinputjoystick.c.obj
+[307/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/generic/SDL_sysmain_callbacks.c.obj
+[308/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvulkan.c.obj
+[309/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenwindow.c.obj
 [310/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/handover.cpp.obj
-[311/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/main.cpp.obj
-[312/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/system_info.cpp.obj
+[311/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/system_info.cpp.obj
+[312/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/main.cpp.obj
 [313/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/splash.cpp.obj
 [314/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/core/input.cpp.obj
 [315/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/core/log.cpp.obj
@@ -1007,11 +1007,11 @@ unimplemented verr 1
 [323/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/boot.cpp.obj
 [324/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/disc.cpp.obj
 [325/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/gpu/texturedumper.cpp.obj
-[326/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/memory.cpp.obj
-[327/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/ordinals.cpp.obj
-[328/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/files.cpp.obj
-[329/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/objects.cpp.obj
-[330/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/rtl.cpp.obj
+[326/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/ordinals.cpp.obj
+[327/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/memory.cpp.obj
+[328/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/rtl.cpp.obj
+[329/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/files.cpp.obj
+[330/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/objects.cpp.obj
 [331/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/bink.cpp.obj
 [332/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/crt_math.cpp.obj
 [333/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/dsp_image.cpp.obj
@@ -1019,8 +1019,8 @@ unimplemented verr 1
 [335/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/xapi.cpp.obj
 [336/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/xboxkrnl.cpp.obj
 [337/446] Building CXX object CMakeFiles/Black.dir/src/audio/xaudio2.cpp.obj
-[338/446] Building CXX object CMakeFiles/Black.dir/src/common/focus_pause.cpp.obj
-[339/446] Building CXX object CMakeFiles/Black.dir/src/common/gyro.cpp.obj
+[338/446] Building CXX object CMakeFiles/Black.dir/src/common/gyro.cpp.obj
+[339/446] Building CXX object CMakeFiles/Black.dir/src/common/focus_pause.cpp.obj
 [340/446] Building CXX object CMakeFiles/Black.dir/src/common/cursor.cpp.obj
 [341/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/xnet.cpp.obj
 [342/446] Building CXX object CMakeFiles/Black.dir/src/common/game_files.cpp.obj
@@ -1036,42 +1036,711 @@ unimplemented verr 1
 [352/446] Building CXX object CMakeFiles/Black.dir/src/sound/mixer.cpp.obj
 [353/446] Building CXX object CMakeFiles/Black.dir/src/sound/streams.cpp.obj
 [354/446] Building CXX object CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj
-FAILED: [code=1] CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj 
-"C:\Program Files\LLVM\bin\clang++.exe" -DBlack_EXPORTS -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_UNICODE -ID:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src -ID:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime -ID:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/generated/game -isystem D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src -isystem D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/tomlplusplus-src/include -march=x86-64-v2 -O3 -DNDEBUG -std=gnu++20 -D_DLL -D_MT -Xclang --dependent-lib=msvcrt -fno-strict-aliasing -MD -MT CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj -MF CMakeFiles\Black.dir\src\vr\vr_openxr.cpp.obj.d -o CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj -c D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:241:43: error: use of undeclared identifier 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12KHR'; did you mean 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR'?
-  241 |     XrGraphicsRequirementsD3D12KHR req = {XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12KHR};
-      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                           XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:432:5: note: 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR' declared here
-  432 |     XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR = 1000028002,
-      |     ^
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:253:34: error: no member named 'GetDesc1' in 'IDXGIAdapter'
-  253 |             SUCCEEDED(adaptador->GetDesc1(&desc))) {
-      |                       ~~~~~~~~~~~^
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\winerror.h:30296:35: note: expanded from macro 'SUCCEEDED'
- 30296 | #define SUCCEEDED(hr) (((HRESULT)(hr)) >= 0)
-       |                                   ^~
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:263:42: error: use of undeclared identifier 'XR_TYPE_GRAPHICS_BINDING_D3D12KHR'; did you mean 'XR_TYPE_GRAPHICS_BINDING_D3D12_KHR'?
-  263 |     XrGraphicsBindingD3D12KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D12KHR};
-      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                          XR_TYPE_GRAPHICS_BINDING_D3D12_KHR
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:430:5: note: 'XR_TYPE_GRAPHICS_BINDING_D3D12_KHR' declared here
-  430 |     XR_TYPE_GRAPHICS_BINDING_D3D12_KHR = 1000028000,
-      |     ^
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:335:60: error: use of undeclared identifier 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12KHR'; did you mean 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR'?
-  335 |         std::vector<XrSwapchainImageD3D12KHR> imgs(count, {XR_TYPE_SWAPCHAIN_IMAGE_D3D12KHR});
-      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                                            XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR
-D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:431:5: note: 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR' declared here
-  431 |     XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR = 1000028001,
-      |     ^
-4 errors generated.
 [355/446] Building CXX object CMakeFiles/Black.dir/src/game/ambient_occlusion.cpp.obj
-[356/446] Building CXX object CMakeFiles/Black.dir/src/game/fps_counter.cpp.obj
-[357/446] Building CXX object CMakeFiles/Black.dir/src/d3d/d3d12.cpp.obj
+[356/446] Building CXX object CMakeFiles/Black.dir/src/game/language.cpp.obj
+[357/446] Building CXX object CMakeFiles/Black.dir/src/game/fps_counter.cpp.obj
 [358/446] Building CXX object CMakeFiles/Black.dir/src/game/exit_menu.cpp.obj
-[359/446] Building CXX object CMakeFiles/Black.dir/src/game/hooks.cpp.obj
-ninja: build stopped: subcommand failed.
-build rc=1
-exe: 
-FALHOU: BLACK.exe nao foi gerado (veja build-log.txt)
+[359/446] Building CXX object CMakeFiles/Black.dir/src/d3d/d3d12.cpp.obj
+[360/446] Building CXX object CMakeFiles/Black.dir/src/game/hooks.cpp.obj
+[361/446] Building CXX object CMakeFiles/Black.dir/src/game/hud.cpp.obj
+[362/446] Building CXX object CMakeFiles/Black.dir/src/game/menu_animations.cpp.obj
+[363/446] Building CXX object CMakeFiles/Black.dir/src/game/mouse.cpp.obj
+[364/446] Building CXX object CMakeFiles/Black.dir/src/game/profile_messages.cpp.obj
+[365/446] Building CXX object CMakeFiles/Black.dir/src/game/name_entry.cpp.obj
+[366/446] Building CXX object CMakeFiles/Black.dir/src/game/sound_clock.cpp.obj
+[367/446] Building CXX object CMakeFiles/Black.dir/src/game/prompts.cpp.obj
+[368/446] Building CXX object CMakeFiles/Black.dir/src/game/options_menu.cpp.obj
+[369/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/backends/imgui_impl_win32.cpp.obj
+[370/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/backends/imgui_impl_dx12.cpp.obj
+[371/446] Building CXX object CMakeFiles/Black.dir/Black_xbe.cpp.obj
+[372/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/imgui_tables.cpp.obj
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:198:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawListSplitter' [-Wnontrivial-memcall]
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: note: explicitly cast the pointer to silence this warning
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+      |                                           (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawList' [-Wnontrivial-memcall]
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: note: explicitly cast the pointer to silence this warning
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+      |                                                            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:200:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawDataBuilder' [-Wnontrivial-memcall]
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: note: explicitly cast the pointer to silence this warning
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextDeactivatedState' [-Wnontrivial-memcall]
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: note: explicitly cast the pointer to silence this warning
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+      |                                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextState' [-Wnontrivial-memcall]
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: note: explicitly cast the pointer to silence this warning
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: note: explicitly cast the pointer to silence this warning
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+      |                                              (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: note: explicitly cast the pointer to silence this warning
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+      |                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiIDStackTool' [-Wnontrivial-memcall]
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: note: explicitly cast the pointer to silence this warning
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+      |                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTable' [-Wnontrivial-memcall]
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: note: explicitly cast the pointer to silence this warning
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: note: explicitly cast the pointer to silence this warning
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2650:35: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2650 |                     memcpy(dst_tmp++, channel, sizeof(ImDrawChannel));
+      |                                   ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2650:35: note: explicitly cast the pointer to silence this warning
+ 2650 |                     memcpy(dst_tmp++, channel, sizeof(ImDrawChannel));
+      |                                   ^
+      |                            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2656:31: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2656 |                 memcpy(dst_tmp++, &splitter->_Channels[table->Bg2DrawChannelUnfrozen], sizeof(ImDrawChannel));
+      |                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2656:31: note: explicitly cast the pointer to silence this warning
+ 2656 |                 memcpy(dst_tmp++, &splitter->_Channels[table->Bg2DrawChannelUnfrozen], sizeof(ImDrawChannel));
+      |                               ^
+      |                        (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2665:27: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2665 |             memcpy(dst_tmp++, channel, sizeof(ImDrawChannel));
+      |                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2665:27: note: explicitly cast the pointer to silence this warning
+ 2665 |             memcpy(dst_tmp++, channel, sizeof(ImDrawChannel));
+      |                           ^
+      |                    (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2669:41: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2669 |         memcpy(splitter->_Channels.Data + LEADING_DRAW_CHANNELS, g.DrawChannelsTempMergeBuffer.Data, (splitter->_Count - LEADING_DRAW_CHANNELS) * sizeof(ImDrawChannel));
+      |                                         ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2669:41: note: explicitly cast the pointer to silence this warning
+ 2669 |         memcpy(splitter->_Channels.Data + LEADING_DRAW_CHANNELS, g.DrawChannelsTempMergeBuffer.Data, (splitter->_Count - LEADING_DRAW_CHANNELS) * sizeof(ImDrawChannel));
+      |                                         ^
+      |                (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:198:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiTable' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2092:88: note: in instantiation of member function 'ImVector<ImGuiTable>::reserve' requested here
+ 2092 |     inline void         resize(int new_size)                { if (new_size > Capacity) reserve(_grow_capacity(new_size)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:695:101: note: in instantiation of member function 'ImVector<ImGuiTable>::resize' requested here
+  695 |     T*          Add()                               { int idx = FreeIdx; if (idx == Buf.Size) { Buf.resize(Buf.Size + 1); FreeIdx++; } else { FreeIdx = *(int*)&Buf[idx]; } IM_PLACEMENT_NEW(&Buf[idx]) T(); AliveCount++; return &Buf[idx]; }
+      |                                                                                                     ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:692:156: note: in instantiation of member function 'ImPool<ImGuiTable>::Add' requested here
+  692 |     T*          GetOrAddByKey(ImGuiID key)          { int* p_idx = Map.GetIntRef(key, -1); if (*p_idx != -1) return &Buf[*p_idx]; *p_idx = FreeIdx; return Add(); }
+      |                                                                                                                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:346:34: note: in instantiation of member function 'ImPool<ImGuiTable>::GetOrAddByKey' requested here
+  346 |     ImGuiTable* table = g.Tables.GetOrAddByKey(id);
+      |                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:351:26: note: in instantiation of member function 'ImVector<ImGuiTableTempData>::resize' requested here
+  351 |         g.TablesTempData.resize(g.TablesTempDataStacked, ImGuiTableTempData());
+      |                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: note: explicitly cast the pointer to silence this warning
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+      |                                                                                                                                                                                             (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:88: note: in instantiation of member function 'ImVector<ImGuiTableTempData>::reserve' requested here
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:351:26: note: in instantiation of member function 'ImVector<ImGuiTableTempData>::resize' requested here
+  351 |         g.TablesTempData.resize(g.TablesTempDataStacked, ImGuiTableTempData());
+      |                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2092:88: note: in instantiation of member function 'ImVector<ImDrawChannel>::reserve' requested here
+ 2092 |     inline void         resize(int new_size)                { if (new_size > Capacity) reserve(_grow_capacity(new_size)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:2603:39: note: in instantiation of member function 'ImVector<ImDrawChannel>::resize' requested here
+ 2603 |         g.DrawChannelsTempMergeBuffer.resize(splitter->_Count - LEADING_DRAW_CHANNELS); // Use shared temporary storage so the allocation gets amortized
+      |                                       ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2099:127: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 2099 |     inline void         push_back(const T& v)               { if (Size == Capacity) reserve(_grow_capacity(Size + 1)); memcpy(&Data[Size], &v, sizeof(v)); Size++; }
+      |                                                                                                                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:4201:28: note: in instantiation of member function 'ImVector<ImGuiOldColumns>::push_back' requested here
+ 4201 |     window->ColumnsStorage.push_back(ImGuiOldColumns());
+      |                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2099:127: note: explicitly cast the pointer to silence this warning
+ 2099 |     inline void         push_back(const T& v)               { if (Size == Capacity) reserve(_grow_capacity(Size + 1)); memcpy(&Data[Size], &v, sizeof(v)); Size++; }
+      |                                                                                                                               ^
+      |                                                                                                                               (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2099:85: note: in instantiation of member function 'ImVector<ImGuiOldColumns>::reserve' requested here
+ 2099 |     inline void         push_back(const T& v)               { if (Size == Capacity) reserve(_grow_capacity(Size + 1)); memcpy(&Data[Size], &v, sizeof(v)); Size++; }
+      |                                                                                     ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_tables.cpp:4201:28: note: in instantiation of member function 'ImVector<ImGuiOldColumns>::push_back' requested here
+ 4201 |     window->ColumnsStorage.push_back(ImGuiOldColumns());
+      |                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+20 warnings generated.
+[373/446] Building RC object CMakeFiles/Black.dir/src/common/version.rc.res
+[374/446] Linking CXX executable xbe_symbols.exe
+[375/446] Linking CXX static library _deps\sdl3-build\SDL3-static.lib
+[376/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/imgui_widgets.cpp.obj
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:43:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawListSplitter' [-Wnontrivial-memcall]
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: note: explicitly cast the pointer to silence this warning
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+      |                                           (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawList' [-Wnontrivial-memcall]
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: note: explicitly cast the pointer to silence this warning
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+      |                                                            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:45:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawDataBuilder' [-Wnontrivial-memcall]
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: note: explicitly cast the pointer to silence this warning
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextDeactivatedState' [-Wnontrivial-memcall]
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: note: explicitly cast the pointer to silence this warning
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+      |                                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextState' [-Wnontrivial-memcall]
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: note: explicitly cast the pointer to silence this warning
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: note: explicitly cast the pointer to silence this warning
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+      |                                              (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: note: explicitly cast the pointer to silence this warning
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+      |                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiIDStackTool' [-Wnontrivial-memcall]
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: note: explicitly cast the pointer to silence this warning
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+      |                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTable' [-Wnontrivial-memcall]
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: note: explicitly cast the pointer to silence this warning
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: note: explicitly cast the pointer to silence this warning
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:8999:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTabBar' [-Wnontrivial-memcall]
+ 8999 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:8999:12: note: explicitly cast the pointer to silence this warning
+ 8999 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:43:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiMultiSelectTempData' [-Wnontrivial-memcall]
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:7361:31: note: in instantiation of member function 'ImVector<ImGuiMultiSelectTempData>::resize' requested here
+ 7361 |         g.MultiSelectTempData.resize(g.MultiSelectTempDataStacked, ImGuiMultiSelectTempData());
+      |                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: note: explicitly cast the pointer to silence this warning
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+      |                                                                                                                                                                                             (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiMultiSelectTempData' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:88: note: in instantiation of member function 'ImVector<ImGuiMultiSelectTempData>::reserve' requested here
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:7361:31: note: in instantiation of member function 'ImVector<ImGuiMultiSelectTempData>::resize' requested here
+ 7361 |         g.MultiSelectTempData.resize(g.MultiSelectTempDataStacked, ImGuiMultiSelectTempData());
+      |                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiTabBar' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2092:88: note: in instantiation of member function 'ImVector<ImGuiTabBar>::reserve' requested here
+ 2092 |     inline void         resize(int new_size)                { if (new_size > Capacity) reserve(_grow_capacity(new_size)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:695:101: note: in instantiation of member function 'ImVector<ImGuiTabBar>::resize' requested here
+  695 |     T*          Add()                               { int idx = FreeIdx; if (idx == Buf.Size) { Buf.resize(Buf.Size + 1); FreeIdx++; } else { FreeIdx = *(int*)&Buf[idx]; } IM_PLACEMENT_NEW(&Buf[idx]) T(); AliveCount++; return &Buf[idx]; }
+      |                                                                                                     ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:692:156: note: in instantiation of member function 'ImPool<ImGuiTabBar>::Add' requested here
+  692 |     T*          GetOrAddByKey(ImGuiID key)          { int* p_idx = Map.GetIntRef(key, -1); if (*p_idx != -1) return &Buf[*p_idx]; *p_idx = FreeIdx; return Add(); }
+      |                                                                                                                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_widgets.cpp:9049:38: note: in instantiation of member function 'ImPool<ImGuiTabBar>::GetOrAddByKey' requested here
+ 9049 |     ImGuiTabBar* tab_bar = g.TabBars.GetOrAddByKey(id);
+      |                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+14 warnings generated.
+[377/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/imgui.cpp.obj
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:1023:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawListSplitter' [-Wnontrivial-memcall]
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: note: explicitly cast the pointer to silence this warning
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+      |                                           (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawList' [-Wnontrivial-memcall]
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: note: explicitly cast the pointer to silence this warning
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+      |                                                            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:1025:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawDataBuilder' [-Wnontrivial-memcall]
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: note: explicitly cast the pointer to silence this warning
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextDeactivatedState' [-Wnontrivial-memcall]
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: note: explicitly cast the pointer to silence this warning
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+      |                                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextState' [-Wnontrivial-memcall]
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: note: explicitly cast the pointer to silence this warning
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: note: explicitly cast the pointer to silence this warning
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+      |                                              (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: note: explicitly cast the pointer to silence this warning
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+      |                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiIDStackTool' [-Wnontrivial-memcall]
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: note: explicitly cast the pointer to silence this warning
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+      |                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTable' [-Wnontrivial-memcall]
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: note: explicitly cast the pointer to silence this warning
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: note: explicitly cast the pointer to silence this warning
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:1345:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiIO' [-Wnontrivial-memcall]
+ 1345 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:1345:12: note: explicitly cast the pointer to silence this warning
+ 1345 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:2931:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiListClipper' [-Wnontrivial-memcall]
+ 2931 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:2931:12: note: explicitly cast the pointer to silence this warning
+ 2931 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:3920:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiWindow' [-Wnontrivial-memcall]
+ 3920 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:3920:12: note: explicitly cast the pointer to silence this warning
+ 3920 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:1023:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:2960:27: note: in instantiation of member function 'ImVector<ImGuiListClipperData>::resize' requested here
+ 2960 |         g.ClipperTempData.resize(g.ClipperTempDataStacked, ImGuiListClipperData());
+      |                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:189: note: explicitly cast the pointer to silence this warning
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                                                                                                                             ^
+      |                                                                                                                                                                                             (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2093:88: note: in instantiation of member function 'ImVector<ImGuiListClipperData>::reserve' requested here
+ 2093 |     inline void         resize(int new_size, const T& v)    { if (new_size > Capacity) reserve(_grow_capacity(new_size)); if (new_size > Size) for (int n = Size; n < new_size; n++) memcpy(&Data[n], &v, sizeof(v)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui.cpp:2960:27: note: in instantiation of member function 'ImVector<ImGuiListClipperData>::resize' requested here
+ 2960 |         g.ClipperTempData.resize(g.ClipperTempDataStacked, ImGuiListClipperData());
+      |                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+15 warnings generated.
+[378/446] Building CXX object CMakeFiles/Black.dir/_deps/imgui-src/imgui_draw.cpp.obj
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:34:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawListSplitter' [-Wnontrivial-memcall]
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2973:43: note: explicitly cast the pointer to silence this warning
+ 2973 |     inline ImDrawListSplitter()  { memset(this, 0, sizeof(*this)); }
+      |                                           ^
+      |                                           (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawList' [-Wnontrivial-memcall]
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:3044:60: note: explicitly cast the pointer to silence this warning
+ 3044 |     ImDrawList(ImDrawListSharedData* shared_data) { memset(this, 0, sizeof(*this)); _Data = shared_data; }
+      |                                                            ^
+      |                                                            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:36:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawDataBuilder' [-Wnontrivial-memcall]
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:807:54: note: explicitly cast the pointer to silence this warning
+  807 |     ImDrawDataBuilder()                     { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextDeactivatedState' [-Wnontrivial-memcall]
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1108:50: note: explicitly cast the pointer to silence this warning
+ 1108 |     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
+      |                                                  ^
+      |                                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiInputTextState' [-Wnontrivial-memcall]
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1134:54: note: explicitly cast the pointer to silence this warning
+ 1134 |     ImGuiInputTextState()                   { memset(this, 0, sizeof(*this)); }
+      |                                                      ^
+      |                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiListClipperData' [-Wnontrivial-memcall]
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1526:46: note: explicitly cast the pointer to silence this warning
+ 1526 |     ImGuiListClipperData()          { memset(this, 0, sizeof(*this)); }
+      |                                              ^
+      |                                              (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiOldColumns' [-Wnontrivial-memcall]
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1710:34: note: explicitly cast the pointer to silence this warning
+ 1710 |     ImGuiOldColumns()   { memset(this, 0, sizeof(*this)); }
+      |                                  ^
+      |                                  (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiIDStackTool' [-Wnontrivial-memcall]
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:1966:38: note: explicitly cast the pointer to silence this warning
+ 1966 |     ImGuiIDStackTool()      { memset(this, 0, sizeof(*this)); CopyToClipboardLastTime = -FLT_MAX; }
+      |                                      ^
+      |                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTable' [-Wnontrivial-memcall]
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3019:42: note: explicitly cast the pointer to silence this warning
+ 3019 |     ImGuiTable()                { memset(this, 0, sizeof(*this)); LastFrameActive = -1; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImGuiTableTempData' [-Wnontrivial-memcall]
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui_internal.h:3047:42: note: explicitly cast the pointer to silence this warning
+ 3047 |     ImGuiTableTempData()        { memset(this, 0, sizeof(*this)); LastTimeActive = -1.0f; }
+      |                                          ^
+      |                                          (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:372:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawListSharedData' [-Wnontrivial-memcall]
+  372 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:372:12: note: explicitly cast the pointer to silence this warning
+  372 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2037:20: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2037 |             memset(&_Channels[i], 0, sizeof(_Channels[i]));  // Current channel is a copy of CmdBuffer/IdxBuffer, don't destruct again
+      |                    ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2037:20: note: explicitly cast the pointer to silence this warning
+ 2037 |             memset(&_Channels[i], 0, sizeof(_Channels[i]));  // Current channel is a copy of CmdBuffer/IdxBuffer, don't destruct again
+      |                    ^
+      |                    (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2061:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2061 |     memset(&_Channels[0], 0, sizeof(ImDrawChannel));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2061:12: note: explicitly cast the pointer to silence this warning
+ 2061 |     memset(&_Channels[0], 0, sizeof(ImDrawChannel));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2154:12: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImVector<ImDrawCmd>' [-Wnontrivial-memcall]
+ 2154 |     memcpy(&_Channels.Data[_Current]._CmdBuffer, &draw_list->CmdBuffer, sizeof(draw_list->CmdBuffer));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2154:12: note: explicitly cast the pointer to silence this warning
+ 2154 |     memcpy(&_Channels.Data[_Current]._CmdBuffer, &draw_list->CmdBuffer, sizeof(draw_list->CmdBuffer));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2155:12: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImVector<ImDrawIdx>' (aka 'ImVector<unsigned short>') [-Wnontrivial-memcall]
+ 2155 |     memcpy(&_Channels.Data[_Current]._IdxBuffer, &draw_list->IdxBuffer, sizeof(draw_list->IdxBuffer));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2155:12: note: explicitly cast the pointer to silence this warning
+ 2155 |     memcpy(&_Channels.Data[_Current]._IdxBuffer, &draw_list->IdxBuffer, sizeof(draw_list->IdxBuffer));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2157:12: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImVector<ImDrawCmd>' [-Wnontrivial-memcall]
+ 2157 |     memcpy(&draw_list->CmdBuffer, &_Channels.Data[idx]._CmdBuffer, sizeof(draw_list->CmdBuffer));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2157:12: note: explicitly cast the pointer to silence this warning
+ 2157 |     memcpy(&draw_list->CmdBuffer, &_Channels.Data[idx]._CmdBuffer, sizeof(draw_list->CmdBuffer));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2158:12: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImVector<ImDrawIdx>' (aka 'ImVector<unsigned short>') [-Wnontrivial-memcall]
+ 2158 |     memcpy(&draw_list->IdxBuffer, &_Channels.Data[idx]._IdxBuffer, sizeof(draw_list->IdxBuffer));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2158:12: note: explicitly cast the pointer to silence this warning
+ 2158 |     memcpy(&draw_list->IdxBuffer, &_Channels.Data[idx]._IdxBuffer, sizeof(draw_list->IdxBuffer));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2394:12: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImFontAtlas' [-Wnontrivial-memcall]
+ 2394 |     memset(this, 0, sizeof(*this));
+      |            ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2394:12: note: explicitly cast the pointer to silence this warning
+ 2394 |     memset(this, 0, sizeof(*this));
+      |            ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2783:26: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImFontBuildSrcData' [-Wnontrivial-memcall]
+ 2783 |     memset(src_tmp_array.Data, 0, (size_t)src_tmp_array.size_in_bytes());
+      |                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2783:26: note: explicitly cast the pointer to silence this warning
+ 2783 |     memset(src_tmp_array.Data, 0, (size_t)src_tmp_array.size_in_bytes());
+      |                          ^
+      |            (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2784:26: warning: first argument in call to 'memset' is a pointer to non-trivially copyable type 'ImFontBuildDstData' [-Wnontrivial-memcall]
+ 2784 |     memset(dst_tmp_array.Data, 0, (size_t)dst_tmp_array.size_in_bytes());
+      |                          ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2784:26: note: explicitly cast the pointer to silence this warning
+ 2784 |     memset(dst_tmp_array.Data, 0, (size_t)dst_tmp_array.size_in_bytes());
+      |                          ^
+      |            (void*)
+In file included from D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:34:
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImDrawChannel' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2053:19: note: in instantiation of member function 'ImVector<ImDrawChannel>::reserve' requested here
+ 2053 |         _Channels.reserve(channels_count); // Avoid over reserving since this is likely to stay stable
+      |                   ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImFontBuildSrcData' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2092:88: note: in instantiation of member function 'ImVector<ImFontBuildSrcData>::reserve' requested here
+ 2092 |     inline void         resize(int new_size)                { if (new_size > Capacity) reserve(_grow_capacity(new_size)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2781:19: note: in instantiation of member function 'ImVector<ImFontBuildSrcData>::resize' requested here
+ 2781 |     src_tmp_array.resize(atlas->ConfigData.Size);
+      |                   ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: warning: first argument in call to 'memcpy' is a pointer to non-trivially copyable type 'ImFontBuildDstData' [-Wnontrivial-memcall]
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2092:88: note: in instantiation of member function 'ImVector<ImFontBuildDstData>::reserve' requested here
+ 2092 |     inline void         resize(int new_size)                { if (new_size > Capacity) reserve(_grow_capacity(new_size)); Size = new_size; }
+      |                                                                                        ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src/imgui_draw.cpp:2782:19: note: in instantiation of member function 'ImVector<ImFontBuildDstData>::resize' requested here
+ 2782 |     dst_tmp_array.resize(atlas->Fonts.Size);
+      |                   ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src\imgui.h:2095:182: note: explicitly cast the pointer to silence this warning
+ 2095 |     inline void         reserve(int new_capacity)           { if (new_capacity <= Capacity) return; T* new_data = (T*)IM_ALLOC((size_t)new_capacity * sizeof(T)); if (Data) { memcpy(new_data, Data, (size_t)Size * sizeof(T)); IM_FREE(Data); } Data = new_data; Capacity = new_capacity; }
+      |                                                                                                                                                                                      ^
+      |                                                                                                                                                                                      (void*)
+23 warnings generated.
+[379/446] Linking CXX executable BLACK.exe
+[380/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_func_mapping.cpp.obj
+[381/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.2.cpp.obj
+[382/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.3.cpp.obj
+[383/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.4.cpp.obj
+[384/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.0.cpp.obj
+[385/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.1.cpp.obj
+[386/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.5.cpp.obj
+[387/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.6.cpp.obj
+[388/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.7.cpp.obj
+[389/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.8.cpp.obj
+[390/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.9.cpp.obj
+[391/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.10.cpp.obj
+[392/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.12.cpp.obj
+[393/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.14.cpp.obj
+[394/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.13.cpp.obj
+[395/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.11.cpp.obj
+[396/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.15.cpp.obj
+[397/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.16.cpp.obj
+[398/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.19.cpp.obj
+[399/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.18.cpp.obj
+[400/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.17.cpp.obj
+[401/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.20.cpp.obj
+[402/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.21.cpp.obj
+[403/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.22.cpp.obj
+[404/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.24.cpp.obj
+[405/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.23.cpp.obj
+[406/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.25.cpp.obj
+[407/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.26.cpp.obj
+[408/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.27.cpp.obj
+[409/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.28.cpp.obj
+[410/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.29.cpp.obj
+[411/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.31.cpp.obj
+[412/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.30.cpp.obj
+[413/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.32.cpp.obj
+[414/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.33.cpp.obj
+[415/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.34.cpp.obj
+[416/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.35.cpp.obj
+[417/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.36.cpp.obj
+[418/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.37.cpp.obj
+[419/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.38.cpp.obj
+[420/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.39.cpp.obj
+[421/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.40.cpp.obj
+[422/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.41.cpp.obj
+[423/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.42.cpp.obj
+[424/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.43.cpp.obj
+[425/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.44.cpp.obj
+[426/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.45.cpp.obj
+[427/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.46.cpp.obj
+[428/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.48.cpp.obj
+[429/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.47.cpp.obj
+[430/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.49.cpp.obj
+[431/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.50.cpp.obj
+[432/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.51.cpp.obj
+[433/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.52.cpp.obj
+[434/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.53.cpp.obj
+[435/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.54.cpp.obj
+[436/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.55.cpp.obj
+[437/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.56.cpp.obj
+[438/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.57.cpp.obj
+[439/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.63.cpp.obj
+[440/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.58.cpp.obj
+[441/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.62.cpp.obj
+[442/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.61.cpp.obj
+[443/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.60.cpp.obj
+[444/446] Building CXX object CMakeFiles/Black_code.dir/generated/game/x86_recomp.59.cpp.obj
+[445/446] Linking CXX shared library Black.dll
+build rc=0
+exe: _src/BLACK-XBERecomp/out/build/release/BLACK.exe
+total 16890
+drwxr-xr-x 1 runneradmin 197121       0 Oct 25 15:07 .
+drwxr-xr-x 1 runneradmin 197121       0 Oct 25 15:02 ..
+-rwxr-xr-x 1 runneradmin 197121 9158656 Oct 25 15:07 Black.dll
+-rw-r--r-- 1 runneradmin 197121     627 Oct 25 15:07 JOGAR-VR.bat
+-rw-r--r-- 1 runneradmin 197121    1425 Oct 25 15:07 LEIA-ISTO.txt
+-rw-r--r-- 1 runneradmin 197121     369 Oct 25 15:02 LEIA.txt
+-rw-r--r-- 1 runneradmin 197121   11560 Oct 25 15:02 OPENXR-LICENSE.txt
+-rwxr-xr-x 1 runneradmin 197121 5861888 Oct 25 15:07 black.exe
+-rwxr-xr-x 1 runneradmin 197121 1408000 Oct 25 15:02 blackrt.dll
+-rw-r--r-- 1 runneradmin 197121  158854 Oct 25 15:07 build-log.txt
+drwxr-xr-x 1 runneradmin 197121       0 Oct 25 15:07 compiler
+-rwxr-xr-x 1 runneradmin 197121  671744 Oct 25 15:07 openxr_loader.dll
+drwxr-xr-x 1 runneradmin 197121       0 Oct 25 15:02 x64
