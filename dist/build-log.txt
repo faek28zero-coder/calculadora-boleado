@@ -55,8 +55,8 @@ OK: emendas aplicadas
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (13.7s)
--- Generating done (0.1s)
+-- Configuring done (12.3s)
+-- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
 
@@ -319,150 +319,14 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\d3d\state
   output.cpp
   xinput.cpp
   vr.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr.cpp')
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
-      see declaration of 'XrSwapchainImageD3D11KHR'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
   vr_openxr.cpp
 D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
       D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9):
       'WIN32_LEAN_AND_MEAN' previously declared on the command line
   
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_openxr.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_openxr.cpp')
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
-      see declaration of 'XrSwapchainImageD3D11KHR'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_openxr.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_openxr.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(27,1): error C2512: 'std::vector': no appropriate default constructor available [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_openxr.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(27,1):
-      This diagnostic occurred in the compiler generated function 'vr::internal::EyeImage::EyeImage(void)'
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(64,1):
-      see reference to function 'vr::internal::EyeImage::EyeImage(void)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(90,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(90,1): error C2146: syntax error: missing ';' before identifier 'p_xrGetD3D11GraphicsRequirementsKHR' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(275,17): error C2065: 'p_xrGetD3D11GraphicsRequirementsKHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,5): error C2065: 'XrGraphicsRequirementsD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,36): error C2146: syntax error: missing ';' before identifier 'req' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,36): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(284,40): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(285,81): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(285,16): error C3861: 'p_xrGetD3D11GraphicsRequirementsKHR': identifier not found [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(288,23): error C2065: 'req': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,5): error C2065: 'XrGraphicsBindingD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,31): error C2146: syntax error: missing ';' before identifier 'binding' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,31): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(318,39): error C3079: an initializer list cannot be used as the right operand of this assignment operator [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(319,5): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(321,17): error C2065: 'binding': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(364,20): error C2198: 'PFN_xrEnumerateSwapchainImages': too few arguments for call [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
   vr_pose.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60): error C2678: binary '[': no operator found which takes a left-hand operand of type 'std::vector' (or there is no acceptable conversion) [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(1945,40):
-      could be 'const _Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept const'
-          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-          'const _Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept const': cannot convert 'this' pointer from 'std::vector' to 'const std::vector<_Ty,_Alloc> &'
-              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-              Reason: cannot convert from 'std::vector' to 'const std::vector<_Ty,_Alloc>'
-              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-              Conversion requires a second user-defined-conversion operator or constructor
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(1935,34):
-      or       '_Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept'
-          D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-          '_Ty &std::vector<_Ty,_Alloc>::operator [](const allocator_traits<allocator_traits<_Alloc>::rebind_alloc<_Ty>>::size_type) noexcept': cannot convert 'this' pointer from 'std::vector' to 'std::vector<_Ty,_Alloc> &'
-              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-              Reason: cannot convert from 'std::vector' to 'std::vector<_Ty,_Alloc>'
-              D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-              Conversion requires a second user-defined-conversion operator or constructor
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(818,60):
-      while trying to match the argument list '(std::vector, uint32_t)'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_pose.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_pose.cpp')
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
-      see declaration of 'XrSwapchainImageD3D11KHR'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_pose.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_pose.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
   vr_input.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_input.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_input.cpp')
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
-      see declaration of 'XrSwapchainImageD3D11KHR'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_input.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_input.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
   vr_selftest.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17): error C2065: 'XrSwapchainImageD3D11KHR': undeclared identifier [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_selftest.cpp')
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2923: 'std::vector': 'XrSwapchainImageD3D11KHR' is not a valid template type argument for parameter '_Ty' [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_selftest.cpp')
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,17):
-      see declaration of 'XrSwapchainImageD3D11KHR'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,10): error C2976: 'std::vector': too few template arguments [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_selftest.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_internal.h(24,43): error C2955: 'std::vector': use of class template requires template argument list [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-  (compiling source file '../src/vr/vr_selftest.cpp')
-      C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vector(459,7):
-      see declaration of 'std::vector'
-  
   Generating Code...
 build rc=1
 FALHOU: black.exe nao foi gerado
