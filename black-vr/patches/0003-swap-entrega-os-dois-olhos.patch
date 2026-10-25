@@ -1,5 +1,5 @@
 diff --git a/loader/src/d3d/device.cpp b/loader/src/d3d/device.cpp
-index 28609f8..b66d2a7 100644
+index 28609f8..4226545 100644
 --- a/loader/src/d3d/device.cpp
 +++ b/loader/src/d3d/device.cpp
 @@ -13,6 +13,9 @@
@@ -31,7 +31,25 @@ index 28609f8..b66d2a7 100644
  Viewport g_requested_viewport = {0, 0, 640, 480, 0.0f, 1.0f}; // as the game last set it (before clamping)
  IDirect3DSurface9 *g_host_backbuffer, *g_host_depth;
  
-@@ -1293,6 +1299,20 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+@@ -574,6 +580,8 @@ IDirect3DTexture9 *scratch_rt(uint32_t w, uint32_t h)
+     return t;
+ }
+ 
++} // namespace (fecha antes das duas do state.h)
++
+ void bind_render_target(Surface *rt, Surface *z)
+ {
+     IDirect3DDevice9 *d = host3d::dev();
+@@ -663,6 +671,8 @@ void apply_viewport()
+     host3d::dev()->SetViewport(&vp);
+ }
+ 
++namespace { // reabre: o resto continua anonimo
++
+ // Vertical blank emulation (60 Hz). On the Xbox the GPU interrupt signals the device's vblank KEVENT
+ // (+0x1DBC, waited on by D3DDevice_BlockUntilVerticalBlank and game threads) and calls the callback set
+ // with SetVerticalBlankCallback (+0x1DB8) with a D3DVBLANKDATA {VBlank, Swap, Flags}.
+@@ -1293,6 +1303,20 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
      perf::swap_begin();
      pace_swap();
      present_backbuffer();
@@ -52,7 +70,7 @@ index 28609f8..b66d2a7 100644
      capture_frame();
      uint32_t frames = ++g_frame_count;
      memdump_frame(frames);
-@@ -1322,6 +1342,28 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
+@@ -1322,6 +1346,28 @@ uint32_t __stdcall D3DDevice_Swap(uint32_t Flags)
      if (frames % 60 == 0 || frames < 4)
          logf("[d3d] frame %u presented (%u draws, %u skipped since last report)", frames, g_st.draws, g_st.draws_skipped);
      if (frames % 60 == 0 || frames < 4) g_st.draws = g_st.draws_skipped = 0;
