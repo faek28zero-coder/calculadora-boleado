@@ -162,6 +162,16 @@ jobs:
           git push origin HEAD:${{ github.ref_name }}
           echo "push rc=$?"
 
+      - name: Conferir (o run falha de verdade se o exe nao saiu)
+        shell: bash
+        run: |
+          if [ ! -f dist/BLACK.exe ]; then
+            echo "::error::BLACK.exe nao foi gerado - veja dist/build-log.txt"
+            tail -40 dist-log.txt
+            exit 1
+          fi
+          ls -la dist
+
       - name: Guardar como artifact
         if: always()
         uses: actions/upload-artifact@v4

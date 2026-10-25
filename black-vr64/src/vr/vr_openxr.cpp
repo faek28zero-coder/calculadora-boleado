@@ -238,29 +238,40 @@ bool MontarSessao(ID3D12Device *dev, ID3D12CommandQueue *fila) {
         return false;
     }
 
-    XrGraphicsRequirementsD3D12KHR req = {XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12KHR};
+    XrGraphicsRequirementsD3D12KHR req = {XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR};
     r = g.requisitos(g.instancia, g.sistema, &req);
     if (XR_FAILED(r)) {
         Log("requisitos D3D12: %s (%d)", NomeErro(r), static_cast<int>(r));
         return false;
     }
-    DXGI_ADAPTER_DESC1 desc{};
+    // LUID da placa que o jogo esta usando (o oculos pede uma placa especifica).
+    bool tem_luid = false;
+    LUID luid_jogo{};
     {
         ComPtr<IDXGIDevice> dxgi_dev;
         ComPtr<IDXGIAdapter> adaptador;
         if (SUCCEEDED(dev->QueryInterface(IID_PPV_ARGS(&dxgi_dev))) &&
-            SUCCEEDED(dxgi_dev->GetAdapter(&adaptador)) &&
-            SUCCEEDED(adaptador->GetDesc1(&desc))) {
-            Log("placa do jogo: luid %08lx:%08lx | placa pedida: luid %08lx:%08lx",
-                static_cast<unsigned long>(desc.AdapterLuid.HighPart), static_cast<unsigned long>(desc.AdapterLuid.LowPart),
-                static_cast<unsigned long>(req.adapterLuid.HighPart), static_cast<unsigned long>(req.adapterLuid.LowPart));
-            if (desc.AdapterLuid.LowPart != req.adapterLuid.LowPart ||
-                desc.AdapterLuid.HighPart != req.adapterLuid.HighPart)
-                Log("AVISO: a placa do jogo pode nao ser a que o oculos pede");
+            SUCCEEDED(dxgi_dev->GetAdapter(&adaptador)) && adaptador) {
+            DXGI_ADAPTER_DESC desc0{};
+            if (SUCCEEDED(adaptador->GetDesc(&desc0))) {
+                luid_jogo = desc0.AdapterLuid;
+                tem_luid = true;
+                Log("placa do jogo: %ls", desc0.Description);
+            }
         }
     }
+    Log("placa pedida pelo oculos: luid %08lx:%08lx",
+        static_cast<unsigned long>(req.adapterLuid.HighPart), static_cast<unsigned long>(req.adapterLuid.LowPart));
+    if (tem_luid) {
+        Log("luid da placa do jogo: %08lx:%08lx",
+            static_cast<unsigned long>(luid_jogo.HighPart), static_cast<unsigned long>(luid_jogo.LowPart));
+        if (luid_jogo.LowPart != req.adapterLuid.LowPart || luid_jogo.HighPart != req.adapterLuid.HighPart)
+            Log("AVISO: a placa do jogo pode nao ser a que o oculos pede");
+        else
+            Log("placa confere com a pedida pelo oculos");
+    }
 
-    XrGraphicsBindingD3D12KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D12KHR};
+    XrGraphicsBindingD3D12KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D12_KHR};
     binding.device = dev;
     binding.queue = fila;
     XrSessionCreateInfo sci = {XR_TYPE_SESSION_CREATE_INFO};
@@ -332,7 +343,7 @@ bool CriarTrocas(uint32_t largura, uint32_t altura, int formato_dxgi) {
             return false;
         }
         if (count > static_cast<uint32_t>(kMaxImagens)) count = kMaxImagens;
-        std::vector<XrSwapchainImageD3D12KHR> imgs(count, {XR_TYPE_SWAPCHAIN_IMAGE_D3D12KHR});
+        std::vector<XrSwapchainImageD3D12KHR> imgs(count, {XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR});
         r = g.imagens_da_troca(g.olho[e].troca, count, &count,
                                reinterpret_cast<XrSwapchainImageBaseHeader *>(imgs.data()));
         if (XR_FAILED(r)) {
