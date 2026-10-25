@@ -41,6 +41,105 @@ aplicando 0006-build-vr.patch
 + git apply --whitespace=nowarn ../../black-vr/patches/0006-build-vr.patch
 + echo 'OK: emendas aplicadas'
 OK: emendas aplicadas
+=== OPENXR LOADER ===
+-- Building for: Visual Studio 18 2026
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: C:/hostedtoolcache/windows/Python/3.15.1/x64/python3.exe (found version "3.15.1") found components: Interpreter
+-- EGL disabled
+-- Found OpenGL: opengl32
+-- Enabling OpenGL support
+-- Could NOT find Vulkan (missing: Vulkan_LIBRARY Vulkan_INCLUDE_DIR) (found version "")
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Could NOT find JsonCpp (missing: JsonCpp_INCLUDE_DIR JsonCpp_LIBRARY) 
+-- Could NOT find glslc, using precompiled .spv files
+-- Looking for secure_getenv
+-- Looking for secure_getenv - not found
+-- Looking for __secure_getenv
+-- Looking for __secure_getenv - not found
+-- Looking for timespec_get
+-- Looking for timespec_get - found
+-- OpenXR 1.1.65
+-- Found and will use pre-generated xr_generated_dispatch_table.h in source tree
+-- Found and will use pre-generated xr_generated_dispatch_table.c in source tree
+-- Found and will use pre-generated xr_generated_dispatch_table_core.h in source tree
+-- Found and will use pre-generated xr_generated_dispatch_table_core.c in source tree
+-- Found and will use pre-generated xr_generated_loader.hpp in source tree
+-- Found and will use pre-generated xr_generated_loader.cpp in source tree
+-- Performing Test HAVE_MISSING_PROTOTYPES
+-- Performing Test HAVE_MISSING_PROTOTYPES - Failed
+-- Performing Test HAVE_UNDEF
+-- Performing Test HAVE_UNDEF - Failed
+-- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT
+-- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT - Failed
+-- Performing Test HAVE_MISSING_BRACES
+-- Performing Test HAVE_MISSING_BRACES - Failed
+-- Performing Test HAVE_UNREACHABLE_CODE
+-- Performing Test HAVE_UNREACHABLE_CODE - Failed
+-- Performing Test HAVE_CPP20_EXTENSIONS
+-- Performing Test HAVE_CPP20_EXTENSIONS - Failed
+-- Configuring done (22.1s)
+-- Generating done (0.1s)
+CMake Warning (unused-cli):
+  Manually-specified variables were not used by the project:
+
+    BUILD_SAMPLES
+
+
+-- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32
+MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/include/openxr/CMakeLists.txt
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/CMakeLists.txt
+  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/loader/CMakeLists.txt
+  android_utilities.cpp
+  api_layer_interface.cpp
+  loader_core.cpp
+  loader_init_data.cpp
+  loader_instance.cpp
+  loader_logger.cpp
+  loader_logger_recorders.cpp
+  loader_properties.cpp
+  manifest_file.cpp
+  runtime_interface.cpp
+  filesystem_utils.cpp
+  object_info.cpp
+  xr_generated_loader.cpp
+  json_reader.cpp
+  json_value.cpp
+  json_writer.cpp
+  Generating Code...
+  xr_generated_dispatch_table_core.c
+     Creating library D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32/src/loader/Release/openxr_loader.lib and object D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32/src/loader/Release/openxr_loader.exp
+  openxr_loader.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
+  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
+  1 File(s) copied
+  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
+  1 File(s) copied
+  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
+  1 File(s) copied
+loader rc=0
+build32/src/conformance/conformance_test/Release/openxr_loader.dll
+build32/src/loader/Release/openxr_loader.dll
+build32/src/tests/hello_xr/Release/openxr_loader.dll
+build32/src/tests/loader_test/Release/openxr_loader.dll
 === CONFIGURAR ===
 -- Building for: Visual Studio 18 2026
 -- The C compiler identification is MSVC 19.51.36260.0
@@ -55,7 +154,7 @@ OK: emendas aplicadas
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (19.4s)
+-- Configuring done (3.2s)
 -- Generating done (0.0s)
 CMake Warning (unused-cli):
   Manually-specified variables were not used by the project:
@@ -141,4 +240,5 @@ D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_ope
   black.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\black.exe
   Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
 build rc=0
+openxr_loader.dll: 612352 bytes
 PRONTO: binarios gerados
