@@ -1,395 +1,1077 @@
-+ mkdir -p _fork/black-pc
-+ cd _fork/black-pc
-+ git init -q .
-+ git remote add origin https://github.com/Spark198rus/black-pc.git
-+ git fetch -q --depth 1 origin b826153997907272dd555b8ec63b6a54fcde0600
-+ git checkout -q FETCH_HEAD
-+ cd ../..
-+ mkdir -p _fork/black-pc/loader/src/vr _fork/black-pc/vendor/openxr
-+ cp black-vr/src/vr/vr.h black-vr/src/vr/vr_frame.h black-vr/src/vr/vr_internal.h black-vr/src/vr/vr_math.h black-vr/src/vr/vr_trace.h black-vr/src/vr/vr.cpp black-vr/src/vr/vr_input.cpp black-vr/src/vr/vr_openxr.cpp black-vr/src/vr/vr_pose.cpp black-vr/src/vr/vr_selftest.cpp black-vr/src/vr/vr_trace.cpp _fork/black-pc/loader/src/vr/
-+ cp black-vr/vendor/openxr/openxr.h black-vr/vendor/openxr/openxr_platform.h black-vr/vendor/openxr/openxr_platform_defines.h _fork/black-pc/vendor/openxr/
-+ cd _fork/black-pc
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0001-draw-capture-e-replay.patch
-+ echo 'aplicando 0001-draw-capture-e-replay.patch'
-aplicando 0001-draw-capture-e-replay.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0001-draw-capture-e-replay.patch
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0002-vertex-shader-c201.patch
-+ echo 'aplicando 0002-vertex-shader-c201.patch'
-aplicando 0002-vertex-shader-c201.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0002-vertex-shader-c201.patch
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0003-swap-entrega-os-dois-olhos.patch
-+ echo 'aplicando 0003-swap-entrega-os-dois-olhos.patch'
-aplicando 0003-swap-entrega-os-dois-olhos.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0003-swap-entrega-os-dois-olhos.patch
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0004-entrada-pad-merge.patch
-+ echo 'aplicando 0004-entrada-pad-merge.patch'
-aplicando 0004-entrada-pad-merge.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0004-entrada-pad-merge.patch
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0005-opcoes-vr.patch
-+ echo 'aplicando 0005-opcoes-vr.patch'
-aplicando 0005-opcoes-vr.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0005-opcoes-vr.patch
-+ for p in ../../black-vr/patches/*.patch
-++ basename ../../black-vr/patches/0006-build-vr.patch
-+ echo 'aplicando 0006-build-vr.patch'
-aplicando 0006-build-vr.patch
-+ git apply --whitespace=nowarn ../../black-vr/patches/0006-build-vr.patch
-+ echo 'OK: emendas aplicadas'
-OK: emendas aplicadas
-=== OPENXR LOADER ===
--- Building for: Visual Studio 18 2026
--- The C compiler identification is MSVC 19.51.36260.0
--- The CXX compiler identification is MSVC 19.51.36260.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Found Python3: C:/hostedtoolcache/windows/Python/3.15.1/x64/python3.exe (found version "3.15.1") found components: Interpreter
--- EGL disabled
--- Found OpenGL: opengl32
--- Enabling OpenGL support
--- Could NOT find Vulkan (missing: Vulkan_LIBRARY Vulkan_INCLUDE_DIR) (found version "")
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
--- Looking for pthread_create in pthreads
--- Looking for pthread_create in pthreads - not found
--- Looking for pthread_create in pthread
--- Looking for pthread_create in pthread - not found
--- Found Threads: TRUE
--- Could NOT find JsonCpp (missing: JsonCpp_INCLUDE_DIR JsonCpp_LIBRARY) 
--- Could NOT find glslc, using precompiled .spv files
--- Looking for secure_getenv
--- Looking for secure_getenv - not found
--- Looking for __secure_getenv
--- Looking for __secure_getenv - not found
--- Looking for timespec_get
--- Looking for timespec_get - found
--- OpenXR 1.1.65
--- Found and will use pre-generated xr_generated_dispatch_table.h in source tree
--- Found and will use pre-generated xr_generated_dispatch_table.c in source tree
--- Found and will use pre-generated xr_generated_dispatch_table_core.h in source tree
--- Found and will use pre-generated xr_generated_dispatch_table_core.c in source tree
--- Found and will use pre-generated xr_generated_loader.hpp in source tree
--- Found and will use pre-generated xr_generated_loader.cpp in source tree
--- Performing Test HAVE_MISSING_PROTOTYPES
--- Performing Test HAVE_MISSING_PROTOTYPES - Failed
--- Performing Test HAVE_UNDEF
--- Performing Test HAVE_UNDEF - Failed
--- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT
--- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT - Failed
--- Performing Test HAVE_MISSING_BRACES
--- Performing Test HAVE_MISSING_BRACES - Failed
--- Performing Test HAVE_UNREACHABLE_CODE
--- Performing Test HAVE_UNREACHABLE_CODE - Failed
--- Performing Test HAVE_CPP20_EXTENSIONS
--- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (20.4s)
--- Generating done (0.1s)
-CMake Warning (unused-cli):
-  Manually-specified variables were not used by the project:
++ mkdir -p _src
++ cd _src
++ git clone --depth 1 https://github.com/TGP482/XboxXBE-Recomp.git XboxXBE-Recomp
+Cloning into 'XboxXBE-Recomp'...
++ git clone --depth 1 https://github.com/TGP482/BLACK-XBERecomp.git BLACK-XBERecomp
+Cloning into 'BLACK-XBERecomp'...
++ cd ..
++ echo 'OK: fontes baixadas'
+OK: fontes baixadas
++ P=_src/BLACK-XBERecomp
++ mkdir -p _src/BLACK-XBERecomp/src/vr/openxr
++ cp black-vr64/src/vr/vr_openxr.h black-vr64/src/vr/vr_openxr.cpp _src/BLACK-XBERecomp/src/vr/
++ cp black-vr/vendor/openxr/openxr.h black-vr/vendor/openxr/openxr_platform.h black-vr/vendor/openxr/openxr_platform_defines.h _src/BLACK-XBERecomp/src/vr/openxr/
++ command -v python3
++ PY=python3
++ python3 --version
+Python 3.12.10
++ python3 black-vr64/aplicar-emenda.py _src/BLACK-XBERecomp
+emenda aplicada em src/d3d/d3d12.cpp
++ grep -n 'vr::GravarCopia\|vr::DepoisDoEnvio\|vr/vr_openxr.h' _src/BLACK-XBERecomp/src/d3d/d3d12.cpp
+47:#include "vr/vr_openxr.h"
+3887:            vr::GravarCopia(dev_.Get(), queue_.Get(), cl_.Get(), bb_[bi].Get(), vrd.Width, vrd.Height,
+3893:    vr::DepoisDoEnvio();
++ ls -la _src/BLACK-XBERecomp/src/vr _src/BLACK-XBERecomp/src/vr/openxr
++ head -20
+_src/BLACK-XBERecomp/src/vr:
+total 28
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 .
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 ..
+drwxr-xr-x 1 runneradmin 197121     0 Oct 25 14:58 openxr
+-rw-r--r-- 1 runneradmin 197121 21386 Oct 25 14:58 vr_openxr.cpp
+-rw-r--r-- 1 runneradmin 197121  1397 Oct 25 14:58 vr_openxr.h
 
-    BUILD_SAMPLES
-
-
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/include/openxr/CMakeLists.txt
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/CMakeLists.txt
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/loader/CMakeLists.txt
-  android_utilities.cpp
-  api_layer_interface.cpp
-  loader_core.cpp
-  loader_init_data.cpp
-  loader_instance.cpp
-  loader_logger.cpp
-  loader_logger_recorders.cpp
-  loader_properties.cpp
-  manifest_file.cpp
-  runtime_interface.cpp
-  filesystem_utils.cpp
-  object_info.cpp
-  xr_generated_loader.cpp
-  json_reader.cpp
-  json_value.cpp
-  json_writer.cpp
-  Generating Code...
-  xr_generated_dispatch_table_core.c
-     Creating library D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32/src/loader/Release/openxr_loader.lib and object D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build32/src/loader/Release/openxr_loader.exp
-  openxr_loader.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build32\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-loader rc=0
-build32/src/conformance/conformance_test/Release/openxr_loader.dll
-build32/src/loader/Release/openxr_loader.dll
-build32/src/tests/hello_xr/Release/openxr_loader.dll
-build32/src/tests/loader_test/Release/openxr_loader.dll
-=== OPENXR LOADER 64 BITS ===
--- Building for: Visual Studio 18 2026
--- The C compiler identification is MSVC 19.51.36260.0
--- The CXX compiler identification is MSVC 19.51.36260.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Found Python3: C:/hostedtoolcache/windows/Python/3.15.1/x64/python3.exe (found version "3.15.1") found components: Interpreter
--- EGL disabled
--- Found OpenGL: opengl32
--- Enabling OpenGL support
--- Could NOT find Vulkan (missing: Vulkan_LIBRARY Vulkan_INCLUDE_DIR) (found version "")
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
--- Looking for pthread_create in pthreads
--- Looking for pthread_create in pthreads - not found
--- Looking for pthread_create in pthread
--- Looking for pthread_create in pthread - not found
--- Found Threads: TRUE
--- Could NOT find JsonCpp (missing: JsonCpp_INCLUDE_DIR JsonCpp_LIBRARY) 
--- Could NOT find glslc, using precompiled .spv files
--- Looking for secure_getenv
--- Looking for secure_getenv - not found
--- Looking for __secure_getenv
--- Looking for __secure_getenv - not found
--- Looking for timespec_get
--- Looking for timespec_get - found
--- OpenXR 1.1.65
--- Found and will use pre-generated xr_generated_dispatch_table.h in source tree
--- Found and will use pre-generated xr_generated_dispatch_table.c in source tree
--- Found and will use pre-generated xr_generated_dispatch_table_core.h in source tree
--- Found and will use pre-generated xr_generated_dispatch_table_core.c in source tree
--- Found and will use pre-generated xr_generated_loader.hpp in source tree
--- Found and will use pre-generated xr_generated_loader.cpp in source tree
--- Performing Test HAVE_MISSING_PROTOTYPES
--- Performing Test HAVE_MISSING_PROTOTYPES - Failed
--- Performing Test HAVE_UNDEF
--- Performing Test HAVE_UNDEF - Failed
--- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT
--- Performing Test HAVE_TAUTOLOGICAL_TYPE_LIMIT - Failed
--- Performing Test HAVE_MISSING_BRACES
--- Performing Test HAVE_MISSING_BRACES - Failed
--- Performing Test HAVE_UNREACHABLE_CODE
--- Performing Test HAVE_UNREACHABLE_CODE - Failed
--- Performing Test HAVE_CPP20_EXTENSIONS
--- Performing Test HAVE_CPP20_EXTENSIONS - Failed
--- Configuring done (12.8s)
--- Generating done (0.1s)
-CMake Warning (unused-cli):
-  Manually-specified variables were not used by the project:
-
-    BUILD_SAMPLES
-
-
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build64
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/include/openxr/CMakeLists.txt
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/CMakeLists.txt
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/src/loader/CMakeLists.txt
-  android_utilities.cpp
-  api_layer_interface.cpp
-  loader_core.cpp
-  loader_init_data.cpp
-  loader_instance.cpp
-  loader_logger.cpp
-  loader_logger_recorders.cpp
-  loader_properties.cpp
-  manifest_file.cpp
-  runtime_interface.cpp
-  filesystem_utils.cpp
-  object_info.cpp
-  xr_generated_loader.cpp
-  json_reader.cpp
-  json_value.cpp
-  json_writer.cpp
-  Generating Code...
-  xr_generated_dispatch_table_core.c
-     Creating library D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build64/src/loader/Release/openxr_loader.lib and object D:/a/calculadora-boleado/calculadora-boleado/OpenXR-SDK-release-1.1.65/build64/src/loader/Release/openxr_loader.exp
-  openxr_loader.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build64\src\loader\Release\openxr_loader.dll
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build64\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build64\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-  D:\a\calculadora-boleado\calculadora-boleado\OpenXR-SDK-release-1.1.65\build64\src\loader\Release\openxr_loader.dll
-  1 File(s) copied
-loader64 rc=0
-build64/src/conformance/conformance_test/Release/openxr_loader.dll
-build64/src/loader/Release/openxr_loader.dll
-build64/src/tests/hello_xr/Release/openxr_loader.dll
-build64/src/tests/loader_test/Release/openxr_loader.dll
+_src/BLACK-XBERecomp/src/vr/openxr:
+total 752
+drwxr-xr-x 1 runneradmin 197121      0 Oct 25 14:58 .
+drwxr-xr-x 1 runneradmin 197121      0 Oct 25 14:58 ..
+-rw-r--r-- 1 runneradmin 197121 727740 Oct 25 14:58 openxr.h
+-rw-r--r-- 1 runneradmin 197121  36022 Oct 25 14:58 openxr_platform.h
+-rw-r--r-- 1 runneradmin 197121   4026 Oct 25 14:58 openxr_platform_defines.h
++ echo 'OK: emenda aplicada'
+OK: emenda aplicada
+=== XBE ===
+xbe baixado: 2813952 bytes
+AVISO: XBE pequeno demais (2813952 bytes) - provavelmente veio uma pagina do Drive, nao o arquivo
+c5bfed25449c8212d7a976f15246e87ead57713f *_src/BLACK-XBERecomp/assets/default.xbe
 === CONFIGURAR ===
--- Building for: Visual Studio 18 2026
--- The C compiler identification is MSVC 19.51.36260.0
--- The CXX compiler identification is MSVC 19.51.36260.0
+-- The C compiler identification is Clang 20.1.8 with GNU-like command-line
+-- The CXX compiler identification is Clang 20.1.8 with GNU-like command-line
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Check for working C compiler: C:/Program Files/LLVM/bin/clang.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
+-- Check for working CXX compiler: C:/Program Files/LLVM/bin/clang++.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (3.3s)
--- Generating done (0.0s)
-CMake Warning (unused-cli):
-  Manually-specified variables were not used by the project:
+CMake Warning (deprecated) at out/build/release/_deps/zydis-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
 
-    CMAKE_BUILD_TYPE
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
 
+CMake Warning (deprecated) at out/build/release/_deps/zydis-src/dependencies/zycore/CMakeLists.txt:5 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
 
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- Found Doxygen: C:/Strawberry/c/bin/doxygen.exe (found version "1.10.0") found components: doxygen missing components: dot
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Detecting Target CPU Architecture
+-- Detecting Target CPU Architecture - X64
+-- Performing Test HAVE_GCC_WALL
+-- Performing Test HAVE_GCC_WALL - Success
+-- Performing Test HAVE_GCC_WUNDEF
+-- Performing Test HAVE_GCC_WUNDEF - Success
+-- Performing Test HAVE_GCC_WFLOAT_CONVERSION
+-- Performing Test HAVE_GCC_WFLOAT_CONVERSION - Success
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION
+-- Performing Test HAVE_GCC_WDOCUMENTATION - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND - Success
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS - Success
+-- Performing Test HAVE_GCC_WSHADOW
+-- Performing Test HAVE_GCC_WSHADOW - Success
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS - Success
+-- Performing Test HAVE_GCC_WIMPLICIT_FALLTHROUGH
+-- Performing Test HAVE_GCC_WIMPLICIT_FALLTHROUGH - Success
+-- Performing Test COMPILER_SUPPORTS_FCOLOR_DIAGNOSTICS
+-- Performing Test COMPILER_SUPPORTS_FCOLOR_DIAGNOSTICS - Success
+-- Looking for __GLIBC__
+-- Looking for __GLIBC__ - not found
+-- Performing Test HAVE_WL_VERSION_SCRIPT
+-- Performing Test HAVE_WL_VERSION_SCRIPT - Success
+-- Performing Test COMPILER_SUPPORTS_GCC_ATOMICS
+-- Performing Test COMPILER_SUPPORTS_GCC_ATOMICS - Success
+-- Performing Test HAVE_GCC_FVISIBILITY
+-- Performing Test HAVE_GCC_FVISIBILITY - Failed
+-- Performing Test LINKER_SUPPORTS_WL_NO_UNDEFINED
+-- Performing Test LINKER_SUPPORTS_WL_NO_UNDEFINED - Success
+-- Performing Test COMPILER_SUPPORTS_MMX
+-- Performing Test COMPILER_SUPPORTS_MMX - Success
+-- Performing Test COMPILER_SUPPORTS_SSE
+-- Performing Test COMPILER_SUPPORTS_SSE - Success
+-- Performing Test COMPILER_SUPPORTS_SSE2
+-- Performing Test COMPILER_SUPPORTS_SSE2 - Success
+-- Performing Test COMPILER_SUPPORTS_SSE3
+-- Performing Test COMPILER_SUPPORTS_SSE3 - Success
+-- Performing Test COMPILER_SUPPORTS_SSE4_1
+-- Performing Test COMPILER_SUPPORTS_SSE4_1 - Success
+-- Performing Test COMPILER_SUPPORTS_SSE4_2
+-- Performing Test COMPILER_SUPPORTS_SSE4_2 - Success
+-- Performing Test COMPILER_SUPPORTS_AVX
+-- Performing Test COMPILER_SUPPORTS_AVX - Success
+-- Performing Test COMPILER_SUPPORTS_AVX2
+-- Performing Test COMPILER_SUPPORTS_AVX2 - Success
+-- Performing Test COMPILER_SUPPORTS_AVX512F
+-- Performing Test COMPILER_SUPPORTS_AVX512F - Success
+-- Looking for alloca.h
+-- Looking for alloca.h - not found
+-- Looking for float.h
+-- Looking for float.h - found
+-- Looking for iconv.h
+-- Looking for iconv.h - not found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for limits.h
+-- Looking for limits.h - found
+-- Looking for malloc.h
+-- Looking for malloc.h - found
+-- Looking for math.h
+-- Looking for math.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for strings.h
+-- Looking for strings.h - not found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for time.h
+-- Looking for time.h - found
+-- Looking for wchar.h
+-- Looking for wchar.h - found
+-- Looking for pow in m
+-- Looking for pow in m - not found
+-- Looking for abs
+-- Looking for abs - found
+-- Looking for acos
+-- Looking for acos - found
+-- Looking for acosf
+-- Looking for acosf - found
+-- Looking for asin
+-- Looking for asin - found
+-- Looking for asinf
+-- Looking for asinf - found
+-- Looking for atan
+-- Looking for atan - found
+-- Looking for atan2
+-- Looking for atan2 - found
+-- Looking for atan2f
+-- Looking for atan2f - found
+-- Looking for atanf
+-- Looking for atanf - found
+-- Looking for atof
+-- Looking for atof - found
+-- Looking for atoi
+-- Looking for atoi - found
+-- Looking for bcopy
+-- Looking for bcopy - not found
+-- Looking for ceil
+-- Looking for ceil - found
+-- Looking for ceilf
+-- Looking for ceilf - found
+-- Looking for copysign
+-- Looking for copysign - found
+-- Looking for copysignf
+-- Looking for copysignf - found
+-- Looking for cos
+-- Looking for cos - found
+-- Looking for cosf
+-- Looking for cosf - found
+-- Looking for _Exit
+-- Looking for _Exit - found
+-- Looking for exp
+-- Looking for exp - found
+-- Looking for expf
+-- Looking for expf - found
+-- Looking for fabs
+-- Looking for fabs - found
+-- Looking for fabsf
+-- Looking for fabsf - found
+-- Looking for floor
+-- Looking for floor - found
+-- Looking for floorf
+-- Looking for floorf - found
+-- Looking for fmod
+-- Looking for fmod - found
+-- Looking for fmodf
+-- Looking for fmodf - found
+-- Looking for fopen64
+-- Looking for fopen64 - not found
+-- Looking for fseeko
+-- Looking for fseeko - not found
+-- Looking for fseeko64
+-- Looking for fseeko64 - not found
+-- Looking for getenv
+-- Looking for getenv - found
+-- Looking for _i64toa
+-- Looking for _i64toa - found
+-- Looking for index
+-- Looking for index - not found
+-- Looking for itoa
+-- Looking for itoa - found
+-- Looking for log
+-- Looking for log - found
+-- Looking for log10
+-- Looking for log10 - found
+-- Looking for log10f
+-- Looking for log10f - found
+-- Looking for logf
+-- Looking for logf - found
+-- Looking for lround
+-- Looking for lround - found
+-- Looking for lroundf
+-- Looking for lroundf - found
+-- Looking for _ltoa
+-- Looking for _ltoa - found
+-- Looking for malloc
+-- Looking for malloc - found
+-- Looking for memcmp
+-- Looking for memcmp - found
+-- Looking for memcpy
+-- Looking for memcpy - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for memset
+-- Looking for memset - found
+-- Looking for modf
+-- Looking for modf - found
+-- Looking for modff
+-- Looking for modff - found
+-- Looking for pow
+-- Looking for pow - found
+-- Looking for powf
+-- Looking for powf - found
+-- Looking for putenv
+-- Looking for putenv - found
+-- Looking for rindex
+-- Looking for rindex - not found
+-- Looking for round
+-- Looking for round - found
+-- Looking for roundf
+-- Looking for roundf - found
+-- Looking for scalbn
+-- Looking for scalbn - found
+-- Looking for scalbnf
+-- Looking for scalbnf - found
+-- Looking for setenv
+-- Looking for setenv - not found
+-- Looking for sin
+-- Looking for sin - found
+-- Looking for sinf
+-- Looking for sinf - found
+-- Looking for sqr
+-- Looking for sqr - not found
+-- Looking for sqrt
+-- Looking for sqrt - found
+-- Looking for sqrtf
+-- Looking for sqrtf - found
+-- Looking for sscanf
+-- Looking for sscanf - found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strcmp
+-- Looking for strcmp - found
+-- Looking for strlcat
+-- Looking for strlcat - not found
+-- Looking for strlcpy
+-- Looking for strlcpy - not found
+-- Looking for strlen
+-- Looking for strlen - found
+-- Looking for strncmp
+-- Looking for strncmp - found
+-- Looking for strnlen
+-- Looking for strnlen - found
+-- Looking for strpbrk
+-- Looking for strpbrk - found
+-- Looking for strrchr
+-- Looking for strrchr - found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strnstr
+-- Looking for strnstr - not found
+-- Looking for strtod
+-- Looking for strtod - found
+-- Looking for strtok_r
+-- Looking for strtok_r - not found
+-- Looking for strtol
+-- Looking for strtol - found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for tan
+-- Looking for tan - found
+-- Looking for tanf
+-- Looking for tanf - found
+-- Looking for trunc
+-- Looking for trunc - found
+-- Looking for truncf
+-- Looking for truncf - found
+-- Looking for unsetenv
+-- Looking for unsetenv - not found
+-- Looking for vsnprintf
+-- Looking for vsnprintf - found
+-- Looking for vsscanf
+-- Looking for vsscanf - found
+-- Looking for wcsnlen
+-- Looking for wcsnlen - found
+-- Looking for wcscmp
+-- Looking for wcscmp - found
+-- Looking for wcsdup
+-- Looking for wcsdup - found
+-- Looking for wcslcat
+-- Looking for wcslcat - not found
+-- Looking for wcslcpy
+-- Looking for wcslcpy - not found
+-- Looking for wcslen
+-- Looking for wcslen - found
+-- Looking for wcsncmp
+-- Looking for wcsncmp - found
+-- Looking for wcsstr
+-- Looking for wcsstr - found
+-- Looking for wcstol
+-- Looking for wcstol - found
+-- Looking for _copysign
+-- Looking for _copysign - found
+-- Looking for _fseeki64
+-- Looking for _fseeki64 - found
+-- Looking for _strrev
+-- Looking for _strrev - found
+-- Looking for _ui64toa
+-- Looking for _ui64toa - found
+-- Looking for _ultoa
+-- Looking for _ultoa - found
+-- Looking for _wcsdup
+-- Looking for _wcsdup - found
+-- Performing Test LIBC_HAS_ISINF
+-- Performing Test LIBC_HAS_ISINF - Success
+-- Performing Test LIBC_ISINF_HANDLES_FLOAT
+-- Performing Test LIBC_ISINF_HANDLES_FLOAT - Success
+-- Performing Test LIBC_HAS_ISINFF
+-- Performing Test LIBC_HAS_ISINFF - Failed
+-- Performing Test LIBC_HAS_ISNAN
+-- Performing Test LIBC_HAS_ISNAN - Success
+-- Performing Test LIBC_ISNAN_HANDLES_FLOAT
+-- Performing Test LIBC_ISNAN_HANDLES_FLOAT - Success
+-- Performing Test LIBC_HAS_ISNANF
+-- Performing Test LIBC_HAS_ISNANF - Failed
+-- Performing Test HAVE_WIN32_CC
+-- Performing Test HAVE_WIN32_CC - Success
+-- Performing Test HAVE_D3D9_H
+-- Performing Test HAVE_D3D9_H - Success
+-- Performing Test HAVE_D3D11_H
+-- Performing Test HAVE_D3D11_H - Success
+-- Performing Test HAVE_DDRAW_H
+-- Performing Test HAVE_DDRAW_H - Success
+-- Performing Test HAVE_DSOUND_H
+-- Performing Test HAVE_DSOUND_H - Success
+-- Performing Test HAVE_DINPUT_H
+-- Performing Test HAVE_DINPUT_H - Success
+-- Looking for dxgi.h
+-- Looking for dxgi.h - found
+-- Performing Test HAVE_XINPUT_H
+-- Performing Test HAVE_XINPUT_H - Success
+-- Performing Test HAVE_WINDOWS_GAMING_INPUT_H
+-- Performing Test HAVE_WINDOWS_GAMING_INPUT_H - Success
+-- Performing Test HAVE_GAMEINPUT_H
+-- Performing Test HAVE_GAMEINPUT_H - Success
+-- Looking for dxgi1_5.h
+-- Looking for dxgi1_5.h - found
+-- Looking for dxgi1_6.h
+-- Looking for dxgi1_6.h - found
+-- Looking for tpcshrd.h
+-- Looking for tpcshrd.h - found
+-- Looking for roapi.h
+-- Looking for roapi.h - found
+-- Looking for mmdeviceapi.h
+-- Looking for mmdeviceapi.h - found
+-- Looking for audioclient.h
+-- Looking for audioclient.h - found
+-- Looking for sensorsapi.h
+-- Looking for sensorsapi.h - found
+-- Looking for shellscalingapi.h
+-- Looking for shellscalingapi.h - found
+-- Performing Test HAVE_MFAPI_H
+-- Performing Test HAVE_MFAPI_H - Success
+-- Could NOT find LibUSB (missing: LibUSB_LIBRARY LibUSB_INCLUDE_PATH) (found version "LibUSB_VERSION-NOTFOUND")
+-- 
+-- SDL3 was configured with the following options:
+-- 
+-- Platform: Windows-10.0.26100
+-- 64-bit:   TRUE
+-- Compiler: C:/Program Files/LLVM/bin/clang.exe
+-- Revision: SDL-3.4.16-release-3.4.16
+-- Vendor:   
+-- 
+-- Subsystems:
+--   Audio:    ON
+--   Video:    ON
+--   GPU:      OFF
+--   Render:   OFF
+--   Camera:   OFF
+--   Joystick: ON
+--   Haptic:   ON
+--   Hidapi:   ON
+--   Power:    ON
+--   Sensor:   ON
+--   Dialog:   ON
+--   Tray:     ON
+-- 
+-- Options:
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: OFF): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_AVX                     (Wanted: ON): ON
+--   SDL_AVX2                    (Wanted: ON): ON
+--   SDL_AVX512F                 (Wanted: ON): ON
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: OFF): OFF
+--   SDL_CLANG_TIDY              (Wanted: OFF): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: OFF): OFF
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DEPS_SHARED             (Wanted: ON): OFF
+--   SDL_DIRECTX                 (Wanted: ON): ON
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DLOPEN_NOTES            (Wanted: OFF): OFF
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYCAMERA             (Wanted: OFF): OFF
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_EXAMPLES                (Wanted: OFF): OFF
+--   SDL_EXAMPLES_LINK_SHARED    (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FRIBIDI                 (Wanted: OFF): OFF
+--   SDL_FRIBIDI_SHARED          (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: ON): OFF
+--   SDL_HIDAPI_LIBUSB_SHARED    (Wanted: ON): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL                 (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBTHAI                 (Wanted: OFF): OFF
+--   SDL_LIBTHAI_SHARED          (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LIBURING                (Wanted: OFF): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: ON): ON
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): ON
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OPENVR                  (Wanted: OFF): OFF
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: OFF): OFF
+--   SDL_PTHREADS_SEM            (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: OFF): OFF
+--   SDL_RENDER_D3D11            (Wanted: OFF): OFF
+--   SDL_RENDER_D3D12            (Wanted: OFF): OFF
+--   SDL_RENDER_GPU              (Wanted: OFF): OFF
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RENDER_VULKAN           (Wanted: OFF): OFF
+--   SDL_ROCKCHIP                (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: ON): ON
+--   SDL_SSE2                    (Wanted: ON): ON
+--   SDL_SSE3                    (Wanted: ON): ON
+--   SDL_SSE4_1                  (Wanted: ON): ON
+--   SDL_SSE4_2                  (Wanted: ON): ON
+--   SDL_SYSTEM_ICONV            (Wanted: OFF): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_TESTS_LINK_SHARED       (Wanted: OFF): OFF
+--   SDL_UNINSTALL               (Wanted: OFF): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: ON): ON
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_X11_XSYNC               (Wanted: OFF): OFF
+--   SDL_X11_XTEST               (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: ON): ON
+-- 
+--  Build Shared Library: OFF
+--  Build Static Library: ON
+-- 
+-- Enabled backends:
+--   Video drivers: dummy offscreen windows
+--   Render drivers: ogl ogl_es2
+--   GPU drivers: disabled
+--   Audio drivers: disk dsound dummy wasapi
+--   Joystick drivers: dinput gameinput hidapi rawinput virtual wgi xinput
+--   Camera drivers: dummy
+-- 
+-- Configuring done (127.2s)
+-- Generating done (0.2s)
+-- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release
 config rc=0
 === COMPILAR ===
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
-  main.cpp
-  log.cpp
-  xbe.cpp
-  image.cpp
-  xthread.cpp
-  hooks.cpp
-  timing.cpp
-  fov.cpp
-  reload_blur.cpp
-  bigbuf.cpp
-  calls.cpp
-  vars.cpp
-  pc_settings.cpp
-  apt.cpp
-  pages.cpp
-  bind_list.cpp
-  pause_ui.cpp
-  mouselook.cpp
-  autoaim.cpp
-  lean.cpp
-  Generating Code...
-  Compiling...
-  bindings.cpp
-  movies.cpp
-  reverb.cpp
-  settings.cpp
-  language.cpp
-  perf.cpp
-  sha1.cpp
-  ktable.cpp
-  k_memory.cpp
-  k_thread.cpp
-  k_sync.cpp
-  k_dpc.cpp
-  k_file.cpp
-  k_rtl.cpp
-  k_misc.cpp
-  dispatch.cpp
-  device.cpp
-  host.cpp
-  pushbuf.cpp
-  draw.cpp
-  Generating Code...
-  Compiling...
-  formats.cpp
-  resources.cpp
-  texture.cpp
-  vshader.cpp
-  nv2a_vsh.cpp
-  nv2a_psh.cpp
-  pshader.cpp
-  dsound.cpp
-  output.cpp
-  xinput.cpp
-  vr.cpp
-  vr_openxr.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_openxr.cpp(21,9):
-      'WIN32_LEAN_AND_MEAN' previously declared on the command line
-  
-  vr_pose.cpp
-  vr_input.cpp
-  vr_selftest.cpp
-  vr_trace.cpp
-D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(10,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\blackrt.vcxproj]
-      D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\src\vr\vr_trace.cpp(10,9):
-      'WIN32_LEAN_AND_MEAN' previously declared on the command line
-  
-  Generating Code...
-     Creating library D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.lib and object D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/build/Release/blackrt.exp
-  blackrt.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\blackrt.dll
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
-  stub.c
-  black.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\_fork\black-pc\loader\build\Release\black.exe
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/_fork/black-pc/loader/CMakeLists.txt
-build rc=0
-=== SONDA DO CONECTOR ===
--- Building for: Visual Studio 18 2026
--- The C compiler identification is MSVC 19.51.36260.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x86/cl.exe - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Configuring done (1.9s)
--- Generating done (0.0s)
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/probe/build
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/probe/CMakeLists.txt
-  probe.c
-  probe.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\probe\build\Release\probe.exe
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/probe/CMakeLists.txt
-sonda: Error [SPEC | xrGetInstanceProcAddr | VUID-xrGetInstanceProcAddr-function-parameter] : Invalid Function pointer
-FALHOU: sem xrCreateInstance
-=== SONDA DE VR 64 BITS ===
--- Building for: Visual Studio 18 2026
--- The CXX compiler identification is MSVC 19.51.36260.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done (1.9s)
--- Generating done (0.0s)
-CMake Warning (unused-cli):
-  Manually-specified variables were not used by the project:
-
-    CMAKE_BUILD_TYPE
-
-
--- Build files have been written to: D:/a/calculadora-boleado/calculadora-boleado/sonda64-build
-MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
-
-  1>Checking Build System
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
-  sonda.cpp
-  vr-sonda64.vcxproj -> D:\a\calculadora-boleado\calculadora-boleado\sonda64-build\Release\vr-sonda64.exe
-  Building Custom Rule D:/a/calculadora-boleado/calculadora-boleado/black-vr/src/sonda/CMakeLists.txt
-sonda64 rc=0
-sonda64-build/Release/vr-sonda64.exe
-openxr_loader.dll: 612352 bytes
-x64: vr-sonda64.exe 195072 bytes, openxr_loader.dll 671744 bytes
-PRONTO: binarios gerados
+[0/2] Re-checking globbed directories...
+[1/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Allocator.c.obj
+[2/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/ArgParse.c.obj
+[3/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Process.c.obj
+[4/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Synchronization.c.obj
+[5/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Thread.c.obj
+[6/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Memory.c.obj
+[7/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/API/Terminal.c.obj
+[8/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Bitset.c.obj
+[9/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Zycore.c.obj
+[10/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/List.c.obj
+[11/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Format.c.obj
+[12/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/MetaInfo.c.obj
+[13/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/Vector.c.obj
+[14/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Mnemonic.c.obj
+[15/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Register.c.obj
+[16/446] Building C object _deps/zydis-build/zycore/CMakeFiles/Zycore.dir/src/String.c.obj
+[17/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Segment.c.obj
+[18/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Zydis.c.obj
+[19/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Utils.c.obj
+[20/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/String.c.obj
+[21/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Disassembler.c.obj
+[22/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/DecoderData.c.obj
+[23/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Formatter.c.obj
+[24/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Decoder.c.obj
+[25/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterBuffer.c.obj
+[26/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/EncoderData.c.obj
+[27/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterATT.c.obj
+[28/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/Encoder.c.obj
+[29/446] Linking C static library _deps\zydis-build\zycore\Zycore.lib
+[30/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterIntel.c.obj
+[31/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/FormatterBase.c.obj
+[32/446] Building C object _deps/zydis-build/CMakeFiles/Zydis.dir/src/SharedData.c.obj
+[33/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen.cpp.obj
+[34/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_fp.cpp.obj
+[35/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_int.cpp.obj
+[36/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/analysis.cpp.obj
+[37/446] Linking C static library _deps\zydis-build\Zydis.lib
+[38/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -DSRC=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp -DOUT=D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/build_info.h "-DGIT=C:/Program Files/Git/ucrt64/bin/git.exe" -P D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/tools/build_info.cmake"
+[39/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/codegen_emit.cpp.obj
+[40/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/cmake_pch.h.pch
+[41/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/cmake_pch.hxx.pch
+[42/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL.c.obj
+[43/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_error.c.obj
+[44/446] C:\Windows\system32\cmd.exe /C "cd /D D:\a\calculadora-boleado\calculadora-boleado\_src\BLACK-XBERecomp\out\build\release && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different "C:/Program Files/LLVM/bin/clang.exe" "C:/Program Files/LLVM/bin/lld-link.exe" D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/LLVM-LICENSE.txt D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/config/game.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/config && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_ops.h D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/x86_context.h D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/cpu && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cmath D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstdint D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/cstring D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/limits D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/freestanding/type_traits D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/include/freestanding && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/4831/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/4831 && "C:\Program Files\CMake\bin\cmake.exe" -E make_directory D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849 && "C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/xdk/5849/layout.toml D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/compiler/xdk/5849"
+[45/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_guid.c.obj
+[46/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_assert.c.obj
+[47/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_list.c.obj
+[48/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hints.c.obj
+[49/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_hashtable.c.obj
+[50/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_properties.c.obj
+[51/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_utils.c.obj
+[52/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/atomic/SDL_atomic.c.obj
+[53/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/SDL_log.c.obj
+[54/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/atomic/SDL_spinlock.c.obj
+[55/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiodev.c.obj
+[56/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audio.c.obj
+[57/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioqueue.c.obj
+[58/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audioresample.c.obj
+[59/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiocvt.c.obj
+[60/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_audiotypecvt.c.obj
+[61/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_mixer.c.obj
+[62/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/SDL_core_unsupported.c.obj
+[63/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/SDL_wave.c.obj
+[64/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_categories.c.obj
+[65/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/SDL_camera.c.obj
+[66/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_clipboardevents.c.obj
+[67/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/cpuinfo/SDL_cpuinfo.c.obj
+[68/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_displayevents.c.obj
+[69/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_dropevents.c.obj
+[70/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_eventwatch.c.obj
+[71/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keyboard.c.obj
+[72/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keymap.c.obj
+[73/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_keycode.c.obj
+[74/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dynapi/SDL_dynapi.c.obj
+[75/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_keysym_to_scancode.c.obj
+[76/446] Building CXX object CMakeFiles/xbe_recomp.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/recomp/main.cpp.obj
+[77/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_events.c.obj
+[78/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_quit.c.obj
+[79/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_scancode_tables.c.obj
+[80/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_pen.c.obj
+[81/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_touch.c.obj
+[82/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/imKStoUCS.c.obj
+[83/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_windowevents.c.obj
+[84/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/SDL_filesystem.c.obj
+[85/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/SDL_haptic.c.obj
+[86/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/events/SDL_mouse.c.obj
+[87/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/SDL_asyncio.c.obj
+[88/446] Linking CXX executable compiler\xbe_recomp.exe
+[89/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/generic/SDL_asyncio_generic.c.obj
+[90/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/gpu/SDL_gpu.c.obj
+[91/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/SDL_iostream.c.obj
+[92/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.obj
+[93/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/hidapi/SDL_hidapi.c.obj
+[94/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/controller_type.c.obj
+[95/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_gamepad.c.obj
+[96/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/SDL_locale.c.obj
+[97/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_runapp.c.obj
+[98/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/SDL_main_callbacks.c.obj
+[99/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/SDL_libusb.c.obj
+[100/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/SDL_joystick.c.obj
+[101/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/SDL_url.c.obj
+[102/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/power/SDL_power.c.obj
+[103/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render_unsupported.c.obj
+[104/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d/SDL_render_d3d.c.obj
+[105/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_yuv_sw.c.obj
+[106/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d/SDL_shaders_d3d.c.obj
+[107/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d11/SDL_render_d3d11.c.obj
+[108/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.obj
+[109/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_render_d3d12.c.obj
+[110/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.obj
+[111/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_pipeline_gpu.c.obj
+[112/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_render_gpu.c.obj
+[113/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/gpu/SDL_shaders_gpu.c.obj
+[114/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/ngage/SDL_render_ngage.c.obj
+[115/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengl/SDL_render_gl.c.obj
+[116/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengl/SDL_shaders_gl.c.obj
+[117/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_shaders_gles2.c.obj
+[118/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/ps2/SDL_render_ps2.c.obj
+[119/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/opengles2/SDL_render_gles2.c.obj
+[120/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/psp/SDL_render_psp.c.obj
+[121/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendfillrect.c.obj
+[122/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendline.c.obj
+[123/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_blendpoint.c.obj
+[124/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_drawpoint.c.obj
+[125/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_drawline.c.obj
+[126/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_render_sw.c.obj
+[127/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/software/SDL_triangle.c.obj
+[128/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.obj
+[129/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vulkan/SDL_render_vulkan.c.obj
+[130/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.obj
+[131/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.obj
+[132/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/vulkan/SDL_shaders_vulkan.c.obj
+[133/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/render/SDL_render.c.obj
+[134/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_crc16.c.obj
+[135/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_crc32.c.obj
+[136/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/sensor/SDL_sensor.c.obj
+[137/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_iconv.c.obj
+[138/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_malloc.c.obj
+[139/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memcpy.c.obj
+[140/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memmove.c.obj
+[141/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_mslibc.c.obj
+[142/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_memset.c.obj
+[143/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_murmur3.c.obj
+[144/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_random.c.obj
+[145/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_getenv.c.obj
+[146/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_strtokr.c.obj
+[147/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_stdlib.c.obj
+[148/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/SDL_storage.c.obj
+[149/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_string.c.obj
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1164:12: warning: 'itoa' is deprecated: The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details. [-Wdeprecated-declarations]
+ 1164 |     return itoa(value, string, radix);
+      |            ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\stdlib.h:1315:5: note: 'itoa' has been explicitly marked deprecated here
+ 1315 |     _CRT_NONSTDC_DEPRECATE(_itoa) _CRT_INSECURE_DEPRECATE(_itoa_s)
+      |     ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt.h:428:50: note: expanded from macro '_CRT_NONSTDC_DEPRECATE'
+  428 |         #define _CRT_NONSTDC_DEPRECATE(_NewName) _CRT_DEPRECATE_TEXT(             \
+      |                                                  ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:348:47: note: expanded from macro '_CRT_DEPRECATE_TEXT'
+  348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
+      |                                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1173:12: warning: '_ltoa' is deprecated: This function or variable may be unsafe. Consider using _ltoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [-Wdeprecated-declarations]
+ 1173 |     return _ltoa(value, string, radix);
+      |            ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\stdlib.h:664:1: note: '_ltoa' has been explicitly marked deprecated here
+  664 | __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1(
+      | ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt.h:886:5: note: expanded from macro '__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1'
+  886 |     __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)
+      |     ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt.h:1945:17: note: expanded from macro '__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX'
+ 1945 |                 _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1);
+      |                 ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:358:55: note: expanded from macro '_CRT_INSECURE_DEPRECATE'
+  358 |         #define _CRT_INSECURE_DEPRECATE(_Replacement) _CRT_DEPRECATE_TEXT(    \
+      |                                                       ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:348:47: note: expanded from macro '_CRT_DEPRECATE_TEXT'
+  348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
+      |                                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1191:12: warning: '_ultoa' is deprecated: This function or variable may be unsafe. Consider using _ultoa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [-Wdeprecated-declarations]
+ 1191 |     return _ultoa(value, string, radix);
+      |            ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\stdlib.h:687:1: note: '_ultoa' has been explicitly marked deprecated here
+  687 | __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1(
+      | ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt.h:886:5: note: expanded from macro '__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1'
+  886 |     __DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX(_ReturnType, _ReturnPolicy, _DeclSpec, _FuncName, _FuncName##_s, _HType1, _HArg1, _SalAttributeDst, _DstType, _Dst, _TType1, _TArg1)
+      |     ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt.h:1945:17: note: expanded from macro '__DEFINE_CPP_OVERLOAD_STANDARD_FUNC_1_1_EX'
+ 1945 |                 _CRT_INSECURE_DEPRECATE(_SecureFuncName) _DeclSpec _ReturnType __cdecl _FuncName(_HType1 _HArg1, _SalAttributeDst _DstType *_Dst, _TType1 _TArg1);
+      |                 ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:358:55: note: expanded from macro '_CRT_INSECURE_DEPRECATE'
+  358 |         #define _CRT_INSECURE_DEPRECATE(_Replacement) _CRT_DEPRECATE_TEXT(    \
+      |                                                       ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:348:47: note: expanded from macro '_CRT_DEPRECATE_TEXT'
+  348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
+      |                                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1215:12: warning: '_i64toa' is deprecated: This function or variable may be unsafe. Consider using _i64toa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [-Wdeprecated-declarations]
+ 1215 |     return _i64toa(value, string, radix);
+      |            ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\stdlib.h:704:1: note: '_i64toa' has been explicitly marked deprecated here
+  704 | _CRT_INSECURE_DEPRECATE(_i64toa_s)
+      | ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:358:55: note: expanded from macro '_CRT_INSECURE_DEPRECATE'
+  358 |         #define _CRT_INSECURE_DEPRECATE(_Replacement) _CRT_DEPRECATE_TEXT(    \
+      |                                                       ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:348:47: note: expanded from macro '_CRT_DEPRECATE_TEXT'
+  348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
+      |                                               ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/sdl3-src/src/stdlib/SDL_string.c:1233:12: warning: '_ui64toa' is deprecated: This function or variable may be unsafe. Consider using _ui64toa_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [-Wdeprecated-declarations]
+ 1233 |     return _ui64toa(value, string, radix);
+      |            ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\stdlib.h:720:1: note: '_ui64toa' has been explicitly marked deprecated here
+  720 | _CRT_INSECURE_DEPRECATE(_ui64toa_s)
+      | ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:358:55: note: expanded from macro '_CRT_INSECURE_DEPRECATE'
+  358 |         #define _CRT_INSECURE_DEPRECATE(_Replacement) _CRT_DEPRECATE_TEXT(    \
+      |                                                       ^
+C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC\Tools\MSVC\14.51.36231\include\vcruntime.h:348:47: note: expanded from macro '_CRT_DEPRECATE_TEXT'
+  348 | #define _CRT_DEPRECATE_TEXT(_Text) __declspec(deprecated(_Text))
+      |                                               ^
+5 warnings generated.
+[150/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/SDL_time.c.obj
+[151/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/stdlib/SDL_qsort.c.obj
+[152/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit.c.obj
+[153/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/SDL_thread.c.obj
+[154/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/timer/SDL_timer.c.obj
+[155/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_1.c.obj
+[156/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_RLEaccel.c.obj
+[157/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_0.c.obj
+[158/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_copy.c.obj
+[159/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_A.c.obj
+[160/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_N.c.obj
+[161/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_bmp.c.obj
+[162/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_clipboard.c.obj
+[163/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_slow.c.obj
+[164/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_fillrect.c.obj
+[165/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_pixels.c.obj
+[166/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_rect.c.obj
+[167/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_egl.c.obj
+[168/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_rotate.c.obj
+[169/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_stretch.c.obj
+[170/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_surface.c.obj
+[171/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video_unsupported.c.obj
+[172/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_vulkan_utils.c.obj
+[173/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_video.c.obj
+[174/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.obj
+[175/446] Recompiling default.xbe
+default.xbe: title 45410083 entry 00025A3F kernel thunk 00282FE0
+direct: 789 functions, 40659 instructions
+pointer seeds: 3070 accepted, 1227 rejected
+gap fill: 6431 functions
+c++ eh: 0 catch blocks, 0 continuations
+late pointer seeds: 0
+overlapping decodes: 4028
+total: 15042 functions, 680140 instructions, 2266213 code bytes of 2564056, 457 jump tables, 18 callback entries
+functions 15042
+instructions 798292
+unimplemented aaa 15
+unimplemented aad 12
+unimplemented aam 18
+unimplemented aas 127
+unimplemented arpl 15
+unimplemented bound 27
+unimplemented daa 18
+unimplemented das 5
+unimplemented enter 13
+unimplemented fbstp 1
+unimplemented ffreep 1
+unimplemented insb 11
+unimplemented insd 11
+unimplemented int1 10
+unimplemented into 23
+unimplemented iretd 35
+unimplemented lar 1
+unimplemented lds 22
+unimplemented les 94
+unimplemented lfs 1
+unimplemented lldt 2
+unimplemented lss 1
+unimplemented outsb 12
+unimplemented outsd 7
+unimplemented salc 6
+unimplemented sldt 2
+unimplemented str 1
+unimplemented verr 1
+[176/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_yuv.c.obj
+[177/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_atan2.c.obj
+[178/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_exp.c.obj
+[179/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_stb.c.obj
+[180/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.obj
+[181/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_fmod.c.obj
+[182/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log.c.obj
+[183/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_log10.c.obj
+[184/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_pow.c.obj
+[185/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.obj
+[186/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_rem_pio2.c.obj
+[187/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/e_sqrt.c.obj
+[188/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_cos.c.obj
+[189/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_tan.c.obj
+[190/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_sin.c.obj
+[191/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_atan.c.obj
+[192/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_copysign.c.obj
+[193/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_cos.c.obj
+[194/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/k_rem_pio2.c.obj
+[195/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinf.c.obj
+[196/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_fabs.c.obj
+[197/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isinff.c.obj
+[198/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_floor.c.obj
+[199/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnan.c.obj
+[200/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_isnanf.c.obj
+[201/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_scalbn.c.obj
+[202/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_modf.c.obj
+[203/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_sin.c.obj
+[204/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/libm/s_tan.c.obj
+[205/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/SDL_blit_auto.c.obj
+[206/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/disk/SDL_diskaudio.c.obj
+[207/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/dummy/SDL_dummyaudio.c.obj
+[208/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullevents.c.obj
+[209/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullframebuffer.c.obj
+[210/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/dummy/SDL_nullvideo.c.obj
+[211/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.obj
+[212/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_hid.c.obj
+[213/446] Building CXX object CMakeFiles/xbe_symbols.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/tools/symbols/main.cpp.obj
+[214/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/pch.c.obj
+[215/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_xinput.c.obj
+[216/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/pch_cpp.cpp.obj
+[217/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_immdevice.c.obj
+[218/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_windows.c.obj
+[219/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/core/windows/SDL_gameinput.cpp.obj
+[220/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/io/windows/SDL_asyncio_windows_ioring.c.obj
+[221/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/windows/SDL_sysmain_runapp.c.obj
+[222/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/misc/windows/SDL_sysurl.c.obj
+[223/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/directsound/SDL_directsound.c.obj
+[224/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsclipboard.c.obj
+[225/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/audio/wasapi/SDL_wasapi.c.obj
+[226/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsframebuffer.c.obj
+[227/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsgameinput.cpp.obj
+[228/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsevents.c.obj
+[229/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowskeyboard.c.obj
+[230/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsmessagebox.c.obj
+[231/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsmodes.c.obj
+[232/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsmouse.c.obj
+[233/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsopengl.c.obj
+[234/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsopengles.c.obj
+[235/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsshape.c.obj
+[236/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsrawinput.c.obj
+[237/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/generic/SDL_syscond.c.obj
+[238/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/generic/SDL_sysrwlock.c.obj
+[239/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvideo.c.obj
+[240/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowsvulkan.c.obj
+[241/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_syscond_cv.c.obj
+[242/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_sysmutex.c.obj
+[243/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_sysrwlock_srw.c.obj
+[244/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_syssem.c.obj
+[245/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_systhread.c.obj
+[246/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/thread/windows/SDL_systls.c.obj
+[247/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/power/windows/SDL_syspower.c.obj
+[248/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/windows/SDL_windowswindow.c.obj
+[249/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/generic/SDL_genericstorage.c.obj
+[250/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/storage/steam/SDL_steamstorage.c.obj
+[251/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/sensor/windows/SDL_windowssensor.c.obj
+[252/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/locale/windows/SDL_syslocale.c.obj
+[253/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/windows/SDL_sysfsops.c.obj
+[254/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/time/windows/SDL_systime.c.obj
+[255/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/timer/windows/SDL_systimer.c.obj
+[256/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_8bitdo.c.obj
+[257/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/loadso/windows/SDL_sysloadso.c.obj
+[258/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.obj
+[259/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/tray/windows/SDL_tray.c.obj
+[260/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_flydigi.c.obj
+[261/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/filesystem/windows/SDL_sysfilesystem.c.obj
+[262/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.obj
+[263/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_lg4ff.c.obj
+[264/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.obj
+[265/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.obj
+[266/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.obj
+[267/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.obj
+[268/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.obj
+[269/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_gip.c.obj
+[270/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.obj
+[271/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.obj
+[272/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam_hori.c.obj
+[273/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam_triton.c.obj
+[274/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_sinput.c.obj
+[275/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_switch2.c.obj
+[276/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.obj
+[277/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.obj
+[278/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.obj
+[279/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.obj
+[280/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.obj
+[281/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_zuiki.c.obj
+[282/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.obj
+[283/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/hidapi/SDL_hidapihaptic.c.obj
+[284/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_report_descriptor.c.obj
+[285/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.obj
+[286/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/hidapi/SDL_hidapihaptic_lg4ff.c.obj
+[287/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.obj
+[288/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_dinputjoystick.c.obj
+[289/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_windowsjoystick.c.obj
+[290/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_xinputjoystick.c.obj
+[291/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/SDL_dialog.c.obj
+[292/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/SDL_dialog_utils.c.obj
+[293/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_dinputhaptic.c.obj
+[294/446] Building CXX object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/gdk/SDL_gameinputjoystick.cpp.obj
+[295/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/haptic/windows/SDL_windowshaptic.c.obj
+[296/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/process/SDL_process.c.obj
+[297/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenevents.c.obj
+[298/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.obj
+[299/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/process/windows/SDL_windowsprocess.c.obj
+[300/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenopengles.c.obj
+[301/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/dialog/windows/SDL_windowsdialog.c.obj
+[302/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvideo.c.obj
+[303/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/camera/dummy/SDL_camera_dummy.c.obj
+[304/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/tray/SDL_tray_utils.c.obj
+[305/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/main/generic/SDL_sysmain_callbacks.c.obj
+[306/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_windows_gaming_input.c.obj
+[307/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenvulkan.c.obj
+[308/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/video/offscreen/SDL_offscreenwindow.c.obj
+[309/446] Building C object _deps/sdl3-build/CMakeFiles/SDL3-static.dir/src/joystick/windows/SDL_rawinputjoystick.c.obj
+[310/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/handover.cpp.obj
+[311/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/main.cpp.obj
+[312/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/system_info.cpp.obj
+[313/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/splash.cpp.obj
+[314/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/core/input.cpp.obj
+[315/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/core/log.cpp.obj
+[316/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/settings.cpp.obj
+[317/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/cpu/dispatch.cpp.obj
+[318/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/gpu/shaders.cpp.obj
+[319/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/crypto.cpp.obj
+[320/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/gpu/texture.cpp.obj
+[321/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/gpu/vertex.cpp.obj
+[322/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/app/game_code.cpp.obj
+[323/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/boot.cpp.obj
+[324/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/disc.cpp.obj
+[325/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/gpu/texturedumper.cpp.obj
+[326/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/memory.cpp.obj
+[327/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/ordinals.cpp.obj
+[328/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/files.cpp.obj
+[329/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/objects.cpp.obj
+[330/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/rtl.cpp.obj
+[331/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/bink.cpp.obj
+[332/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/crt_math.cpp.obj
+[333/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/dsp_image.cpp.obj
+[334/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/threads.cpp.obj
+[335/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/xapi.cpp.obj
+[336/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/kernel/xboxkrnl.cpp.obj
+[337/446] Building CXX object CMakeFiles/Black.dir/src/audio/xaudio2.cpp.obj
+[338/446] Building CXX object CMakeFiles/Black.dir/src/common/focus_pause.cpp.obj
+[339/446] Building CXX object CMakeFiles/Black.dir/src/common/gyro.cpp.obj
+[340/446] Building CXX object CMakeFiles/Black.dir/src/common/cursor.cpp.obj
+[341/446] Building CXX object CMakeFiles/Black.dir/D_/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime/xdk/xnet.cpp.obj
+[342/446] Building CXX object CMakeFiles/Black.dir/src/common/game_files.cpp.obj
+[343/446] Building CXX object CMakeFiles/Black.dir/src/common/translations.cpp.obj
+[344/446] Building CXX object CMakeFiles/Black.dir/src/common/game_info.cpp.obj
+[345/446] Building CXX object CMakeFiles/Black.dir/src/common/monitor.cpp.obj
+[346/446] Building CXX object CMakeFiles/Black.dir/src/common/mouse_keyboard.cpp.obj
+[347/446] Building CXX object CMakeFiles/Black.dir/src/common/menu.cpp.obj
+[348/446] Building CXX object CMakeFiles/Black.dir/src/sound/buffers.cpp.obj
+[349/446] Building CXX object CMakeFiles/Black.dir/src/sound/device.cpp.obj
+[350/446] Building CXX object CMakeFiles/Black.dir/src/d3d/d3d8.cpp.obj
+[351/446] Building CXX object CMakeFiles/Black.dir/src/d3d/render_thread.cpp.obj
+[352/446] Building CXX object CMakeFiles/Black.dir/src/sound/mixer.cpp.obj
+[353/446] Building CXX object CMakeFiles/Black.dir/src/sound/streams.cpp.obj
+[354/446] Building CXX object CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj
+FAILED: [code=1] CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj 
+"C:\Program Files\LLVM\bin\clang++.exe" -DBlack_EXPORTS -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_UNICODE -ID:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src -ID:/a/calculadora-boleado/calculadora-boleado/_src/XboxXBE-Recomp/runtime -ID:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/generated/game -isystem D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/imgui-src -isystem D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/out/build/release/_deps/tomlplusplus-src/include -march=x86-64-v2 -O3 -DNDEBUG -std=gnu++20 -D_DLL -D_MT -Xclang --dependent-lib=msvcrt -fno-strict-aliasing -MD -MT CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj -MF CMakeFiles\Black.dir\src\vr\vr_openxr.cpp.obj.d -o CMakeFiles/Black.dir/src/vr/vr_openxr.cpp.obj -c D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:241:43: error: use of undeclared identifier 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12KHR'; did you mean 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR'?
+  241 |     XrGraphicsRequirementsD3D12KHR req = {XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12KHR};
+      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                           XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:432:5: note: 'XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR' declared here
+  432 |     XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR = 1000028002,
+      |     ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:253:34: error: no member named 'GetDesc1' in 'IDXGIAdapter'
+  253 |             SUCCEEDED(adaptador->GetDesc1(&desc))) {
+      |                       ~~~~~~~~~~~^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\shared\winerror.h:30296:35: note: expanded from macro 'SUCCEEDED'
+ 30296 | #define SUCCEEDED(hr) (((HRESULT)(hr)) >= 0)
+       |                                   ^~
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:263:42: error: use of undeclared identifier 'XR_TYPE_GRAPHICS_BINDING_D3D12KHR'; did you mean 'XR_TYPE_GRAPHICS_BINDING_D3D12_KHR'?
+  263 |     XrGraphicsBindingD3D12KHR binding = {XR_TYPE_GRAPHICS_BINDING_D3D12KHR};
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          XR_TYPE_GRAPHICS_BINDING_D3D12_KHR
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:430:5: note: 'XR_TYPE_GRAPHICS_BINDING_D3D12_KHR' declared here
+  430 |     XR_TYPE_GRAPHICS_BINDING_D3D12_KHR = 1000028000,
+      |     ^
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr/vr_openxr.cpp:335:60: error: use of undeclared identifier 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12KHR'; did you mean 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR'?
+  335 |         std::vector<XrSwapchainImageD3D12KHR> imgs(count, {XR_TYPE_SWAPCHAIN_IMAGE_D3D12KHR});
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                            XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR
+D:/a/calculadora-boleado/calculadora-boleado/_src/BLACK-XBERecomp/src/vr\openxr/openxr.h:431:5: note: 'XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR' declared here
+  431 |     XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR = 1000028001,
+      |     ^
+4 errors generated.
+[355/446] Building CXX object CMakeFiles/Black.dir/src/game/ambient_occlusion.cpp.obj
+[356/446] Building CXX object CMakeFiles/Black.dir/src/game/fps_counter.cpp.obj
+[357/446] Building CXX object CMakeFiles/Black.dir/src/d3d/d3d12.cpp.obj
+[358/446] Building CXX object CMakeFiles/Black.dir/src/game/exit_menu.cpp.obj
+[359/446] Building CXX object CMakeFiles/Black.dir/src/game/hooks.cpp.obj
+ninja: build stopped: subcommand failed.
+build rc=1
+exe: 
+FALHOU: BLACK.exe nao foi gerado (veja build-log.txt)
