@@ -50,9 +50,18 @@ struct GUID;
 enum D3D_DRIVER_TYPE { D3D_DRIVER_TYPE_UNKNOWN = 0, D3D_DRIVER_TYPE_HARDWARE = 1 };
 struct SECURITY_ATTRIBUTES;
 struct OVERLAPPED;
-struct _EXCEPTION_POINTERS;
+struct EXCEPTION_RECORD {
+    unsigned long ExceptionCode;
+    void *ExceptionAddress;
+    unsigned long NumberParameters;
+    unsigned long long ExceptionInformation[15];
+};
+struct _EXCEPTION_POINTERS { EXCEPTION_RECORD *ExceptionRecord; void *ContextRecord; };
+using EXCEPTION_POINTERS = _EXCEPTION_POINTERS;
 struct CONTEXT;
 struct CRITICAL_SECTION;
+inline long InterlockedCompareExchange(volatile long *, long, long) { return 0; }
+inline long InterlockedExchange(volatile long *, long) { return 0; }
 struct NT_TIB { void *ExceptionList, *StackBase, *StackLimit; };
 #define GetCurrentThread() ((void*)0)
 #define GetCurrentProcess() ((void*)0)
@@ -67,6 +76,18 @@ inline BOOL FreeLibrary(HMODULE) { return 1; }
 inline DWORD GetLastError() { return 0; }
 struct MODULEINFO;
 inline unsigned int GetModuleFileNameA(HMODULE, char *, unsigned int) { return 0; }
+struct MEMORY_BASIC_INFORMATION { void *BaseAddress; void *AllocationBase; };
+inline unsigned long VirtualQuery(const void *, MEMORY_BASIC_INFORMATION *, unsigned long) { return 0; }
+using PVECTORED_EXCEPTION_HANDLER = long (*)(struct _EXCEPTION_POINTERS *);
+inline void *AddVectoredExceptionHandler(unsigned long, PVECTORED_EXCEPTION_HANDLER) { return nullptr; }
+#define EXCEPTION_ACCESS_VIOLATION 0xC0000005ul
+#define EXCEPTION_ILLEGAL_INSTRUCTION 0xC000001Dul
+#define EXCEPTION_STACK_OVERFLOW 0xC00000FDul
+#define EXCEPTION_INT_DIVIDE_BY_ZERO 0xC0000094ul
+#define EXCEPTION_CONTINUE_SEARCH 0
+using LONG = long;
+using ULONG_PTR = unsigned long long;
+#define CALLBACK
 inline int MessageBoxA(void *, const char *, const char *, unsigned int) { return 0; }
 struct HKEY;
 struct FILETIME { DWORD dwLowDateTime, dwHighDateTime; };

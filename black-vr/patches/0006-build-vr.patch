@@ -1,8 +1,8 @@
 diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
-index 74476db..3c23437 100644
+index 74476db..9f693a6 100644
 --- a/loader/CMakeLists.txt
 +++ b/loader/CMakeLists.txt
-@@ -67,12 +67,22 @@ add_library(blackrt SHARED
+@@ -67,12 +67,23 @@ add_library(blackrt SHARED
    src/audio/dsound.cpp
    src/audio/output.cpp
    src/input/xinput.cpp
@@ -12,6 +12,7 @@ index 74476db..3c23437 100644
 +  src/vr/vr_pose.cpp
 +  src/vr/vr_input.cpp
 +  src/vr/vr_selftest.cpp
++  src/vr/vr_trace.cpp
  )
 -target_include_directories(blackrt PRIVATE src)
 +target_include_directories(blackrt PRIVATE src

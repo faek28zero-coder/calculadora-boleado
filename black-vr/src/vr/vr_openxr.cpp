@@ -40,6 +40,7 @@
 #include "openxr.h"
 #include "openxr_platform.h"
 #include "vr/vr_internal.h"
+#include "vr/vr_trace.h"
 #include "vr/vr_math.h"
 
 namespace vr {
@@ -235,6 +236,7 @@ bool create_d3d11(const LUID &adapter)
 bool create_instance()
 {
     uint32_t n = 0;
+    trace::line("  2a: enumerando extensoes do runtime");
     if (XR_FAILED(p_xrEnumerateInstanceExtensionProperties(nullptr, 0, &n, nullptr))) {
         set_error("nenhum runtime OpenXR ativo (o headset está ligado? o runtime está instalado?)");
         return false;
@@ -249,6 +251,7 @@ bool create_instance()
         return false;
     }
 
+    trace::line("  2b: %u extensoes, D3D11 presente", n);
     static const char *wanted[] = {"XR_KHR_D3D11_enable"};
     XrInstanceCreateInfo ci = {XR_TYPE_INSTANCE_CREATE_INFO};
     copy_name(ci.applicationInfo.applicationName, sizeof ci.applicationInfo.applicationName, "BLACK VR (black-vr)");
@@ -728,19 +731,30 @@ bool start(const void *hwnd)
 {
     (void)hwnd;
     if (g_rt.session) return true;
+    trace::init();
+    trace::line("cpu: %d bits do programa", (int)(sizeof(void *) * 8));
+    trace::line("[1] carregando openxr_loader.dll");
     if (!load_loader()) return false;
+    trace::line("[1] ok: %p", (void *)g_loader);
+    trace::line("[2] xrCreateInstance");
     if (!create_instance()) {
         shutdown();
         return false;
     }
+    trace::line("[2] ok: instance %p system %p", (void *)g_rt.instance, (void *)g_rt.system);
+    trace::line("[3] sessao D3D11 (xrCreateSession)");
     if (!create_session()) {
         shutdown();
         return false;
     }
+    trace::line("[3] ok: session %p", (void *)g_rt.session);
+    trace::line("[4] swapchains + acoes");
     if (!create_swapchains() || !create_actions()) {
         shutdown();
         return false;
     }
+    trace::line("[4] ok: swapchain %ux%u por olho", g_rt.eye[0].width, g_rt.eye[0].height);
+    trace::line("=== sessao de pe ===");
     logf("[vr] pronto: %ux%u por olho; aproxime o headset e aperte o gatilho", g_rt.eye[0].width, g_rt.eye[0].height);
     return true;
 }

@@ -97,6 +97,52 @@ jobs:
           grep -nE "error|Error" dist-log.txt | head -40
           exit $rc
 
+      - name: Sonda do conector (a DLL carrega e responde?)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        run: |
+          set +e
+          echo "=== SONDA DO CONECTOR ===" >> dist-log.txt
+          L=OpenXR-SDK-release-1.1.65/build32/src/loader/Release/openxr_loader.dll
+          [ -f "$L" ] || { echo "sonda: DLL nao foi gerada" >> dist-log.txt; exit 0; }
+          mkdir -p probe
+          cp "$L" probe/
+          cat > probe/probe.c <<'EOF'
+          #include <windows.h>
+          #include <stdio.h>
+          typedef struct XrInstance_T *XrInstance;
+          typedef int XrResult;
+          typedef XrResult (__stdcall *PFN_gipa)(XrInstance, const char *, void **);
+          int main(void) {
+              HMODULE m = LoadLibraryA("openxr_loader.dll");
+              if (!m) { printf("FALHOU: nao carregou (erro %lu)\n", GetLastError()); return 1; }
+              PFN_gipa g = (PFN_gipa)GetProcAddress(m, "xrGetInstanceProcAddr");
+              if (!g) { printf("FALHOU: sem xrGetInstanceProcAddr\n"); return 2; }
+              void *ci = 0;
+              g(0, "xrCreateInstance", &ci);
+              if (!ci) { printf("FALHOU: sem xrCreateInstance\n"); return 3; }
+              printf("OK: DLL de 32 bits carregou e expoe as funcoes\n");
+              return 0;
+          }
+          EOF
+          cat > probe/CMakeLists.txt <<'EOF'
+          cmake_minimum_required(VERSION 3.20)
+          project(probe C)
+          add_executable(probe probe.c)
+          EOF
+          cmake -S probe -B probe/build -A Win32 >> dist-log.txt 2>&1
+          cmake --build probe/build --config Release >> dist-log.txt 2>&1
+          EXE=$(find probe/build -name "probe.exe" | head -1)
+          if [ -n "$EXE" ]; then
+            cp probe/openxr_loader.dll "$(dirname "$EXE")/" 2>/dev/null || true
+            ( cd "$(dirname "$EXE")" && ./probe.exe ) > probe-run.txt 2>&1
+            echo "sonda: $(cat probe-run.txt)" >> dist-log.txt
+          else
+            echo "sonda: nao compilou o probe.exe" >> dist-log.txt
+          fi
+          exit 0
+
       - name: Empacotar
         if: always()
         shell: bash
