@@ -1,4 +1,4 @@
-BLACK VR - TESTE DE 64 BITS (versao 12)
+BLACK VR - TESTE DE 64 BITS (versao 13)
 ============================================================
 
 So tem 64 bits aqui. O lado de 32 bits foi descartado: ele estoura
@@ -33,8 +33,15 @@ O QUE ELE TESTA
 - modo 11: desenha, tentando a sessao 3 vezes
 - modo 12: desenha com janela e fila de mensagens
 
-Cada teste tem tempo limite: se travar, ele e encerrado e o relatorio
-continua. Pode deixar rodando.
+A janela mostra cada passo com o tempo (ex.: [  12.40 s]). Se o oculos
+ficar em "carregando" para sempre, o teste desiste sozinho em 90
+segundos e escreve no relatorio onde travou. Pode deixar rodando.
+
+SE O OCULOS FICAR PRESO EM "CARREGANDO"
+------------------------------------------------------------
+Aperte o botao do menu (o do controle direito, com a marca do oculos)
+para sair do app. Se nao sair, tire o oculos da cabeca, feche e abra o
+Meta Horizon Link de novo.
 
 
 SE ALGO DER ERRO

@@ -61,6 +61,7 @@ namespace {
 FILE *g_file;
 int g_variant;
 const char *g_step = "inicio";
+DWORD g_inicio;
 
 void say(const char *fmt, ...)
 {
@@ -69,14 +70,16 @@ void say(const char *fmt, ...)
     va_start(ap, fmt);
     vsnprintf(linha, sizeof linha, fmt, ap);
     va_end(ap);
+    // carimbo de tempo: mostra onde o programa parou (e quanto tempo esperou)
+    char com_tempo[2200];
+    snprintf(com_tempo, sizeof com_tempo, "[%7.2f s] %s", (double)(GetTickCount() - g_inicio) / 1000.0, linha);
     if (g_file) {
-        fputs(linha, g_file);
+        fputs(com_tempo, g_file);
         fputc('\n', g_file);
         fflush(g_file);
     }
     // tambem na tela: se o relatorio se perder, a janela ja mostra tudo
-    fputs("[sonda] ", stdout);
-    fputs(linha, stdout);
+    fputs(com_tempo, stdout);
     fputc('\n', stdout);
     fflush(stdout);
 }
@@ -507,7 +510,12 @@ int desenhar_no_oculos(const Funcoes &f, XrInstance inst, XrSession sess, ID3D11
     g_step = "esperar estado pronto";
     bool comecou = false;
     const DWORD t_inicio = GetTickCount();
-    while (!comecou && GetTickCount() - t_inicio < 30000) {
+    DWORD ultimo_aviso = 0;
+    while (!comecou && GetTickCount() - t_inicio < 60000) {
+        if (!comecou && GetTickCount() - t_inicio - ultimo_aviso > 5000) {
+            ultimo_aviso = GetTickCount() - t_inicio;
+            say("  (esperando o oculos ficar pronto: %.0f s de 60)", (double)ultimo_aviso / 1000.0);
+        }
         XrEventDataBuffer ev = {XR_TYPE_EVENT_DATA_BUFFER};
         while (XR_SUCCEEDED(p.poll(inst, &ev))) {
             if (ev.type == XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED) {
@@ -908,15 +916,57 @@ int rodada(const Opt &o, const Funcoes &f)
     sci.systemId = system;
     dump_memory();
     XrSession session = XR_NULL_HANDLE;
+
+    // O runtime do oculos ja travou antes (ficou "carregando" para sempre).
+    // Entao a sessao e pedida numa thread separada e a principal desiste
+    // depois de 90 s, escrevendo no relatorio onde parou.
+    struct Pedido {
+        PFN_xrCreateSession fn = nullptr;
+        XrInstance inst = XR_NULL_HANDLE;
+        XrSessionCreateInfo sci = {XR_TYPE_SESSION_CREATE_INFO};
+        XrSession session = XR_NULL_HANDLE;
+        XrResult r = XR_ERROR_RUNTIME_FAILURE;
+        HANDLE pronto = nullptr;
+    };
+    Pedido ped;
+    ped.fn = create_session;
+    ped.inst = instance;
+    ped.sci = sci;
+    ped.pronto = CreateEventA(nullptr, TRUE, FALSE, nullptr);
+    auto corpo_pedido = [](LPVOID p) -> DWORD {
+        Pedido *d = (Pedido *)p;
+        d->r = d->fn(d->inst, &d->sci, &d->session);
+        SetEvent(d->pronto);
+        return 0;
+    };
     for (int tentativa = 1; tentativa <= o.tentativas; tentativa++) {
         if (tentativa > 1) {
             say("tentando de novo (tentativa %d de %d) depois de 2 s...", tentativa, o.tentativas);
             Sleep(2000);
         }
-        r = create_session(instance, &sci, &session);
+        ped.session = XR_NULL_HANDLE;
+        ResetEvent(ped.pronto);
+        say("pedindo a sessao ao runtime (tentativa %d)...", tentativa);
+        HANDLE th = CreateThread(nullptr, 4u * 1024u * 1024u, corpo_pedido, &ped, 0, nullptr);
+        if (!th) {
+            say("FALHOU: nao consegui criar a thread do pedido");
+            return 1;
+        }
+        const DWORD espera = WaitForSingleObject(ped.pronto, 90000);
+        if (espera == WAIT_TIMEOUT) {
+            say("*** O RUNTIME NAO RESPONDEU em 90 s: travou dentro de xrCreateSession.");
+            say("*** (e por isso que o oculos fica em \"carregando\" para sempre)");
+            say("sonda: FALHOU");
+            if (g_file) fflush(g_file);
+            return 4; // sai sem esperar a thread travada
+        }
+        CloseHandle(th);
+        say("xrCreateSession devolveu: %s (%d)", xr_name(ped.r), (int)ped.r);
+        r = ped.r;
+        session = ped.session;
         if (XR_SUCCEEDED(r)) break;
-        say("xrCreateSession (tentativa %d): %s (%d)", tentativa, xr_name(r), (int)r);
     }
+    CloseHandle(ped.pronto);
     if (XR_FAILED(r)) {
         say("sonda: FALHOU");
         return 1;
@@ -1017,6 +1067,7 @@ Opt opt_da_variante(int v)
 
 int main(int argc, char **argv)
 {
+    g_inicio = GetTickCount();
     g_variant = argc > 1 ? atoi(argv[1]) : 1;
 
     char exe[MAX_PATH] = {};
